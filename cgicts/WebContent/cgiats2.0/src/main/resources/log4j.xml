@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd"  [
+  <!ENTITY loglocation "/AtsLogs">
+]>
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+	<!-- <appender name="default" class="org.apache.log4j.ConsoleAppender">
+		<param name="target" value="System.out" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="%d{MM/dd/yyyy hh:mm:ss.SSS} %-5p [%20.20t] %-35.35c{1} %m%n" />
+		</layout>
+	</appender> -->
+	<appender name="applicationLog" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="Threshold" value="INFO" />
+
+	    <param name="File" value="&loglocation;/sim.log" />
+
+		<param name="BufferSize" value="500" />
+		<param name="MaxFileSize" value="20MB" />
+		<param name="MaxBackupIndex" value="24" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="%d{MM/dd/yyyy hh:mm:ss.SSS} %-5p [%20.20t] %-35.35c{1} %m%n" />
+		</layout>
+	</appender>
+	<appender name="errorlog" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="Threshold" value="ERROR" />
+
+	 	<param name="File" value="&loglocation;/ATSErrorLog.log" />
+	    
+		<param name="BufferSize" value="50" />
+		<param name="MaxFileSize" value="20MB" />
+		<param name="MaxBackupIndex" value="24" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="%d{MM/dd/yyyy hh:mm:ss.SSS} %-5p [%20.20t] %-35.35c{1} %m%n" />
+		</layout>
+	</appender>
+	<category name="org.hibernate.stat">
+		<priority value="INFO" />
+	</category>
+	<category name="com.uralian">
+		<priority value="INFO" />
+	</category>
+
+	<category name="org.hibernate">
+		<priority value="WARN" />
+	</category>
+
+	<category name="org.littleshoot">
+		<priority value="WARN" />
+	</category>
+
+	<category name="org.springframework">
+		<priority value="INFO" />
+	</category>
+	<root>
+		<priority value="INFO" />
+<!-- 		<appender-ref ref="default" /> -->
+		<appender-ref ref="applicationLog" />
+		<appender-ref ref="errorlog" />
+	</root>
+
+</log4j:configuration>

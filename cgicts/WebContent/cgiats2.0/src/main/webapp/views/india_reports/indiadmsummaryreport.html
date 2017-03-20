@@ -1,0 +1,231 @@
+<div ng-controller="indiadmreportcontroller" ng-init="onload()">
+
+<!-- BEGIN PAGE HEADER--> 
+<div class="sub-page-header">
+  <div class="page-bar">
+    <ul class="page-breadcrumb">
+         	<li><a href="#/dashboard" ng-if="!(rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_Recruiter' || rsLoginUser.userRole === 'ATS_Executive')">Home</a> 
+				<a href="#/india_joborders/my_indiajobOrder" ng-if="(rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_Recruiter')">Home</a>
+				<a href="#/candidates/missingData" ng-if="(rsLoginUser.userRole === 'ATS_Executive')">Home</a>
+				<i class="fa fa-circle"></i>
+				</li>
+      <li>
+        <span>Reports</span>
+        <i class="fa fa-circle"></i>
+      </li>
+      <li>
+        <span>India Reports</span>
+        <i class="fa fa-circle"></i>
+      </li>
+      <li>
+        <span>DM Summary Report</span>
+      </li>
+    </ul> 
+     
+  </div>
+</div>
+<!-- END PAGE HEADER--> 
+
+
+<!-- BEGIN MAIN CONTENT -->
+
+
+<form name="searchsubmitaldm" class="tab-form-demo" ng-submit="searchdmsubmital()" >
+<div class="row">
+<div class="col-md-4">
+            <div class="form-group">
+                <label>Date Range</label>
+                <input type="daterange" ng-model="created" ranges="ranges" id="dmSubmittalRangesId" required=""  readonly="true" class="form-control">
+                </div>
+          </div>
+          <div class="col-md-4">
+            <br>
+            <button type="submit" class="btn blue pull-left btnsmargn" ><i class="fa fa-search"></i> View</button>
+            <button type="submit" class="btn blue pull-left btnsmargn"  ng-click="exportData()">Export <i class="fa fa-upload" aria-hidden="true"></i></button>
+            <!-- <button type="button" class="btn blue pull-left btnsmargn" ng-csv="exportDatalist" ng-disabled="(jobOrderStatsData && jobOrderStatsData.length == 0)" 
+			filename="joborderstats_{{currentDateWithTime | date:'dd-MM-yyyy hh:mm:ss a'}}.csv" ng-click="getTimeFnc();"
+			csv-header="['DM/ADMs','Open','Assigned','Filled','Closed','Reopen','Total']" charset="utf-8">Export <i class="fa fa-upload" aria-hidden="true"></i>
+								</button> -->
+            </div>
+            </div>
+            
+            <div class="pull-right" >
+					<ul class="pagination">
+						<li ng-repeat="page in pages" ng-class="{'active':(page.recordOffset===pageNo)}"><a style="cursor: pointer;" ng-click="nextPageRecords(page.recordOffset)">{{page.number}}</a></li>
+					</ul>
+				</div>
+
+
+<div class="row tablpdng" >
+<div class="shngrcds">{{lblCurrentPageRecords}}</div>
+<table class="table bt-table summaryreport" style="margin-bottom:10px;margin-top:0px;">
+<thead class="tablehead headsmltxt">
+	<tr>
+		<th rowspan="2"><span class="bighd">DM Name</span></th>
+		<th rowspan="2"><span class="bighd">Location</span></th>
+		<th colspan="2"  width="25%" ><center style="font-size:14px;">Job Order Stats</center></th>
+		<th colspan="10"><center style="font-size:18px;'">Submittal Stats from ({{viewstartdate}} to {{viewEndDate}})</center></th>
+	</tr>
+	<tr>
+		<th style="color:#02029c;font-weight:bold;">OPEN</th>
+		<th style="color:#ff0000;font-weight:bold;">CLOSED</th>
+		<th>SUBMITTED</th>
+		<th>DMREJ</th>
+		<th>ACCEPTED</th>
+		<th>INTERVIEWING</th>
+		<th>CONFIRMED</th>
+		<th>REJECTED</th>
+		<th>STARTED</th>
+		<th>BACKOUT</th>
+		<th>OUTOFPROJ</th>
+		<th>NU</th>
+	</tr>
+</thead>
+<tbody ng-if="!(displayRecords.length === 0)">
+	<tr ng-repeat="record in displayRecords" ng-class-odd="'oddcolor'" ng-class-even="'evencolor'">
+		<td width="33%" class="ltxt" style="text-align:left!important;">{{record.fullName}}</td>
+		<td width="20%">{{record.Location}}</td>
+		<td >{{record.openCount}}</td>
+		<td >{{record.closedCount}}</td>
+		<td title="SUBMITTED">{{record.SUBMITTED}}</td>
+		<td title="DMREJ">{{record.DMREJ}}</td>
+		<td title="ACCEPTED">{{record.ACCEPTED}}</td>
+		<td ng-if="!(record.INTERVIEWING ===0)"><label class="anchorTag" ng-click="getUserSubmittalsById(record.Name,'INTERVIEWING')" title="INTERVIEWING" style="color:#0000ff;">{{record.INTERVIEWING}}</label></td>
+		<td style="color:#0000ff;"  ng-if="(record.INTERVIEWING ===0)" title="INTERVIEWING">{{record.INTERVIEWING}}</td>
+		<td  ng-if="!(record.CONFIRMED ===0)"><label ng-click="getUserSubmittalsById(record.Name,'CONFIRMED')" class="anchorTag"  title="CONFIRMED" style="color:#0000ff!important;">{{record.CONFIRMED}}</label></td>
+		<td style="color:#0000ff;"  ng-if="(record.CONFIRMED ===0)" title="CONFIRMED">{{record.CONFIRMED}}</td>
+		<td title="REJECTED">{{record.REJECTED}}</td>
+		<td ng-if="!(record.STARTED ===0)"><label ng-click="getUserSubmittalsById(record.Name,'STARTED')" class="anchorTagWithGreen" title="STARTED">{{record.STARTED}}</label></td>
+		<td ng-if="(record.STARTED ===0)" title="STARTED"><label class="anchorTagRemovedWithGreen">{{record.STARTED}}</label></td>
+		<td title="BACKOUT">{{record.BACKOUT}}</td>
+		<td title="OUTOFPROJ">{{record.OUTOFPROJ}}</td>
+		<td title="NotUpdated">{{record.NotUpdated}}</td>
+	</tr>
+	
+
+	<tr class="totl">
+		<td colspan="2">Total</td>
+		<td>{{totalcount.totalOpenCount}}</td>
+		<td>{{totalcount.totalClosedCount}}</td>
+		<td>{{totalcount.SUBMITTED}}</td>
+		<td>{{totalcount.DMREJ}}</td>
+		<td>{{totalcount.ACCEPTED}}</td>
+		<td>{{totalcount.INTERVIEWING}}</td>
+		<td>{{totalcount.CONFIRMED}}</td>
+		<td>{{totalcount.REJECTED}}</td>
+		<td style="background-color:#ffff00;"><span style="font-weight:bold;color:#ff0000!important;">{{totalcount.STARTED}}</span></td>
+		<td>{{totalcount.BACKOUT}}</td>
+		<td>{{totalcount.OUTOFPROJ}}</td>
+		<td>{{totalcount.NOT_UPDATED}}</td>
+	</tr>
+</tbody>
+<tbody ng-if="(displayRecords.length === 0 || displayRecords===null)">
+	<tr ng-class-odd="'oddcolor'" ng-class-even="'evencolor'">
+	<td colspan="13" ><label style="color:#ff0000;font-size: 14px;font-weight: bold;">No Records Found.</label></td>
+	</tr>
+</tbody>
+</table>
+
+<strong style="color:#ff0000;">*NU: Status Not Updated.</strong>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ****************************** EXPORT TABLE STARTS HERE ******************************-->
+
+<div class="row tablpdng"  id="exporttable" style="display:none;">
+<table border="1" class="table bt-table">
+<thead class="headsmltxt">
+	<tr style="color:#0000ff;!important;">
+		<th rowspan="2"><span class="bighd">DM Name</span></th>
+		<th rowspan="2"><span class="bighd">Location</span></th>
+		<th colspan="2"  width="25%" style="background-color:#00ffff;"><center style="font-size:14px;">Job Order Stats</center></th>
+		<th style="background-color:#f2dddc; font-size:18px;color:#e46d0a;" colspan="10">Submittal Stats from ({{viewstartdate}} to {{viewEndDate}})</th>
+	</tr>
+	<tr style="color:#0000ff;!important;">
+		<th style="color:#3fb050;font-weight:bold;">OPEN</th>
+		<th style="color:#ff0000;font-weight:bold;">CLOSED</th>
+		<th>SUBMITTED</th>
+		<th>DMREJ</th>
+		<th>ACCEPTED</th>
+		<th>INTERVIEWING</th>
+		<th>CONFIRMED</th>
+		<th>REJECTED</th>
+		<th>STARTED</th>
+		<th>BACKOUT</th>
+		<th>OUTOFPROJ</th>
+		<th>STATUS NOT UPDATED</th>
+	</tr>
+</thead>
+<tbody>
+	<tr ng-repeat="record in records" style="text-align:center;">
+		<td width="33%" class="ltxt" style="text-align:left;">{{record.fullName}}</td>
+		<td width="20%">{{record.Location}}</td>
+		<td >{{record.openCount}}</td>
+		<td >{{record.closedCount}}</td>
+		<td>{{record.SUBMITTED}}</td>
+		<td>{{record.DMREJ}}</td>
+		<td>{{record.ACCEPTED}}</td>
+		<td><label  ng-click="getUserSubmittalsById(record.Name,'INTERVIEWING')" style="cursor: pointer;text-decoration: underline;color:#000000; ">{{record.INTERVIEWING}}</label></td>
+		<td><label ng-click="getUserSubmittalsById(record.Name,'CONFIRMED')" style="cursor: pointer;text-decoration: underline;color:#000000; ">{{record.CONFIRMED}}</label></td>
+		<td>{{record.REJECTED}}</td>
+		<td style="color:#16b050;font-weight:bold;"><label ng-click="getUserSubmittalsById(record.Name,'STARTED')" style="cursor: pointer;text-decoration: underline;">{{record.STARTED}}</label></td>
+		<td>{{record.BACKOUT}}</td>
+		<td>{{record.OUTOFPROJ}}</td>
+		<td>{{record.NotUpdated}}</td>
+	</tr>
+	
+
+	<tr style="color:#0000ff;!important;font-weight:bold;text-align:center;">
+		<td colspan="2">Total</td>
+		<td>{{totalcount.totalOpenCount}}</td>
+		<td>{{totalcount.totalClosedCount}}</td>
+		<td>{{totalcount.SUBMITTED}}</td>
+		<td>{{totalcount.DMREJ}}</td>
+		<td>{{totalcount.ACCEPTED}}</td>
+		<td>{{totalcount.INTERVIEWING}}</td>
+		<td>{{totalcount.CONFIRMED}}</td>
+		<td>{{totalcount.REJECTED}}</td>
+		<td style="background-color:#ffff00;color:#ff0000;">{{totalcount.STARTED}}</td>
+		<td>{{totalcount.BACKOUT}}</td>
+		<td>{{totalcount.OUTOFPROJ}}</td>
+		<td>{{totalcount.NOT_UPDATED}}</td>
+	</tr>
+</tbody>
+</table>
+</div>
+<!-- ****************************** EXPORT TABLE ENDS HERE ******************************-->
+
+
+
+
+
+</form>
+<!-- END MAIN CONTENT -->
+
+
+
+
+
+
+</div>

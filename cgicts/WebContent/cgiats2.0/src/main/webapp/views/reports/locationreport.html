@@ -1,0 +1,389 @@
+<div ng-controller="locationreportcontroller" ng-init="onload()">
+<!-- <script src="https://code.highcharts.com/modules/drilldown.js"></script>
+<script src="https://code.highcharts.com/modules/data.js"></script> -->
+<link href="assets/layouts/layout/css/flip.css" rel="stylesheet" />
+<script src="assets/global/scripts/flip.js"></script>
+<style>
+.pagination li.active a
+{
+background-color:#bec9d2;
+border-color:#bec9d2;
+color:#000000;
+}
+.pagination li.active a:hover, .pagination li a:hover
+{
+background-color:#bec9d2;
+border-color:#bec9d2;
+color:#000000;
+}
+</style>
+
+<div class="sub-page-header">
+  <div class="page-bar">
+    <ul class="page-breadcrumb">
+         	<li><a href="#/dashboard" ng-if="!(rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_Recruiter' || rsLoginUser.userRole === 'ATS_Executive')">Home</a> 
+				<a href="#/india_joborders/my_indiajobOrder" ng-if="(rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_Recruiter')">Home</a>
+				<a href="#/candidates/missingData" ng-if="(rsLoginUser.userRole === 'ATS_Executive')">Home</a>
+				<i class="fa fa-circle"></i>
+				</li>
+      <li>
+        <span>Reports</span>
+        <i class="fa fa-circle"></i>
+      </li>
+      <li>
+        <span>Location Report</span>
+      </li>
+    </ul>
+    
+    
+
+ 
+  </div>
+</div>
+
+
+
+
+<form role="form" novalidate="" ng-submit="getDmInfo()" >
+<div id="onsite">
+
+ <div class="row" >
+       <div class="form-group">
+      <!--  <div class="row">
+             <div class="col-md-2">
+            <label>Created Between :</label>
+             <input type="daterange" ng-model="Created" class="dropDown" ranges="ranges" readonly="true" placeholder="Custom Dates" ng-change = "getDMsOnCahnge()" required>
+             </div>  
+             </div> -->
+              <div class="col-md-12" style="margin-top:-25px;">
+             
+             
+             
+             
+             <div class="col-md-3">
+              	<div class="form-group">
+                <label class="">Start Date</label>
+  				<div class="input-group datepick">
+                  <input type="text" class="form-control whitereadonly" uib-datepicker-popup="{{DateFormat}}" is-open="startDatePopup.opened" datepicker-options="startDateOptions" close-text="Close" alt-input-formats="altInputFormats" ng-model="usdms.startDate" ng-keyup="" readonly="true" />
+                  <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="startDateopen()"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+                </div>
+				</div>
+              </div>
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              <div class="col-md-3">
+              	<div class="form-group">
+                <label class="">End Date</label>
+  					<div class="input-group">
+                  <input type="text"  class="form-control whitereadonly" uib-datepicker-popup="{{DateFormat}}" is-open="endDatePopup.opened" datepicker-options="endDateOptions" close-text="Close" alt-input-formats="altInputFormats" ng-model="usdms.endDate" ng-keyup="" readonly="true" />
+                  <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="endDateopen()"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+                </div>
+				</div>
+              </div>
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              <div class="col-md-3">
+              	<div class="form-group" id="locationfield">
+                <label class="">Location</label>
+  					<div class="multiselect formddlist" events="locationevent" ng-dropdown-multiselect="" options="locationdata" selected-model="location" extra-settings="manysettings"></div>
+  					<br><span class="mustfield">This field is required</span>
+				</div>
+              </div>
+              
+
+              
+              <!--  <div class="col-md-3">
+               <label >DM Name</label>
+                <select class="dropDown" required ng-model="usdms.dmName">
+                  <option value="">Select</option>
+                  <option ng-repeat="dm in dms" value="{{dm.userId}}">{{dm.fullName}}</option>
+                  
+                </select>
+              </div> -->
+              <br>
+					
+						<div class="col-md-3">
+							<div class="row">
+								<div class="col-md-2" >
+									<button type="submit" class="btn blue">
+										<i class="fa fa-search"></i> View
+									</button>
+								</div>
+							</div>
+						</div>
+					
+				</div>
+      	</div>
+      	
+      	 <!-- <div class="col-md-9 fade-in-up" style="margin-top:-25px;" >
+      	 <div class="row" >
+      	 <div class="col-md-12"  >
+		<div id="containersidebar"  style="width: 800px; height: 250px; margin: 0 auto"  >
+		</div>
+		</div>
+      	 </div>
+      	 </div> -->
+      	 	
+      	 	</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="col-md-12 bigdata">
+
+
+<br>
+
+
+
+<div class="rdiv animated bounceIn delay marginspace top07 " >
+<div class="rounddiv nw">
+DMs<span class="totalcountbig">{{dmsCount}}</span>
+</div>
+</div>
+
+
+
+<div class="rdiv animated bounceIn delay-one marginspace relpostn top06" >
+<div class="rounddiv tooltipon">
+Recruiters
+<span class="totalcountbig">{{noOfRec}}</span>
+<span class="tooltipdata">
+<ul>
+<li><span class="tlbl">Active Recruiters:</span> {{activeRecWithLevelList.ACTIVE}}</li>
+<li><span class="tlbl">Inactive Recruiters:</span> {{activeRecWithLevelList.INACTIVE}}</li>
+</ul>
+<strong>Active Recruiter Details:</strong>
+<ul>
+<li ng-repeat="(key, value) in activeUserRoles"><span class="tlbl">{{key}}:</span> {{value}}</li>
+</ul>
+</span>
+</div>
+</div>
+
+
+
+
+
+
+
+
+<div class="rdiv animated bounceIn delay-two marginspace relpostn top05" >
+<div class="rounddiv tooltipon">
+Job Orders
+<span class="totalcountbig">{{jobOrdersCount}}</span>
+<span class="tooltipdata">
+<ul>
+<li><span class="tlbl">Open Job Orders:</span> {{jobOrderService.OPEN}}</li>
+<li><span class="tlbl">Closed job Orders:</span> {{jobOrderService.CLOSED}}</li>
+</ul>
+<strong>Open Job Order Details</strong>
+<ul>
+<li><span class="tlbl">Within 30 Days:</span> {{jobOrderService.less_than_30}}</li>
+<li><span class="tlbl">31 - 90 Days:</span> {{jobOrderService.less_than_90}}</li>
+<li><span class="tlbl">90+ Days:</span> {{jobOrderService.more_than_90}}</li>
+</ul>
+</span>
+</div>
+</div>
+
+
+
+
+
+<div class="rdiv animated bounceIn delay-three marginspace relpostn top04">
+<div class="rounddiv tooltipon">
+Positions
+<span class="totalcountbig">{{positionsCount}}</span>
+<span class="tooltipdata">
+<ul>
+<li><span class="tlbl">Open Job Order Positions:</span> {{jobOrderPositionsService.OPEN}}</li>
+<li><span class="tlbl">Closed job Order Positions:</span> {{jobOrderPositionsService.CLOSED}}</li>
+</ul>
+<strong>Open Job Order Positions Details</strong>
+<ul>
+<li><span class="tlbl">Within 30 Days:</span> {{jobOrderPositionsService.less_than_30}}</li>
+<li><span class="tlbl">31 - 90 Days:</span> {{jobOrderPositionsService.less_than_90}}</li>
+<li><span class="tlbl">90+ Days:</span> {{jobOrderPositionsService.more_than_90}}</li>
+</ul>
+</span>
+</div>
+</div>
+
+
+
+
+
+<div class="rdiv animated bounceIn delay-four marginspace relpostn top03">
+<div class="rounddiv tooltipon">
+Submittals
+<span class="totalcountbig">{{submittalsCount}}</span>
+<span class="tooltipdata">
+<ul>
+<li><span class="tlbl">Open Job Order Submittals:</span> {{submittalService.OPEN}}</li>
+<li><span class="tlbl">Closed job Order Submittals:</span> {{submittalService.CLOSED}}</li>
+</ul>
+<strong>Open Job Order Submittals Details</strong>
+<ul>
+<li><span class="tlbl">Within 30 Days:</span> {{submittalService.less_than_30}}</li>
+<li><span class="tlbl">31 - 90 Days:</span> {{submittalService.less_than_90}}</li>
+<li><span class="tlbl">90+ Days:</span> {{submittalService.more_than_90}}</li>
+</ul>
+</span>
+</div>
+</div>
+
+
+
+<div class="rdiv animated bounceIn delay-five marginspace relpostn top02">
+<div class="rounddiv tooltipon">
+Confirmed
+<span class="totalcountbig">{{confirmedCount}}</span>
+<span class="tooltipdata">
+<ul>
+<li><span class="tlbl">Open Job Order Confirmed:</span> {{submittalCnfService.OPEN}}</li>
+<li><span class="tlbl">Closed job Order Confirmed:</span> {{submittalCnfService.CLOSED}}</li>
+</ul>
+<strong>Open Job Order Confirmed Details</strong>
+<ul>
+<li><span class="tlbl">Within 30 Days:</span> {{submittalCnfService.less_than_30}}</li>
+<li><span class="tlbl">31 - 90 Days:</span> {{submittalCnfService.less_than_90}}</li>
+<li><span class="tlbl">90+ Days:</span> {{submittalCnfService.more_than_90}}</li>
+</ul>
+</span>
+</div>
+</div>
+
+
+
+
+<!-- <div class="rdiv animated bounceIn delay-six marginspace relpostn top01">
+<div class="rounddiv startedcolor tooltipon">
+Started
+<span class="totalcountbig">{{startedCount}}</span>
+<span class="tooltipdata" style="margin-left:-55px;">
+<ul>
+<li><span class="tlbl">Open Job Order Starts:</span> {{submittalStartedService.OPEN}}</li>
+<li><span class="tlbl">Closed job Order Starts:</span> {{submittalStartedService.CLOSED}}</li>
+</ul>
+<strong>Open Job Order Starts Details</strong>
+<ul>
+<li><span class="tlbl">Within 30 Days:</span> {{submittalStartedService.less_than_30}}</li>
+<li><span class="tlbl">31 - 90 Days:</span> {{submittalStartedService.less_than_90}}</li>
+<li><span class="tlbl">90+ Days:</span> {{submittalStartedService.more_than_90}}</li>
+</ul>
+</span>
+</div>
+</div> -->
+
+
+<!-- <div class="rdiv animated bounceIn delay-six marginspace relpostn top01">
+<div class="rounddiv startedcolor tooltipon">
+Started
+<span class="totalcountbig">{{startedCount}}</span>
+<span class="tooltipdata" style="margin-left:-55px;">
+<ul>
+<li><span class="tlbl">Open Job Order Starts:</span> {{submittalStarteddOpenClosedCount.OPEN}}</li>
+<li><span class="tlbl">Closed job Order Starts:</span> {{submittalStarteddOpenClosedCount.CLOSED}}</li>
+</ul>
+<strong>Open Job Order Starts Details</strong>
+<ul>
+<li><span class="tlbl">Within 30 Days:</span> {{submittalStartedService.less_than_30}}</li>
+<li><span class="tlbl">31 - 90 Days:</span> {{submittalStartedService.less_than_90}}</li>
+<li><span class="tlbl">90+ Days:</span> {{submittalStartedService.more_than_90}}</li>
+</ul>
+</span>
+</div>
+</div> -->
+
+
+<div class="rdiv animated bounceIn delay-six marginspace relpostn top01">
+<div class="rounddiv startedcolor tooltipon">
+Started
+<span class="totalcountbig">{{startedCount}}</span>
+<span class="tooltipdata" style="margin-left:-55px;">
+<ul>
+<li><span class="tlbl">Active Starts:</span> {{submittalStarteddActiveCount}}</li>
+<li><span class="tlbl">InActive Starts:</span> {{submittalStarteddInActiveCount}}</li>
+</ul>
+</span>
+</div>
+</div>
+
+
+
+<div class="clearboth"></div>
+</div>
+
+
+
+
+
+
+
+
+
+
+				<div class="row fade-in-up table-scrollable">
+            
+	            <table class="customtable" id="viewCandidateTable"  bs-table-control="dmsInfo.dmsTableControl" ng-show="dmsInfoTable"  >
+		        <thead>
+		            <tr>
+		                <th data-field="dmName" data-sortable="true"></th>
+		                <th data-field="rank" data-sortable="true"></th>
+		                <th data-field="dmName" data-sortable="true"></th>
+		                <th data-field="dmName" data-sortable="true"></th>
+		                <th data-field="dmName" data-sortable="true"></th>
+		                <th data-field="noOfjobOrders" data-sortable="true" ></th>
+		                <th data-field="noOfPositions" data-sortable="true"  ></th>
+		                <th data-field="noOfSbm" data-sortable="true"  ></th>
+		                <th data-field="confirmed" data-sortable="true"></th>
+		                <th data-field="started" data-sortable="true"></th>
+		                <th data-field="avgHires" data-sortable="true"></th>
+		                <th data-field="status" data-sortable="true"></th>
+		            </tr>
+		        </thead>
+		        <tbody>
+		           
+		        </tbody>
+	    		</table> 
+	    		</div>
+	    		
+	    		
+	    		
+</div>
+</form>
+
+	    		
+</div>

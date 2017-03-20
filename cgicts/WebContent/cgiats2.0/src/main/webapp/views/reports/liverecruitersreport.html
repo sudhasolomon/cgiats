@@ -1,0 +1,79 @@
+<div ng-controller="liverecruitersreportcontroller" ng-init="onload()">
+<!-- BEGIN PAGE HEADER--> 
+<div class="sub-page-header">
+  <div class="page-bar">
+    <ul class="page-breadcrumb">
+         	<li><a href="#/dashboard" ng-if="!(rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_Recruiter' || rsLoginUser.userRole === 'ATS_Executive')">Home</a> 
+				<a href="#/india_joborders/my_indiajobOrder" ng-if="(rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_Recruiter')">Home</a>
+				<a href="#/candidates/missingData" ng-if="(rsLoginUser.userRole === 'ATS_Executive')">Home</a>
+				<i class="fa fa-circle"></i>
+				</li>
+      <li>
+        <span>Reports</span> 
+        <i class="fa fa-circle"></i>
+      </li>
+      <li>
+        <span>Live Recruiter's Performance Report</span> 
+      </li> 
+    </ul> 
+			
+  </div>
+</div>
+<!-- END PAGE HEADER-->
+
+<form  name="liverecruiterform" class="tab-form-demo" novalidate=""  ng-submit="getdetails()" >
+
+
+<div class="col-md-4">
+              	<div class="form-group">
+                <label class="">Location</label>
+                  <select class="form-control" ng-change="getSubmittalCurrentReport(selectedCity)" ng-model="selectedCity" ng-options="city.officeLocation as city.officeLocation for city in  cityList" ng-change="getSubmittalCurrentReport(selectedCity)">
+                  
+                </select>
+              </div>
+            </div>
+
+<div class="row fade-in-up table-scrollable">
+
+						<table bs-table-control="todayReports.reportTableControl"  ng-show="RecruitersReportTable">
+							<thead>
+								<tr>
+									<th title="Name" data-field="Name" data-sortable="true"></th>
+									<th title="Location" data-field="Location" data-sortable="true"></th>
+									<th title="SUBMITTED" data-field="SUBMITTED" data-sortable="true"></th>
+									<th title="DMREJ" data-field="DMREJ" data-sortable="true"></th>
+									<th title="ACCEPTED" data-field="ACCEPTED" data-sortable="true"></th>
+									<th title="INTERVIEWING" data-field="INTERVIEWING" data-sortable="true"></th>
+									<th Title="CONFIRMED" data-field="CONFIRMED" data-sortable="true"></th>
+									<th title="REJECTED" data-field="REJECTED" data-sortable="true"></th>
+									<th title="STARTED" data-field="STARTED" data-sortable="true"></th>
+									<th title="BACKOUT" data-field="BACKOUT" data-sortable="true"></th>
+									<th title="OUROFPROJ" data-field="OUTOFPROJ" data-sortable="true"></th>
+									<th title="NOTUPDATED" data-field="NotUpdated" data-sortable="true"></th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+							<tfoot>
+							<tr class="totlbstable">
+							<td colspan="2">Total</td>
+							<td id="ydsubmi"></td>
+							<td id="yddmrej"></td>
+							<td id="ydaccepcted"></td>
+							<td id="ydinterviewing"></td>
+							<td id="ydconfirmed"></td>
+							<td id="ydrejected"></td>
+							<td id="ydstarted"></td>
+							<td id="ydbackout"></td>
+							<td id="ydoutofproj"></td>
+							<td id="ydnu"></td>
+							</tr>
+							</tfoot>
+						</table>
+</div>
+
+</form>            
+            
+            
+            
+</div>

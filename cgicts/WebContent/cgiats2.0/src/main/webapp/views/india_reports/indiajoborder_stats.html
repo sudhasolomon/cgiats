@@ -1,0 +1,96 @@
+<div ng-controller = "indiaJobOrderStatsController" ng-init="onload()">
+
+<!-- BEGIN PAGE HEADER--> 
+<div class="sub-page-header">
+  <div class="page-bar">
+    <ul class="page-breadcrumb">
+          	<li><a href="#/dashboard" ng-if="!(rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_Recruiter' || rsLoginUser.userRole === 'ATS_Executive')">Home</a> 
+				<a href="#/india_joborders/my_indiajobOrder" ng-if="(rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_Recruiter')">Home</a>
+				<a href="#/candidates/missingData" ng-if="(rsLoginUser.userRole === 'ATS_Executive')">Home</a>
+				<i class="fa fa-circle"></i>
+				</li>
+      <li>
+        <span>Reports</span>
+        <i class="fa fa-circle"></i>
+      </li>
+      <li>
+        <span>India Reports</span>
+         <i class="fa fa-circle"></i>
+      </li>
+      <li>
+        <span>JobOrder Stats</span>
+      </li>
+    </ul> 
+  </div>
+</div>
+<!-- END PAGE HEADER--> 
+<!-- BEGIN MAIN CONTENT -->
+
+  <form role="form" novalidate="" ng-submit="jobOrderStats()" >
+    <!-- BEGIN Search Forms -->
+    <br>
+       <div class="row">
+       <div class="form-group">
+           
+            <div class="col-md-4">
+            <label>Created Between :</label>
+             <input type="daterange" id="resumeStatsRange" ng-model="Created" class="dropDown" ranges="ranges" placeholder="Custom Dates" required></div>
+             
+             <div class="col-md-6">
+            <br>
+            <button type="submit" class="btn blue pull-left btnsmargn" ><i class="fa fa-search"></i> View</button>
+            <button type="button" ng-click = "refresh()" class="btn blue pull-left btnsmargn" ><i class="fa fa-search"></i> Refresh</button>
+            <!-- ng-if="!(rsLoginUser.userRole === 'Recruiter' || rsLoginUser.userRole === 'DivisionHead')" -->
+            <button type="button" class="btn blue pull-left btnsmargn" ng-csv="exportDatalist" ng-disabled="(jobOrderStatsData && jobOrderStatsData.length == 0)" 
+									filename="joborderstats_{{currentDateWithTime | date:'dd-MM-yyyy hh:mm:ss a'}}.csv" ng-click="getTimeFnc();"
+									csv-header="['DM/ADMs','Open','Assigned','Filled','Closed','Reopen','Total']"
+									charset="utf-8">
+									Export <i class="fa fa-upload" aria-hidden="true"></i>
+								</button>
+										
+								
+            </div>
+            <div class="col-md-5">
+            </div>
+       </div>
+       </div>
+    </form>
+   <br>
+   
+
+    <!-- Table --> 
+           <div class="row fade-in-up table-scrollable">
+            
+	            <table id="viewjoborderStatsTable" class="table bt-table summaryreport"  bs-table-control="indiaReports.jobOrderStats" ng-show="joborderStatsTable"  >
+		        <thead>
+		            <tr>
+		                <th class="ltxt"  data-field="userName" data-formatter="InJobOrderStatsFormatter" data-events="InJobOrderStatsEvents" data-sortable="true"></th>
+		                <th data-field="open" data-sortable="false"  ></th>
+		                <th data-field="assigned" data-sortable="false"></th>
+		                <th data-field="filled" data-sortable="false"></th>
+		                <th data-field="closed" data-sortable="false"></th>
+		                <th data-field="reopen" data-sortable="false"></th>
+		                <th data-field="total" data-sortable="false"></th>
+		            </tr>
+		        </thead>
+		        <tfoot>
+		        <tr class="totl">
+		        <td>Total</td>
+		        <td id="open"></td>
+		        <td id="assigned"></td>
+		        <td id="filled"></td>
+		        <td id="closed"></td>
+		        <td id="reopen"></td>
+		        <td id="total"></td>
+		        </tr>
+		        </tfoot>
+		        <tbody>
+		           
+		        </tbody>
+	    		</table>  
+            </div>   
+            <!-- End Table -->
+            
+   
+    <!-- END MAIN CONTENT -->
+</div>

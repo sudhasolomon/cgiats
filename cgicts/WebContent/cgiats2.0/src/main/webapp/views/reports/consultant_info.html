@@ -1,0 +1,110 @@
+<div ng-controller="consultantinfocontroller"  ng-init="onload()">
+
+<!-- BEGIN PAGE HEADER--> 
+<div class="sub-page-header">
+  <div class="page-bar">
+    <ul class="page-breadcrumb">
+         	<li><a href="#/dashboard" ng-if="!(rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_Recruiter' || rsLoginUser.userRole === 'ATS_Executive')">Home</a> 
+				<a href="#/india_joborders/my_indiajobOrder" ng-if="(rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_Recruiter')">Home</a>
+				<a href="#/candidates/missingData" ng-if="(rsLoginUser.userRole === 'ATS_Executive')">Home</a>
+				<i class="fa fa-circle"></i>
+				</li>
+      <li>
+        <span>Reports</span>
+        <i class="fa fa-circle"></i>
+      </li>
+      <li>
+        <span>Consultant Info</span>
+      </li>
+      
+    </ul> 
+     
+  </div>
+</div>
+<!-- END PAGE HEADER--> 
+
+
+
+
+<!-- BEGIN MAIN CONTENT -->
+
+
+
+<form  name="consultantinfoform" class="tab-form-demo" novalidate=""  ng-submit="fillprojdetails();" >
+
+<div class="row fade-in-up">
+    <div class="col-md-12">
+    
+    <div class="row">
+                <div class="col-md-12">
+                <label class="control-label">Candidate ID</label>
+                
+                <div class="row">
+                <div class="col-md-4">
+                <div class="form-group">
+                <select class="form-control" required="" ng-model="candidateid"  >
+                  <option value="">Select</option>
+                  <option ng-repeat="candidateId in candidateIds" value="{{candidateId}}">{{candidateId}}</option>
+                  </select>
+              </div>
+              </div>
+              
+              <div class="col-md-4">
+              	<div class="form-group">
+              	<button type="submit" class="btn blue" ng-click="">Fill Project Details</button>
+              </div>
+              </div>
+              
+              
+                </div>
+              	
+              </div>
+              
+            
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+
+    
+    
+
+    </div>
+    </div>
+    
+    
+</form>
+
+
+
+
+ <div class="row fade-in-up table-scrollable">
+            
+	            <table id="table" bs-table-control="candidate.bsTableControl" ng-show="clientTable" data-filter-control="true" >
+		        <thead>
+		            <tr>
+		                <th data-field="candidateId" data-formatter="consultantActionFormatter" data-filter-control="input" data-events="consultantOperateEvents" data-sortable="true"></th>
+		                <th data-field="jobOrderId" data-filter-control="input" data-sortable="true"></th>
+		                <th data-field="candidateInfoId" data-visible = "false" data-sortable="false"></th> 
+		                <th data-field="fullName" data-filter-control="input" data-sortable="true"></th>
+		                <th data-field="email" data-sortable="true"></th>
+		                <th data-field="clientName" data-filter-control="input" data-sortable="true"></th>
+		                <th data-field="salaryRate" data-sortable="true"></th>
+		                <th data-field="startDate" data-sortable="true"></th>
+		                <th data-field="endDate" data-sortable="true"></th>
+		            </tr>
+		        </thead>
+		        <tbody>
+		           
+		        </tbody>
+	    		</table>  
+            </div>  
+
+<!-- END MAIN CONTENT -->
+
+</div>

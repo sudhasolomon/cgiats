@@ -1,0 +1,88 @@
+<div ng-controller= "appConfigController" ng-init="onload()">
+
+<!-- BEGIN PAGE HEADER--> 
+<div class="sub-page-header">
+  <div class="page-bar">
+    <ul class="page-breadcrumb">
+      <li>
+        <a href="#/dashboard">Home</a>
+        <i class="fa fa-circle"></i>
+      </li>
+      <li>
+        <span>Settings</span>
+        <i class="fa fa-circle"></i>
+      </li>
+      <li>
+        <span>Configuration</span>
+      </li>
+    </ul> 
+   
+  </div> 
+</div>
+<!-- END PAGE HEADER--> 
+
+
+ <br>
+    <form name="appConfigForm" class="tab-form-demo" novalidate="" ng-submit="saveConfig(config)" >
+    
+    <div class="row">
+        <div class="col-md-12">
+        <div class="row">
+        <div class="col-md-4">
+              <div class="form-group">
+                <label>SMTP Host</label>
+                <input type="text" class="form-control"  name="formField" ng-model="config.smtpHost" >
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>SMTP Port</label>
+                <input type="text" class="form-control"  ng-model="config.smtpPort" >
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>User Name</label>
+                <input type="text" class="form-control" ng-model="config.smtpUsername"  >
+              </div>
+            </div>
+        </div>
+        <div class="row">
+        <div class="col-md-4">
+              <div class="form-group">
+                <label>Password</label>
+                <input type="password" class="form-control"  name="formField" ng-model="config.smtpPassword" >
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Reply-To Address</label>
+                <input type="text" class="form-control"   ng-model="config.emailFrom" >
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Time Zone</label>
+                <select class="form-control"  ng-model="config.timeZoneId"  >
+                <option value="">Select</option>
+                <option>Asia/Calcutta</option>
+                <option>US/Eastern</option>
+                <option>US/Central</option>
+                <option>US/Mountain</option>
+                <option>US/Pacific</option>
+                <option>America/New_York</option>
+                </select>
+              </div>
+            </div>
+        </div>
+       
+        </div></div>
+    <div class="row pull-right">
+    		<button type="button" class="btn btn-primary blue" ng-click="resetDefault();">Reset To Default <i class="fa fa-search"></i></button> 
+        	<button type="submit" class="btn btn-primary blue">Save <i class="fa fa-search"></i></button>  
+        	<button type="button" class="btn btn-primary grey-cascade" ng-click="cancelConfig();">Cancel <i class="fa fa-refresh"></i></button>  
+
+        </div>
+    
+    </form>
+</div>

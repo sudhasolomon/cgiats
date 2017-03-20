@@ -1,0 +1,109 @@
+<div ng-controller = "userController" ng-init = onload() id="userDetails">
+
+<!-- BEGIN PAGE HEADER--> 
+<div class="sub-page-header">
+  <div class="page-bar">
+    <ul class="page-breadcrumb">
+      <li>
+        <a href="#/dashboard">Home</a>
+        <i class="fa fa-circle"></i>
+      </li>
+      <li>
+        <span>Settings</span>
+        <i class="fa fa-circle"></i>
+      </li>
+      <li>
+        <span>Users</span>
+         <i class="fa fa-circle"></i>
+      </li>
+    </ul> 
+  </div>
+</div>
+<!-- END PAGE HEADER-->
+<div ng-show="errMsg" style="color: red" align="right"><b>Select both month and year</b></div>
+<br>
+
+  
+ 
+ 
+ 
+ 
+ 
+ <div class="row">
+       <div class="form-group">
+           
+           <div class="col-md-1" style="margin-top:5px;margin-right:38px;" ng-show="addUserButton" >
+             <br>
+            <button type="button" ng-click="addUser()" class="btn blue"><i class="fa fa-plus" ></i> Add User</button> 
+			</div>
+			
+			
+              <div class="col-md-2">
+              <label>Month</label>
+              <select class="dropDown" ng-model=month>
+ <option value="">Select</option>
+ <option value="0">Jan</option>
+ <option value="1">Feb</option>
+ <option value="2">Mar</option>
+ <option value="3">Apr</option>
+ <option value="4">May</option>
+ <option value="5">Jun</option>
+ <option value="6">Jul</option>
+ <option value="7">Aug</option>
+ <option value="8">Sep</option>
+ <option value="9">Oct</option>
+ <option value="10">Nov</option>
+ <option value="11">Dec</option>
+ </select>
+               </div>
+               
+               
+               
+               
+               <div class="col-md-2">
+              <label>Year</label>
+              <select class="dropDown" ng-model=year ng-options="item for item in years">
+ <option value="">Select</option>
+ <!-- <option value="2010">2010</option>
+ <option value="2011">2011</option>
+ <option value="2012">2012</option>
+ <option value="2013">2013</option>
+ <option value="2014">2014</option>
+ <option value="2015">2015</option>
+  <option value="2016">2016</option> -->
+ </select>
+               </div>
+             
+             <div class="col-md-4" style="margin-top:5px;">
+             <br>
+            <button type="button" ng-click="getUsers(false)" class="btn blue" ><i class="fa fa-search"></i> View </button> &nbsp;
+            <button type="button" ng-click="refresh()" class="btn blue" ><i class="fa fa-refresh"></i> Refresh </button> 
+			</div>
+            </div>
+       </div>
+       
+ 
+ 
+
+ <div class="row fade-in-up table-scrollable">
+            
+	            <table id="userTable" bs-table-control="settings.userDetails" ng-show="usersTable" data-filter-control="true" >
+		        <thead>
+		            <tr>
+		                <th data-field="id" data-sortable="true" data-filter-control="input" 
+		                data-formatter="editUser" data-events="editUserEvent"></th>
+		                <th data-field="role" data-sortable="true"  data-filter-control="select"></th>
+		                <th data-field="name" data-sortable="true" data-filter-control="input"></th>
+		                <th data-field="assignedTo" data-sortable="false"></th>
+		                <th data-field="officeLoc" data-sortable="true" data-filter-control="select"></th>
+		                <th data-field="createdon" data-sortable="true" data-sort-name="strCreatedOn"></th>
+		                <th data-field="status" data-sortable="true" data-filter-control="select"></th>
+		                <th data-field="actions" data-formatter="userFormatter" data-events="userEvents" ></th>
+		            </tr>
+		        </thead>
+		        <tbody>
+		           
+		        </tbody>
+	    		</table>  
+            </div>   
+</div>

@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd
+
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		 http://www.springframework.org/schema/task
+   http://www.springframework.org/schema/task/spring-task.xsd
+    http://www.springframework.org/schema/mvc
+                           http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+   ">
+	<mvc:annotation-driven />
+	<context:annotation-config />
+	<context:component-scan base-package="com.uralian" />
+	
+	<bean id="loginDetailsServiceImpl" class="com.uralian.cgiats.service.impl.LoginDetailsServiceImpl"></bean>
+	
+	<bean
+		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+
+	<!-- jdbc/hibernate config -->
+
+	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:comp/env/jdbc/cgiatsDS" />
+		<property name="resourceRef" value="true" />
+	</bean>
+	
+	<bean id="indiaDataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:comp/env/jdbc/indiaCgiatsDS" />
+		<property name="resourceRef" value="true" />
+	</bean>
+	
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="packagesToScan" value="com.uralian.cgiats.model" />
+		<!-- <property name="entityInterceptor">
+			<bean class="com.uralian.cgiats.util.AuditTrailInterceptor" />
+		</property> -->
+		<property name="hibernateProperties">
+			<value>
+				hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+				hibernate.show_sql=false
+				hibernate.format_sql=true
+				hibernate.hbm2ddl.auto=update
+				hibernate.search.default.directory_provider=filesystem
+				hibernate.search.default.indexBase=./lucene/indexes
+
+			</value>
+		</property>
+	</bean>
+	
+	<bean id="indiaSessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="indiaDataSource" />
+		<property name="packagesToScan" value="com.uralian.cgiats.model" />
+		<!-- <property name="entityInterceptor">
+			<bean class="com.uralian.cgiats.util.AuditTrailInterceptor" />
+		</property> -->
+		<property name="hibernateProperties">
+			<value>
+				hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+				hibernate.show_sql=false
+				hibernate.format_sql=true
+				hibernate.hbm2ddl.auto=update
+		<!-- 		hibernate.search.default.directory_provider=filesystem
+				hibernate.search.default.indexBase=./india_lucene/indexes -->
+			</value>
+		</property>
+	</bean>
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	<tx:annotation-driven transaction-manager="indiaTransactionManager"/>
+	<task:annotation-driven />
+
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="indiaTransactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="indiaSessionFactory" />
+	</bean>
+
+	<!-- view scope -->
+	<bean class="org.springframework.beans.factory.config.CustomScopeConfigurer">
+		<property name="scopes">
+			<map>
+				<entry key="view">
+					<bean class="com.uralian.cgiats.web.ViewScope" />
+				</entry>
+			</map>
+		</property>
+	</bean>
+
+	<!-- security -->
+	
+	
+	<!-- <security:http create-session="stateless"
+		use-expressions="true">
+		<security:intercept-url pattern="/searchResume/**"
+			access="hasAnyRole('Administrator','HR','EM')" />
+		<security:http-basic />
+	</security:http> -->
+	
+	<security:http auto-config="true" use-expressions="true">
+
+
+		<security:intercept-url pattern="/access_denied*"
+			access="permitAll" />
+		<security:intercept-url pattern="/login*"
+			access="permitAll" />
+
+		<!-- <security:intercept-url pattern="/*.jsf" access="Administrator" /> -->
+		<security:intercept-url pattern="/app_config.jsf"
+			access="hasAnyRole('Administrator','HR','EM')" />
+		<security:intercept-url pattern="/portal_resumes.jsf"
+			access="hasAnyRole('Administrator','EM')" />
+
+		<security:intercept-url pattern="/dm_rnr_report.jsf"
+			access="hasAnyRole('Administrator')" />
+
+		<security:intercept-url pattern="/recr_rnr_report.jsf"
+			access="hasAnyRole('Administrator')" />
+		<security:intercept-url pattern="/view_portal_resumes.jsf"
+			access="hasAnyRole('Administrator','EM')" />
+		<security:intercept-url pattern="/cb_edit_profile.jsf"
+			access="hasAnyRole('Administrator')" />
+		<security:intercept-url pattern="/dice_edit_profile.jsf"
+			access="hasAnyRole('Administrator')" />
+		<security:intercept-url pattern="/monster_edit_profile.jsf"
+			access="hasAnyRole('Administrator')" />
+		<security:intercept-url pattern="/all_portal_resumes.jsf"
+			access="hasAnyRole('Administrator','EM')" />
+		<security:intercept-url pattern="/all_portals_resumes.jsf"
+			access="hasAnyRole('Administrator','EM')" />
+		<security:intercept-url pattern="/dm_online_resumes_stats.jsf"
+			access="hasAnyRole('EM')" />
+
+		<security:intercept-url pattern="/online_candidates.jsf"
+			access="hasAnyRole('Administrator','HR','Manager','DivisionHead','AccountManager','EM','DM','Recruiter','ADM')" />
+		<security:intercept-url pattern="/outofproj_candidates.jsf"
+			access="hasAnyRole('Administrator','HR','Manager','DivisionHead','AccountManager','EM','DM','Recruiter','ADM')" />
+		<security:intercept-url pattern="/cb_candidates.jsf"
+			access="hasAnyRole('Administrator','HR','Manager','DivisionHead','AccountManager','EM','DM','Recruiter','ADM')" />
+		<security:intercept-url pattern="/monster_candidates.jsf"
+			access="hasAnyRole('Administrator','HR','Manager','DivisionHead','AccountManager','EM','DM','Recruiter','ADM')" />
+		<security:intercept-url pattern="/dice_candidates.jsf"
+			access="hasAnyRole('Administrator','HR','Manager','DivisionHead','AccountManager','EM','DM','Recruiter','ADM')" />
+		<security:intercept-url pattern="/jo_matching_candidates.jsf"
+			access="hasAnyRole('Administrator','HR','Manager','DivisionHead','AccountManager','EM','DM','Recruiter','ADM')" />
+		<security:intercept-url pattern="/cb_resumes_report.jsf"
+			access="hasAnyRole('Administrator','HR','DivisionHead','AccountManager','EM','DM','Recruiter','ADM')" />
+		<security:intercept-url pattern="/monster_resumes_report.jsf"
+			access="hasAnyRole('Administrator','HR','DivisionHead','AccountManager','EM','DM','Recruiter','ADM')" />
+		<security:intercept-url pattern="/dice_resumes_report.jsf"
+			access="hasAnyRole('Administrator','HR','DivisionHead','AccountManager','EM','DM','Recruiter','ADM')" />
+		<security:intercept-url pattern="/cb_result_page.jsf"
+			access="hasAnyRole('Administrator','HR','Manager','DivisionHead','AccountManager','EM','DM','Recruiter','ADM')" />
+		<security:intercept-url pattern="/monster_download_resumes.jsf"
+			access="hasAnyRole('Administrator','HR','Manager','DivisionHead','AccountManager','EM','DM','Recruiter','ADM')" />
+		<security:intercept-url pattern="/techfetch_candidates.jsf"
+			access="hasAnyRole('Administrator','HR','Manager','DivisionHead','AccountManager','EM','DM','Recruiter','ADM')" />
+		<security:intercept-url pattern="/techfetch_resumes_report.jsf"
+			access="hasAnyRole('Administrator','HR','DivisionHead','AccountManager','EM','DM','Recruiter','ADM')" />
+		<security:intercept-url pattern="/online_cgi_candidates.jsf"
+			access="hasAnyRole('DM','ADM','Administrator')" />
+		<security:intercept-url pattern="/mobile_cgi_candidates.jsf"
+			access="hasAnyRole('DM','ADM','Administrator')" />
+		<!-- <security:intercept-url pattern="/online_candidates_approved.jsf" 
+			access="DM','ADM" /> <security:intercept-url pattern="/online_candidates_rejected.jsf" 
+			access="DM','ADM" /> -->
+		<security:intercept-url pattern="/batch_upload.jsf"
+			access="hasAnyRole('Administrator','HR','Manager','HR','EM','DM')" />
+		<security:intercept-url pattern="/candidate.jsf"
+			access="hasAnyRole('Administrator','HR','Manager','DivisionHead','AccountManager','Recruiter','EM','DM','ADM')" />
+		<security:intercept-url pattern="/candidates.jsf"
+			access="hasAnyRole('Administrator','HR','Manager','DivisionHead','AccountManager','Recruiter','EM','DM','ADM')" />
+		<security:intercept-url pattern="/portal_download_resumes.jsf"
+			access="hasAnyRole('Administrator','HR','Manager','DivisionHead','AccountManager','Recruiter','EM','DM','ADM')" />
+		<security:intercept-url pattern="/dice_download_resumes.jsf"
+			access="hasAnyRole('Administrator','HR','Manager','DivisionHead','AccountManager','Recruiter','EM','DM','ADM')" />
+		<security:intercept-url pattern="/blank_candidates.jsf"
+			access="hasAnyRole('Administrator','HR','DivisionHead','AccountManager','Recruiter','EM','DM','ADM')" />
+		<security:intercept-url pattern="/daily_resumes.jsf"
+			access="hasAnyRole('Administrator','HR','DivisionHead','AccountManager','Recruiter','EM','DM','ADM')" />
+		<security:intercept-url pattern="/daily_updated_resumes.jsf"
+			access="hasAnyRole('Administrator','HR','DivisionHead','AccountManager','Recruiter','EM','DM','ADM')" />
+		<security:intercept-url pattern="/search_candidates.jsf"
+			access="hasAnyRole('Administrator','HR','Manager','DivisionHead','AccountManager','Recruiter','EM','DM','ADM')" />
+		<security:intercept-url pattern="/candidatesresults.jsf"
+			access="hasAnyRole('Administrator','HR','Manager','DivisionHead','AccountManager','Recruiter','EM','DM','ADM')" />
+		<security:intercept-url pattern="/edit_user.jsf"
+			access="hasAnyRole('Administrator','HR','EM')" />
+		<security:intercept-url pattern="/info_login.jsf"
+			access="hasAnyRole('Administrator','HR','Manager','DivisionHead','AccountManager','EM','DM','ADM')" />
+		<security:intercept-url pattern="/home.jsf"
+			access="hasAnyRole('Administrator','HR','Manager','DivisionHead','AccountManager','Recruiter','EM','DM','ADM')" />
+		<security:intercept-url pattern="/jobboards.jsf"
+			access="hasAnyRole('Administrator','HR','DivisionHead','AccountManager','Recruiter','EM','DM','ADM')" />
+		<security:intercept-url pattern="/dice_yearly_jobboards.jsf"
+			access="hasAnyRole('Administrator','HR','DivisionHead','AccountManager','Recruiter','EM','DM','ADM')" />
+		<security:intercept-url pattern="/resumes_status.jsf"
+			access="hasAnyRole('Administrator','HR','Manager','DivisionHead','AccountManager','Recruiter','EM','DM','ADM')" />
+		<security:intercept-url pattern="/joborders_status.jsf"
+			access="hasAnyRole('Administrator','HR','Manager','DivisionHead','AccountManager','Recruiter','EM','DM','ADM')" />
+		<security:intercept-url pattern="/alljob_orders.jsf"
+			access="hasAnyRole('Administrator','HR','Manager','DivisionHead','AccountManager','Recruiter','EM','DM','ADM')" />
+		<security:intercept-url pattern="/deleted_candidates.jsf"
+			access="hasAnyRole('Administrator','HR','Manager','DivisionHead','AccountManager','Recruiter','EM','DM','ADM')" />
+		<security:intercept-url pattern="/submittals_status.jsf"
+			access="hasAnyRole('Administrator','HR','Manager','DivisionHead','AccountManager','Recruiter','EM','DM','ADM')" />
+		<security:intercept-url pattern="/my_account.jsf"
+			access="hasAnyRole('Administrator','HR','Manager','DivisionHead','AccountManager','Recruiter','EM','DM','ADM')" />
+		<security:intercept-url pattern="/today_candidates.jsf"
+			access="hasAnyRole('Administrator','HR','Manager','DivisionHead','AccountManager','Recruiter','EM','DM','ADM')" />
+		<security:intercept-url pattern="/submittal.jsf"
+			access="hasAnyRole('Administrator','HR','Manager','DivisionHead','AccountManager','Recruiter','EM','DM','ADM')" />
+		<security:intercept-url pattern="/users.jsf"
+			access="hasAnyRole('Administrator','HR','EM','ADM')" />
+		<security:intercept-url pattern="/view_submittal.jsf"
+			access="hasAnyRole('Administrator')" />
+		<security:intercept-url pattern="/dm_monthly_quotas.jsf"
+			access="hasAnyRole('Administrator','HR','EM','DM')" />
+		<security:intercept-url pattern="/sales_quota_entry.jsf"
+			access="hasAnyRole('Administrator','HR','EM','DM','ADM')" />
+		<security:intercept-url pattern="/recr_monthly_quotas.jsf"
+			access="hasAnyRole('Administrator','HR','EM','DM','ADM')" />
+		<security:intercept-url pattern="/recr_sales_quota_entry.jsf"
+			access="hasAnyRole('Administrator','HR','EM','DM','ADM')" />
+		<security:intercept-url pattern="/job_orders.jsf"
+			access="hasAnyRole('Administrator','HR','Manager','DivisionHead','AccountManager','Recruiter','EM','DM','ADM')" />
+		<security:intercept-url pattern="/deleted_submittals.jsf"
+			access="hasAnyRole('Administrator','HR','Manager','DivisionHead','AccountManager','Recruiter','EM','DM','ADM')" />
+		<security:intercept-url pattern="/edit_order.jsf"
+			access="hasAnyRole('Administrator','HR','Manager','DivisionHead','AccountManager','EM','DM','ADM')" />
+		<security:intercept-url pattern="/edit_submittal.jsf"
+			access="hasAnyRole('Administrator','HR','Manager','DivisionHead','AccountManager','Recruiter','EM','DM','ADM')" />
+		<security:intercept-url pattern="/deleted_joborders.jsf"
+			access="hasAnyRole('Administrator','HR','Manager','DivisionHead','AccountManager','EM','DM','ADM')" />
+		<security:intercept-url pattern="/resume_audit_log.jsf"
+			access="hasAnyRole('Administrator','HR','DivisionHead','AccountManager','EM','DM','ADM')" />
+		<security:intercept-url pattern="/onsite_visits.jsf"
+			access="hasAnyRole('Administrator','HR','Manager','DivisionHead','AccountManager','EM','DM','ADM')" />
+		<security:intercept-url pattern="/onsite_visit_entry.jsf"
+			access="hasAnyRole('Administrator','HR','Manager','DivisionHead','AccountManager','EM','DM','ADM')" />
+
+		<security:intercept-url pattern="/hot_list_candidates.jsf"
+			access="hasAnyRole('Administrator','HR','Manager','DivisionHead','AccountManager','EM','DM','Recruiter','ADM')" />
+		<security:intercept-url pattern="/black_list_candidates.jsf"
+			access="hasAnyRole('Administrator','HR','Manager','DivisionHead','AccountManager','EM','DM','Recruiter','ADM')" />
+		<security:intercept-url pattern="/consultant_status.jsf"
+			access="hasAnyRole('HR')" />
+		<security:intercept-url pattern="/recruiter_activity_report.jsf"
+			access="hasAnyRole('Administrator','HR','DivisionHead','AccountManager','EM','DM')" />
+		<!-- Awards Related Config -->
+
+		<security:intercept-url pattern="/awards.jsf"
+			access="hasAnyRole('Administrator','HR','Manager','DivisionHead','AccountManager','EM','DM','ADM')" />
+		<security:intercept-url pattern="/edit_award.jsf"
+			access="hasAnyRole('Administrator','HR','EM')" />
+
+		<security:form-login login-page="/login.jsf"
+			login-processing-url="/j_spring_security_check" default-target-url="/home.jsf"
+			authentication-failure-url="/login.jsf?event=2"
+			always-use-default-target="true" />
+
+		<security:session-management
+			session-authentication-error-url="/login.jsf">
+			<security:concurrency-control
+				max-sessions="1" error-if-maximum-exceeded="false" />
+		</security:session-management>
+
+		<security:logout logout-url="/j_spring_security_logout"
+			logout-success-url="/login.jsf?event=1" />
+
+		<!-- CadidateInfo Related Config -->
+		<security:intercept-url pattern="/candidate_info.jsf"
+			access="hasAnyRole('HR')" />
+		<security:intercept-url pattern="/project_report.jsf"
+			access="hasAnyRole('HR')" />
+
+		<!-- Weekly activity Report -->
+		<security:intercept-url pattern="/adm_weekly_activity_report.jsf"
+			access="hasAnyRole('Administrator','HR','Manager','DivisionHead','AccountManager','EM','DM','ADM')" />
+		<security:intercept-url pattern="/weekly_activity_report.jsf"
+			access="hasAnyRole('Administrator','HR','Manager','DivisionHead','AccountManager','EM','DM','ADM')" />
+		<security:intercept-url pattern="/recr_weekly_activity_report.jsf"
+			access="hasAnyRole('Administrator','HR','Manager','DivisionHead','AccountManager','EM','DM','ADM')" />
+		<security:intercept-url pattern="/dice_portals_utilisation.jsf"
+			access="hasAnyRole('Administrator','HR','DivisionHead','AccountManager','EM','DM','Recruiter','ADM')" />
+		<security:intercept-url pattern="/adm_monthly_quotas.jsf"
+			access="hasAnyRole('Administrator','HR','EM','DM','ADM')" />
+		<security:intercept-url pattern="/adm_sales_quota_entry.jsf"
+			access="hasAnyRole('Administrator','HR','Manager','DivisionHead','AccountManager','EM','DM')" />
+
+
+
+		<security:intercept-url pattern="/em_job_orders.jsf"
+			access="hasAnyRole('Administrator','HR','Manager','DivisionHead','AccountManager','Recruiter','EM','DM','ADM')" />
+
+		<!-- Offerletter secuity cfgn -->
+		<security:intercept-url pattern="/offer_letter.jsf"
+			access="hasAnyRole('DM','HR')" />
+		<security:intercept-url pattern="/offerletter_reports.jsf"
+			access="hasAnyRole('DM','HR')" />
+		<security:intercept-url pattern="/offerletter_status.jsf"
+			access="hasAnyRole('DM','HR')" />
+		<security:intercept-url pattern="/deleted_offerletter_reports.jsf"
+			access="hasAnyRole('DM','HR')" />
+
+		<!-- Submittal monthly reports security configurations -->
+		<security:intercept-url pattern="/job_orders_report.jsf"
+			access="hasAnyRole('Administrator')" />
+		<security:intercept-url pattern="/submittals_reports.jsf"
+			access="hasAnyRole('Administrator')" />
+
+
+
+
+		<!-- editing user view counts secuity cfgn -->
+		<security:intercept-url pattern="/edit_user_views.jsf"
+			access="hasAnyRole('Administrator','HR','Manager','DivisionHead','AccountManager','Recruiter','EM','DM','ADM')" />
+
+		<security:intercept-url pattern="/bdms_report.jsf"
+			access="hasAnyRole('Administrator','HR','Manager','DivisionHead','AccountManager','EM','DM','ADM')" />
+
+		<!-- job orders submittal report secuity cfgn -->
+		<security:intercept-url pattern="/job_orders_report.jsf"
+			access="hasAnyRole('Administrator')" />
+
+		<!-- Search Stats and Audit Logs reports security configurations -->
+		<security:intercept-url pattern="/search_candidate_audit_stats.jsf"
+			access="hasAnyRole('Administrator','HR','DivisionHead','AccountManager','Recruiter','EM','DM','ADM')" />
+
+		<security:intercept-url pattern="/search_candidate_audit_logs.jsf"
+			access="hasAnyRole('Administrator','HR','DivisionHead','AccountManager','Recruiter','EM','DM','ADM')" />
+
+	</security:http>
+
+
+	<!-- business logic security <security:global-method-security secured-annotations="enabled" 
+		jsr250-annotations="enabled" /> -->
+
+	<!-- authentication manager -->
+	<security:authentication-manager alias="authenticationManager">
+		<security:authentication-provider>
+			<security:password-encoder hash="md5">
+				<security:salt-source system-wide="CGI" />
+			</security:password-encoder>
+			<security:jdbc-user-service
+				data-source-ref="dataSource"
+				users-by-username-query=" select user_id, user_pwd,true  from user_acct where user_id=?"
+				authorities-by-username-query="select user_id,user_role from user_acct where user_id=?" />
+		</security:authentication-provider>
+	</security:authentication-manager>
+
+	<!-- timer task for daily report generation -->
+	<!-- <bean id="checkEmail" class="com.uralian.cgiats.timertask.EmailReportTask"> 
+		<property name="emailAddresses"> <list> <value>kreaves@charterglobal.com</value> 
+		</list> </property> <property name="reportXmlPath"> <list> <value>c:/reports/ResumeByTitle_toexport.jrxml</value> 
+		<value>c:/reports/GrandResumeCount_toexport.jrxml</value> </list> </property> 
+		</bean> <bean id="scheduledTask" class="org.springframework.scheduling.timer.ScheduledTimerTask"> 
+		wait 20 seconds before starting repeated execution <property name="delay" 
+		value="25000"/> <property name="timerTask" ref="checkEmail"/> </bean> <bean 
+		id="timerFactory" class="org.springframework.scheduling.timer.TimerFactoryBean"> 
+		<property name="scheduledTimerTasks"> <list> <ref bean="scheduledTask"/> 
+		</list> </property> </bean> -->
+
+</beans>

@@ -1,0 +1,244 @@
+<div data-ng-controller="allJobOrdersController"
+	id="allJobOrdersController" ng-init="onload()">
+	<script src="assets/global/scripts/alljquery.js"></script>
+	<!-- BEGIN PAGE HEADER-->
+	<div class="sub-page-header">
+		<div class="page-bar">
+			<ul class="page-breadcrumb">
+				<li><a href="#/dashboard">Home</a> <i class="fa fa-circle"></i>
+				</li>
+				<li><span> Job Orders</span> <i class="fa fa-circle"></i></li>
+				<li><span>All Job Orders</span></li>
+			</ul>
+			<div class="page-toolbar">
+
+
+				<div class="col-md-6">
+
+					<div class="btn-group">
+						<a href="#/joborders/createJobOrder" class="btn btn-primary blue"
+							ng-if="!(rsLoginUser.userRole === 'Manager' || rsLoginUser.userRole === 'DivisionHead' || rsLoginUser.userRole === 'Recruiter' || rsLoginUser.userRole === 'IN_Recruiter' || rsLoginUser.userRole === 'IN_DM')">
+							Create Job Order &nbsp;<i class="fa fa-file-text-o"></i>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- END PAGE HEADER-->
+
+	<!-- BEGIN MAIN CONTENT -->
+
+	<form name="AddCandidateForm" class="tab-form-demo" novalidate=""
+		ng-submit="searchjoborder()">
+
+		<div class="undermask" id="submitalstatus">
+			<div class="popupcont">
+				<div class="popuphead">
+					Submital Details <span class="pull-right" id="closebtn"><img
+						width="16" height="16"
+						src="assets/global/img/portlet-remove-icon-white.png"
+						class="ng-scope"></span>
+				</div>
+				<div id="viewsubmittalid"></div>
+			</div>
+		</div>
+		<div class="undermask" id="submitaldelete">
+			<div class="popupcont">
+				<div class="popuphead">
+					Delete Submital <span class="pull-right" id="closebtndelete"><img
+						width="16" height="16"
+						src="assets/global/img/portlet-remove-icon-white.png"
+						class="ng-scope"></span>
+				</div>
+				<div id="deletesubmittal"></div>
+			</div>
+		</div>
+
+		<div class="row ">
+			<div class="col-md-12">
+
+				<div class="row fade-in-up">
+
+					<div class="">
+
+						<div class="col-md-4">
+							<div class="form-group">
+								<label>Priority</label>
+								<div class="multi">
+									<span class="blankmsg">Select</span> <input type="text"
+										class="ddbox form-control" readonly="readonly" id="priority"><i
+										class="fa fa-caret-down" aria-hidden="true"></i> <span
+										class="errormsg">This field is required</span>
+									<ul class="ddlist">
+										<li><input type="checkbox" value="High" checked="true">High</li>
+										<li><input type="checkbox" value="Medium" checked="true">Medium</li>
+										<li><input type="checkbox" value="Low" checked="true">Low</li>
+									</ul>
+								</div>
+
+							</div>
+						</div>
+
+						<div class="col-md-4">
+							<div class="form-group">
+								<label>Status</label>
+								<div class="multi">
+									<span class="blankmsg">Select</span> <input type="text"
+										class="ddbox form-control" readonly="readonly" id="status"><i
+										class="fa fa-caret-down" aria-hidden="true"></i> <span
+										class="errormsg">This field is required</span>
+									<ul class="ddlist">
+										<li><input type="checkbox" value="Open" checked="true">Open</li>
+										<li><input type="checkbox" value="Assigned"
+											checked="true">Assigned</li>
+										<li><input type="checkbox" value="Filled">Filled</li>
+										<li><input type="checkbox" value="Closed">Closed</li>
+										<li><input type="checkbox" value="Reopen" checked="true">Reopen</li>
+									</ul>
+								</div>
+
+							</div>
+						</div>
+
+						<div class="col-md-4">
+							<div class="form-group">
+								<label>Job Type</label>
+								<div class="multi">
+									<span class="blankmsg">Select</span> <input type="text"
+										class="ddbox form-control" readonly="readonly" id="jobtype"><i
+										class="fa fa-caret-down" aria-hidden="true"></i> <span
+										class="errormsg">This field is required</span>
+									<ul class="ddlist">
+										<li><input type="checkbox" value="Permanent"
+											checked="true">Permanent</li>
+										<li><input type="checkbox" value="Contract"
+											checked="true">Contract</li>
+										<li><input type="checkbox" value="Both" checked="true">Both</li>
+										<li><input type="checkbox" value="Not Specified"
+											checked="true">Not Specified</li>
+									</ul>
+								</div>
+
+							</div>
+						</div>
+
+						<div class="clearboth"></div>
+					</div>
+
+					<div class="">
+
+						<div class="col-md-4">
+							<div class="form-group">
+								<label>Created Between</label> <input type="daterange"
+									ng-model="Created" readonly="true" ranges="ranges" id="allJobOrderRangesId"
+									required="" class="form-control">
+							</div>
+						</div>
+
+						<div class="col-md-4">
+							<div class="form-group">
+								<label>Job Belongs To</label>
+								<div class="multi">
+									<span class="blankmsg">Select</span> <input type="text"
+										class="ddbox form-control" readonly="readonly"
+										id="jobbelongsto"><i class="fa fa-caret-down"
+										aria-hidden="true"></i> <span class="errormsg">This
+										field is required</span>
+									<ul class="ddlist">
+										<li><input type="checkbox" value="CGI">CGI</li>
+										<li><input type="checkbox" value="Sapeare">Sapeare</li>
+										<li><input type="checkbox" value="RedGalaxy">RedGalaxy</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label>Job Order ID</label> <input type="number" max="2147483647" min="0"
+									class="form-control" placeholder="Job Order ID"
+									ng-model="joborderid">
+							</div>
+						</div>
+
+						<div class="clearboth"></div>
+					</div>
+
+					<div class="">
+						<div class="col-md-12">
+							<div class="pull-right">
+								<button type="submit" ng-click=" " class="btn btn-primary blue">
+									Search <i class="fa fa-search"></i>
+								</button>
+								<button type="button" ng-click="myjobordersreset()"
+									class="btn btn-primary grey-cascade">
+									Reset <i class="fa fa-refresh"></i>
+								</button>
+								<!-- <button ng-if="!(rsLoginUser.userRole === 'Recruiter')"
+									type="button"
+									ng-disabled="(allJobOrdersList && allJobOrdersList.length == 0)"
+									ng-json-export-excel data="allJobOrdersList"
+									report-fields="{jobOrderId: 'Id',priority: 'Priority',status: 'Status',type: 'Type',title:'Title',client: 'Client',excell_Location: 'Location',dm: 'Dm',assignedTo: 'Assigned To',updatedDate: 'UpdatedDate',sbm: 'Sbm',activeDays: 'ActiveDays'}"
+									filename="'alljoborders'" class="btn blue">
+									Export <i class="fa fa-upload" aria-hidden="true"></i>
+								</button> -->
+
+								<button type="button" ng-disabled="(allJobOrdersList && allJobOrdersList.length == 0)" class="btn blue" ng-csv="exportAllJobOrdersList" ng-if="!(rsLoginUser.userRole === 'Recruiter')"
+									filename="alljoborders_{{currentDateWithTime | date:'MM-dd-yyyy hh:mm:ss a'}}.csv" ng-click="getTimeFnc();"
+									csv-header="['Id','Priority','Status','Type','Title','Client','Location','Dm','Assigned To','UpdatedDate','Sbm','ActiveDays']"
+									charset="utf-8">
+									Export <i class="fa fa-upload" aria-hidden="true"></i>
+								</button>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+				<div id="searchtable">
+					<!-- Table -->
+					<div class="row fade-in-up table-scrollable">
+
+						<table id="table" data-filter-control="true"
+							ng-repeat="candidate in candidates"
+							bs-table-control="candidate.allJobOrderBsTableControl"
+							ng-show="jobOrderTable">
+							<thead>
+								<tr>
+									<th data-field="jobOrderId" data-sortable="true"
+										data-filter-control="input"></th>
+									<th data-field="priority" data-sortable="true"></th>
+									<th data-field="status" data-sortable="true"></th>
+									<th data-field="type" data-sortable="true"></th>
+									<th data-field="title" data-sortable="true"
+										data-filter-control="input"></th>
+									<th data-field="client" data-sortable="true"
+										data-filter-control="input"></th>
+									<th data-field="location" data-sortable="true"
+										data-filter-control="input"></th>
+									<th data-field="dm" data-sortable="true"
+										data-filter-control="input"></th>
+									<th data-field="assignedTo" data-sortable="true"></th>
+									<th data-field="updatedDate" data-sortable="true" data-sort-name="strUpdatedOn"></th>
+									<th data-field="sbm" data-sortable="true"></th>
+									<th data-field="activeDays" data-sortable="true"></th>
+									<th data-field="actions" data-formatter="operateFormatter"
+										data-events="operateEvents"></th>
+								</tr>
+							</thead>
+							<tbody>
+
+							</tbody>
+						</table>
+					</div>
+					<!-- End Table -->
+
+
+				</div>
+
+			</div>
+		</div>
+	</form>
+	<!-- END MAIN CONTENT -->
+
+</div>

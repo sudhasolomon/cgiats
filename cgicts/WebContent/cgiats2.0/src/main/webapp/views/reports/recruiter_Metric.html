@@ -1,0 +1,378 @@
+<div ng-controller="recruitermetreportcontroller" ng-init="onload()">
+<script src="assets/global/scripts/alljquery02.js"></script>
+
+    
+<style>
+.pagination-detail
+{
+display:none;
+}
+rect
+{
+	 display:none!important 
+}
+.hidelogo
+{
+    margin: 0;
+    padding: 0;
+    display: block;
+    height: 15px;
+    background-color: #ffffff;
+    position: relative;
+    top: 250px;
+    z-index: 99999;
+}
+</style>
+
+    
+<!-- BEGIN PAGE HEADER--> 
+<div class="sub-page-header">
+  <div class="page-bar">
+    <ul class="page-breadcrumb">
+         	<li><a href="#/dashboard" ng-if="!(rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_Recruiter' || rsLoginUser.userRole === 'ATS_Executive' || rsLoginUser.userRole === 'IN_TL')">Home</a> 
+				<a href="#/india_joborders/my_indiajobOrder" ng-if="(rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_Recruiter' || rsLoginUser.userRole === 'IN_TL')">Home</a>
+				<a href="#/candidates/missingData" ng-if="(rsLoginUser.userRole === 'ATS_Executive')">Home</a>
+				<i class="fa fa-circle"></i>
+				</li>
+      <li>
+        <span>Reports</span> 
+        <i class="fa fa-circle"></i>
+      </li>
+      <li>
+        <span>Recruiter Metric ({{sitename}})</span> 
+      </li> 
+    </ul>
+    
+    <div class="tabsmain pull-right">
+<div data-tabname="onsite" data-click="tabitem" ng-class="(!(rsLoginUser.userRole == 'IN_DM' || rsLoginUser.userRole == 'IN_Recruiter' || rsLoginUser.userRole === 'IN_TL'))?'pull-left tabitem activetab':'pull-left tabitem'">On Site</div>
+<div data-tabname="ofshore" data-click="tabitem" ng-class="((rsLoginUser.userRole == 'IN_DM' || rsLoginUser.userRole == 'IN_Recruiter' || rsLoginUser.userRole === 'IN_TL'))?'pull-left tabitem activetab':'pull-left tabitem'">Off Shore</div>
+<button id="usfilter" class="btn btn-primary blue" style="margin-left:15px;margin-right:-50px;" ng-click="showfilters()">Filters &nbsp;<i class="fa fa-filter" aria-hidden="true"></i></button>
+<button id="infilter" class="btn btn-primary blue" style="margin-left:15px;margin-right:-50px;" ng-click="showfiltersIN()">Filters &nbsp;<i class="fa fa-filter" aria-hidden="true"></i></button>
+<div class="clearboth"></div>
+</div>
+
+
+    <!-- <div class="page-toolbar">
+						<button class="btn btn-primary blue" style="margin-right:-10px;" ng-click="showfilters()">Filters &nbsp;<i class="fa fa-filter" aria-hidden="true"></i></button>
+			</div> -->
+			
+			 
+  </div>
+</div>
+<!-- END PAGE HEADER-->
+
+
+
+
+<!-- BEGIN MAIN CONTENT -->
+
+
+<form name="searchsubmitaldm" class="tab-form-demo" ng-submit="getrecdata()" >
+
+<div id="onsite">
+<div class="fade-in-up" id="res">Please Fill the mandatory fields</div>
+<div class="fade-in-up" id="mustyear"  style="display:none;font-weight:bold;color:#ff0000;padding-bottom:10px;">Please select atleast one year</div>
+<div class="fade-in-up" id="mustdm"  style="display:none;font-weight:bold;color:#ff0000;padding-bottom:10px;">Please select a Recruiter</div>
+
+
+
+<div class="row col-md-12 filters animated fadeIn delay-three" id="filterfields">
+
+<div class="col-md-3">
+
+<div class="form-group">
+                <label>Year</label>
+                           <div class="multiselect" events="yearevent" ng-dropdown-multiselect="" options="yeardata" selected-model="year" extra-settings="manysettings"></div>
+                           </div>
+</div>
+
+
+<div class="col-md-3">
+<div class="form-group">
+<label>Month</label>
+<div class="multiselect" events="monthevent" ng-dropdown-multiselect="" options="monthdata" selected-model="month" extra-settings="manysettings"></div>
+</div>
+</div>
+
+
+<div class="col-md-3">
+<div class="form-group">
+<label>Recruiter</label>
+<div class="multiselect" events="dmevent" ng-dropdown-multiselect="" options="dmdata" selected-model="dm" extra-settings="onesearchsettings"></div>
+</div>
+</div>
+
+
+<div class="col-md-3">
+<button type="button" ng-click="getdataforreport()" class="btn blue reportbutton" style="margin-top:25px;">Update</button>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="row" ng-if="!(rsLoginUser.userRole == 'IN_DM' || rsLoginUser.userRole == 'IN_Recruiter' || rsLoginUser.userRole == 'IN_TL')">
+<div class="col-md-12" style="margin-top:10px;">
+<span class="hidelogo"></span>
+				<div class="col-md-4 animated bounceIn delay-one" id="chart-container"></div>
+				<div class="col-md-4 animated bounceIn delay-two" id="chart-container1"></div>
+				<div class="col-md-4 animated bounceIn delay-three"  id="chart-container2"></div>
+
+<nav class="allcolors">
+<a><span class="colorbox clpoor"></span> Poor</a>
+<a><span class="colorbox claverage"></span> Average</a>
+<a><span class="colorbox clgood"></span> Good</a>
+<a><span class="colorbox clexcellent"></span> Excellent</a>
+</nav>
+
+</div>
+</div>
+
+
+
+
+
+
+<br><br>
+
+<div class="row" style="margin:0;" ng-if="(rsLoginUser.userRole == 'IN_DM' || rsLoginUser.userRole == 'IN_Recruiter' || rsLoginUser.userRole == 'IN_TL')">
+
+
+<div class="row">
+<div class="col-md-12 textWithRed_Bold">
+You are not authorised to view the On Site Recruiter Metric
+</div>
+</div>
+
+</div>
+
+
+<div class="col-md-12 animated slideInUp delay-three" ng-if="!(rsLoginUser.userRole == 'IN_DM' || rsLoginUser.userRole == 'IN_Recruiter' || rsLoginUser.userRole == 'IN_TL')">
+
+<div class="col-md-12" id="dmtable" class="row table-scrollable"">
+<b class="reporttablehead01" ng-if="showFullName !=null ">Details of {{showFullName}}</b>
+	            <table class="col-md-6" id="table" bs-table-control="recruiters.RecruitersTableControl" ng-show="recruitersTable" >
+		        <thead>
+		            <tr>
+		            	<!-- <th data-field="jobOrderId" data-formatter="jobOrderIdFormatter" data-events="jobOrderIdEvents" data-sortable="true"></th> -->
+		                <th data-field="Recruiter Name" data-sortable="true"></th>
+		                <th data-field="Designation" data-sortable="true"></th>
+		                <th data-field="Status" data-sortable="true"></th>
+		                <th data-field="No Of Starts" data-sortable="true"></th>
+		                <th data-field="Active Months" data-sortable="true"></th>
+		                <th data-field="Avg Hires" data-sortable="true"></th>
+		                <!-- <th data-field="Joining Date" data-sortable="true"></th> -->
+		                <th data-field="Minimum Start Count" data-sortable="true"></th>
+		                <th data-field="Maximum Start Count" data-sortable="true"></th>
+		                <th data-field="Performance" data-sortable="true"></th>
+		            </tr>
+		        </thead>
+		        <tbody>
+		           
+		        </tbody>
+	    		</table>
+	    		</div>
+
+
+</div>
+
+
+
+
+<div class="clearboth"></div>
+
+
+</div>
+
+</form>
+<!-- END MAIN CONTENT -->
+
+
+
+<br>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+<div ng-controller="INrecruitermetreportcontroller" ng-init="onload()">	
+	
+	<div id="ofshore">
+	<div class="fade-in-up" id="res">Please Fill the mandatory fields</div>
+<div class="fade-in-up" id="mustyear"  style="display:none;font-weight:bold;color:#ff0000;padding-bottom:10px;">Please select atleast one year</div>
+<div class="fade-in-up" id="mustdm"  style="display:none;font-weight:bold;color:#ff0000;padding-bottom:10px;">Please select a Recruiter</div>
+
+
+
+<div class="row col-md-12 filters animated fadeIn delay-three" id="filterfieldsIN">
+
+<div class="col-md-3">
+
+<div class="form-group">
+                <label>Year</label>
+                           <div class="multiselect" events="yearevent" ng-dropdown-multiselect="" options="yeardata" selected-model="year" extra-settings="manysettings"></div>
+                           </div>
+</div>
+
+
+<div class="col-md-3">
+<div class="form-group">
+<label>Month</label>
+<div class="multiselect" events="monthevent" ng-dropdown-multiselect="" options="monthdata" selected-model="month" extra-settings="manysettings"></div>
+</div>
+</div>
+
+
+<div class="col-md-3">
+<div class="form-group">
+<label>Recruiter</label>
+<div class="multiselect" events="dmevent" ng-dropdown-multiselect="" options="dmdata" selected-model="dm" extra-settings="onesearchsettings"></div>
+</div>
+</div>
+
+
+<div class="col-md-3">
+<button type="button" ng-click="getdataforreport()" class="btn blue reportbutton" style="margin-top:25px;">Update</button>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="row" ng-if="!(rsLoginUser.userRole === 'DM' || rsLoginUser.userRole === 'Recruiter' 
+          				|| rsLoginUser.userRole === 'ADM'  
+          				|| rsLoginUser.userRole === 'DivisionHead' || rsLoginUser.userRole === 'AccountManager')">
+          				
+          				<!-- || rsLoginUser.userRole === 'Manager'  -->
+<div class="col-md-12" style="margin-top:10px;">
+<span class="hidelogo"></span>
+				<div class="col-md-4 animated bounceIn delay-one" id="chart-containerIN"></div>
+				<div class="col-md-4 animated bounceIn delay-two" id="chart-containerIN1"></div>
+				<div class="col-md-4 animated bounceIn delay-three"  id="chart-containerIN2"></div>
+
+<nav class="allcolors">
+<a><span class="colorbox clpoor"></span> Poor</a>
+<a><span class="colorbox claverage"></span> Average</a>
+<a><span class="colorbox clgood"></span> Good</a>
+<a><span class="colorbox clexcellent"></span> Excellent</a>
+</nav>
+
+</div>
+</div>
+
+
+
+
+
+
+<br><br>
+
+<div class="row" style="margin:0;" ng-if="(rsLoginUser.userRole === 'DM' || rsLoginUser.userRole === 'Recruiter' 
+          				|| rsLoginUser.userRole === 'ADM'  
+          				|| rsLoginUser.userRole === 'DivisionHead' || rsLoginUser.userRole === 'AccountManager')">
+
+
+<div class="row">
+<div class="col-md-12 textWithRed_Bold">
+You are not authorised to view the Off Shore Recruiter Metric
+</div>
+</div>
+
+</div>
+
+
+<div class="col-md-12 animated slideInUp delay-three" ng-if="!(rsLoginUser.userRole === 'DM' || rsLoginUser.userRole === 'Recruiter' 
+          				|| rsLoginUser.userRole === 'ADM'  
+          				|| rsLoginUser.userRole === 'DivisionHead' || rsLoginUser.userRole === 'AccountManager')">
+
+<div class="col-md-12" id="dmtable" class="row table-scrollable"">
+<b class="reporttablehead01" ng-if="showFullName !=null ">Details of {{showFullName}}</b>
+	            <table class="col-md-6" id="table" bs-table-control="recruiters.RecruitersTableControl" ng-show="recruitersTable" >
+		        <thead>
+		            <tr>
+		            	<!-- <th data-field="jobOrderId" data-formatter="jobOrderIdFormatter" data-events="jobOrderIdEvents" data-sortable="true"></th> -->
+		                <th data-field="Recruiter Name" data-sortable="true"></th>
+		                <th data-field="Designation" data-sortable="true"></th>
+		                <th data-field="Status" data-sortable="true"></th>
+		                <th data-field="No Of Starts" data-sortable="true"></th>
+		                <th data-field="No Of BackOuts" data-sortable="true"></th>
+		                <th data-field="Active Months" data-sortable="true"></th>
+		                <th data-field="Avg Hires" data-sortable="true"></th>
+		                <!-- <th data-field="Joining Date" data-sortable="true"></th> -->
+		                <th data-field="Minimum Start Count" data-sortable="true"></th>
+		                <th data-field="Average Start Count" data-sortable="true"></th>
+		                <th data-field="Maximum Start Count" data-sortable="true"></th>
+		                <th data-field="Performance" data-sortable="true"></th>
+		            </tr>
+		        </thead>
+		        <tbody>
+		           
+		        </tbody>
+	    		</table>
+	    		</div>
+
+
+</div>
+
+
+
+
+
+
+
+</div>
+
+<div class="clearboth"></div>
+
+</div>
+
+
+
+
+
+
+
+
+</div>

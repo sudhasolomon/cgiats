@@ -1,0 +1,239 @@
+<html ng-app="dmsummary" ng-controller="dmsummaryconteroller" ng-init="onload()">
+<head>
+<meta>
+<title>Welcome to CGIATS - DM's Summary Report</title>
+
+<link href="assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<link href="assets/global/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css" rel="stylesheet" />
+<script src="assets/global/plugins/jquery.min.js"></script>
+<script src="assets/global/plugins/bootstrap/js/bootstrap.min.js"></script>
+<script src="assets/global/plugins/bootstrap-daterangepicker/moment.min.js"></script>
+<script src="assets/global/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
+<script src="assets/global/plugins/angularjs/angular.min.js"></script>
+<script src="js/directives/ng-bs-daterangepicker.js"></script>
+<script src="js/modules/extrajs/dmsummaryreport.js"></script>
+
+
+
+<script src="js/modules/extrajs/ng-table.js" rel="stylesheet"></script>
+<link href="assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+<link href="assets/layouts/layout/css/custom.css" rel="stylesheet" />
+<link href="js/modules/extrajs/ng-grid.css" rel="stylesheet" />
+<link href="assets/global/plugins/bootstrap-table-master/bootstrap-table.css" rel="stylesheet" />
+<link href="assets/global/plugins/angularjs/plugins/block-ui/angular-block-ui.css" rel="stylesheet" />
+<script src="js/services/modelDialogs/angular-material.1.0.0.js"></script>
+<link href="resources/css/angular-material.1.0.0.css" rel="stylesheet" />
+<script src="js/services/modelDialogs/angular-messages.min.1.4.8.js"></script>
+<script src="assets/global/plugins/angularjs/plugins/ui-bootstrap-tpls.min.js"></script>
+<script src="assets/global/plugins/angularjs/plugins/block-ui/angular-block-ui.js"></script>
+<script src="assets/global/plugins/angularjs/plugins/jcs-auto-validate.min.js"></script>
+<link href="assets/global/css/angularjs-datetime-picker.css" rel="stylesheet"/>
+<script src="js/services/DateRangeService.js"></script>
+<script src="assets/global/scripts/angularjs-datetime-picker.js"></script>
+<script src="assets/global/plugins/bootstrap-daterangepicker/moment.min.js"></script>
+<script src="assets/global/plugins/angularjs/plugins/json-export-excel.js"></script>
+<script src="js/constants.js"></script>
+
+
+
+<style type="text/css">
+	body
+	{
+	margin:0;
+	padding:0;}
+.headsing
+{
+margin:0;
+padding:0;
+	width:100%!important;
+}
+.appname
+{
+margin:0;
+padding:10px;
+background-color:#2b3643;
+color:#b4bcc8;
+}
+.headsing .logo-default
+{
+margin-right:50px;
+}
+.cancelBtn
+{
+margin:0px 40px 0px 0px;
+padding:5px;
+}
+
+	</style>
+	
+</head>
+<body>
+
+
+
+
+
+
+ 
+	
+	
+
+<script type="text/javascript">
+$(document).ready(function(){
+	
+	
+	
+	setTimeout(function(){
+		   window.location.reload(1);
+		}, 1500000);
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<div class="header-global-search headsing">
+    <div class="col-md-12 appname ">
+    <img src="assets/layouts/layout/img/logo.png" alt="logo" class="logo-default" /> <span style = "font-size : 24px;color:#b4bcc8">Applicant Tracking System - DM's Summary Report</span>
+    
+    </div></div>
+
+
+
+
+
+
+
+
+
+
+
+<!-- BEGIN MAIN CONTENT --> 
+
+<form name="searchsubmitaldm" class="tab-form-demo" ng-submit="searchdmsubmital()" >
+
+
+
+<div style="padding:80px 30px 25px 25px;" class="allhotjobsdiv">
+<div style="display:none;">
+    <div class="col-md-4">
+            <div class="form-group">
+                <label>Date Range</label>
+                <input type="daterange" ng-model="created" ranges="ranges" id="dmSubmittalRangesId" required=""  class="form-control">
+                </div>
+          </div>
+          <div class="col-md-1">
+            <br>
+            <button type="submit" style="margin-top: 5px;background-color: #3598dc;color: #ffffff;margin-left: -15px;" class="btn blue" ><i class="fa fa-search"></i> View</button>
+            </div>
+</div>
+
+<div class="row">
+<div class="shngrcds">{{lblCurrentPageRecords}}</div>
+<table class="table bt-table summaryreport" style="margin-bottom:10px;margin-top:0px;">
+<thead class="tablehead headsmltxt">
+
+	<tr>
+		<th rowspan="2"><span class="bighd">S.No</span></th>
+		<th rowspan="2"><span class="bighd">DM/ADM</span></th>
+		<th rowspan="2"><span class="bighd">Location</span></th>
+		<th colspan="2"  width="25%"><center style="font-size:14px;">Job Order Stats</center></th>
+		<th colspan="11"><center style="font-size:18px;">Submittal Stats from ({{viewstartdate}} to {{viewEndDate}})</center></th>
+	</tr>
+	<tr>
+		<th style="color:#02029c;font-weight:bold;">OPEN</th>
+		<th style="color:#8f0202;font-weight:bold;">CLOSED</th>
+		<th>SUBMITTED</th>
+		<th>DMREJ</th>
+		<th>ACCEPTED</th>
+		<th>INTERVIEWING</th>
+		<th>CONFIRMED</th>
+		<th>REJECTED</th>
+		<th>STARTED</th>
+		<th>BACKOUT</th>
+		<th>OUTOFPROJ</th>
+		<th>NU</th>
+	</tr>
+</thead>
+<tbody>
+	<tr ng-repeat="record in records" ng-class-odd="'oddcolor'" ng-class-even="'evencolor'">
+		<td>{{$index + 1}}</td>
+		<td width="33%" class="ltxt">{{record.Name}}</td>
+		<td width="20%">{{record.Location}}</td>
+		<td>{{record.openJobOrders}}</td>
+		<td>{{record.closedJobOrders}}</td>
+		<td>{{record.SUBMITTED}}</td>
+		<td>{{record.DMREJ}}</td>
+		<td>{{record.ACCEPTED}}</td>
+		<td style="color:#0000ff;">{{record.INTERVIEWING}}</td>
+		<td style="color:#0000ff;">{{record.CONFIRMED}}</td>
+		<td>{{record.REJECTED}}</td>
+		<td style="color:#32b532;">{{record.STARTED}}</td>
+		<td>{{record.BACKOUT}}</td>
+		<td>{{record.OUTOFPROJ}}</td>
+		<td>{{record.NotUpdated}}</td>
+	</tr>
+	
+
+	<tr class="totl">
+		<td colspan="3">Total</td>
+		<td>{{totalcount.OPEN}}</td>
+		<td>{{totalcount.CLOSED}}</td>
+		<td>{{totalcount.SUBMITTED}}</td>
+		<td>{{totalcount.DMREJ}}</td>
+		<td>{{totalcount.ACCEPTED}}</td>
+		<td>{{totalcount.INTERVIEWING}}</td>
+		<td>{{totalcount.CONFIRMED}}</td>
+		<td>{{totalcount.REJECTED}}</td>
+		<td class="strtdtlt"><span style="color:#000000;">{{totalcount.STARTED}}</span></td>
+		<td>{{totalcount.BACKOUT}}</td>
+		<td>{{totalcount.OUTOFPROJ}}</td>
+		<td>{{totalcount.NOT_UPDATED}}</td>
+	</tr>
+</tbody>
+</table>
+<strong style="color:#ff0000;">*NU: Status Not Updated.</strong>
+</div>
+
+
+
+
+
+
+
+
+
+
+    </form>
+    </div>
+    <!-- END MAIN CONTENT -->
+    
+    
+    
+   
+    
+  
+    
+    
+    
+    
+    
+
+
+<div class="header-global-search headsing navbar-fixed-bottom">
+    <div class="col-md-12 appname ">
+    2016 © Charter Global Inc.
+        </div></div>
+
+
+
+
+</body>
+</html>

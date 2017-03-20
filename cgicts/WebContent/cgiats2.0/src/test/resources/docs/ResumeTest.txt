@@ -1,0 +1,40 @@
+CERTIFICATIONS
+JAVA 
+Sun Certified Java Programmer
+Sun Certified Web Component Developer
+PMI
+Certified Associate in Project Management
+
+TECHNICAL / MANAGERIAL SKILLS
+Primary Profile:
+Test plan and test case designing.
+Test automation (mainly with Selenium/Java/Python)
+Manage small development teams
+OO Analysis and design.
+Develop mainly with Java language (Programmer Certification). 
+Constant preparation by courses or self prepared.
+
+PROFESSIONAL EXPERIENCE
+
+Intercall, A subsidiary of WEST Corporation, Atlanta, GA                          Dec 2008 – to date
+Sr. Software Engineer
+Under direction of engineering management, contribute to on-going design, implementation and support efforts for InterCall products allowing users to share audio, video and other communication technologies using internet.
+
+
+Google (Globant contractor), New York, NY                                             Nov 2007 – Dec 2008
+Software Engineer
+Examine, validate, and test large scale software development and deployment projects as well as help design and build intelligent systems that can explore various use cases and scenarios.
+
+
+Intercall, A subsidiary of WEST Corporation, DF, Mexico                         Aug 2006 – Nov 2007
+Sr. Software Engineer
+Under direction of engineering management, contribute to on-going design, implementation and support efforts for Intercall products allowing users to share audio, video and other communication technologies using internet.
+ 
+ABC, Ltd.
+Technical Advisor
+
+
+WEB
+Technical blog: http://www.mydevnotes.net/?lang_pref=en (English – Spanish)
+Personal sites: http://elbuhobuscador.blogspot.com/ (Blog – Spanish)
+http://sites.google.com/site/buhobuscador/Home (Personal Site - English)

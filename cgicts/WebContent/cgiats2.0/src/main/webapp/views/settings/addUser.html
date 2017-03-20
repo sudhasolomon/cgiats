@@ -1,0 +1,250 @@
+<div ng-controller = "addUserController" ng-init = "onload()">
+
+
+<!-- BEGIN PAGE HEADER--> 
+<div class="sub-page-header">
+  <div class="page-bar">
+    <ul class="page-breadcrumb">
+      <li>
+        <a href="#/dashboard">Home</a>
+        <i class="fa fa-circle"></i>
+      </li>
+      <li>
+        <span>Settings</span>
+        <i class="fa fa-circle"></i>
+      </li>
+      <li>
+        <span>Add User</span>
+         <i class="fa fa-circle"></i>
+      </li>
+    </ul> 
+  </div>
+</div>
+<!-- END PAGE HEADER-->
+
+<div ng-show="errMsg" style="color: red" align="right"><b>Confirm Password should match with Password </b></div>
+<form name="userform" novalidate="" ng-submit="saveOrUpdateUser(user)" >
+
+
+    <div class="col-md-12">
+    <div class="row">
+      <div class="row">
+              <div ng-if="!Fromedit">
+              <div class="col-md-4">
+              	<div class="form-group">
+                <label class="control-label">User Id</label>
+                <input type="text" class="form-control" placeholder="User Id" ng-model="user.userId" required="">
+              </div>
+              </div>
+              </div>
+              
+              <div ng-if="Fromedit">
+              <div class="col-md-4">
+              	<div class="form-group">
+                <label class="control-label">User Id</label>
+                <input type="text" class="form-control" placeholder="User Id" ng-model="user.userId"  readonly="readonly" required="">
+              </div>
+              </div>
+              </div>
+              
+              
+              
+              <div class="col-md-4">
+              	<div class="form-group">
+                <label class="control-label">User Role</label>
+                <select  class="form-control"  ng-model="user.userRole" required="required">
+                <option value="">Select</option>
+                <option>Administrator</option>
+                <option>Manager</option>
+                <option>DivisionHead</option>
+                <option>AccountManager</option>
+                <option>Recruiter</option>
+                <option>HR</option>
+                <option>EM</option>
+                <option>DM</option>
+                <option>ADM</option>
+                <option>IN_Recruiter</option>
+                <option>IN_DM</option>
+                <option>TL</option>
+                <option>IN_TL</option>
+                <option>ATS_Executive</option>
+                </select>
+              </div>
+              </div>
+              
+              <div class="col-md-4">
+              	<div class="form-group">
+                <label class="control-label">First Name</label>
+                <input type="text" class="form-control" placeholder="First Name" ng-model="user.firstName" required="">
+              </div>
+              </div>
+              </div>
+    <div class="row">
+           
+              <div class="col-md-4">
+              	<div class="form-group">
+                <label class="">Last Name</label>
+                <input type="text" class="form-control" placeholder="Last Name" ng-model="user.lastName" >
+              </div>
+              </div>
+              
+              <div class="col-md-4">
+              	<div class="form-group">
+                <label>Phone</label>
+                <input valid-number class="form-control" placeholder="Phone" ng-model="user.phone" minlength="10" maxlength="10" >
+              </div>
+              </div>
+              
+              
+              
+              <div class="col-md-4">
+              	<div class="form-group">
+                <label class="control-label">City</label>
+                <input type="text" class="form-control" placeholder="City" ng-model="user.city" required="">
+              </div>
+              </div>
+              
+              </div>
+              
+                <div class="row">
+              
+              <div class="col-md-4">
+              	<div class="form-group">
+                <label class="control-label">Email</label>
+                <input type="email" class="form-control" placeholder="Email" ng-model="user.email" required="">
+              </div>
+              </div>
+              
+              
+              
+              <div class="col-md-4">
+              	<div class="form-group">
+                <label class="control-label">Office Location</label>
+                <select class="form-control"   ng-model="user.officeLocation" required="">
+                <option value="">None...</option>
+                <option>HYD</option>
+                <option>NOIDA</option>
+                <option>PUNE</option>
+                <option>ATL</option>
+                <option>AZ</option>
+                <option>IL</option>
+                <option>NY</option>
+                </select>
+              </div>
+              </div>
+              
+               <div class="col-md-4">
+              	<div class="form-group">
+                <label class="">Assigned-To</label>
+                <select class="form-control"ng-model="user.assignedBdm"
+								ng-options="obj.userId as obj.fullName for obj in  assignedUserIdlist">
+                <option value="" selected>None</option>
+                </select>
+              </div>
+              </div>
+              
+              </div>
+              
+              <div class="row">
+              
+              <div class="col-md-4">
+              	<div class="form-group">
+                <label>Employee ID</label>
+                <input type="text" class="form-control" placeholder="Employee ID" ng-model="user.employeeId">
+              </div>
+              </div>
+              
+                 <div class="col-md-4">
+                 <div class="form-group">
+                <label class="control-label">Date Of Joining</label>
+                <div class="input-group">
+                  <input type="text" class="form-control" uib-datepicker-popup="{{joiningDateFormat}}" is-open="joiningDatePopup.opened" datepicker-options="dateOfJoining" close-text="Close" alt-input-formats="altInputFormats" ng-model="user.joiningDate" readonly="true" required="" />
+                  <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="joiningDateopen()"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+                </div>
+				</div>
+              </div>
+              
+                 <div class="col-md-4">
+              	<div class="form-group">
+                <label class="control-label">Level</label>
+                <select class="form-control"   ng-model="user.level" required="">
+                <option value="">Select</option>
+                <option value="1">Trainee</option>
+                <option value="2">Jr.Recruiter</option>
+                <option value="3">Recruiter</option>
+                <option value="4">Sr Recruiter</option>
+                <option value="5">Lead / AM</option>
+                <option value="6">Account Manager / Mgr</option>
+                </select>
+              </div>
+              </div>
+              
+               <!--    <div class="col-md-4" ng-if="Fromedit">
+                 <div class="form-group">
+                <label>Date Of Leaving</label>
+                <div class="input-group">
+                  <input type="text" class="form-control" uib-datepicker-popup="{{relivingDateFormat}}" is-open="relivingDatePopup.opened" datepicker-options="dateOfReliving" close-text="Close" alt-input-formats="altInputFormats" ng-model="user.relievingDate" readonly="true" />
+                  <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="relivingDateopen()"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+                </div>
+				</div>
+              </div> -->
+              
+              
+              </div>
+              
+              <div class="row">
+              
+               <div ng-if="!Fromedit">
+              
+              <div class="col-md-4">
+              	<div class="form-group">
+                <label class="control-label">Password</label>
+                <input type="password" class="form-control" placeholder="Password" ng-model="user.password" required="">
+              </div>
+              </div>
+              
+               <div class="col-md-4">
+              	<div class="form-group">
+                <label class="control-label">Confirm Password</label>
+                <input type="password" class="form-control" placeholder="Confirm Password" ng-model="user.newPassword" required="">
+              </div>
+              </div>
+              
+              </div>
+              
+              <div ng-if="Fromedit">
+              
+              <div class="col-md-4">
+              	<div class="form-group">
+                <label>Password</label>
+                <input type="password" class="form-control" placeholder="Password" ng-model="user.password">
+              </div>
+              </div>
+              
+               <div class="col-md-4">
+              	<div class="form-group">
+                <label>Confirm Password</label>
+                <input type="password" class="form-control" placeholder="Confirm Password" ng-model="user.newPassword">
+              </div>
+              </div>
+              
+              </div>
+              </div>
+              
+              <div class="row fade-in-up">
+        <div class="col-md-12">
+          <div class="pull-right"> 
+          	<button type="submit" class="btn blue" ><i class="fa fa-check" aria-hidden="true"></i>Save & Close</button>
+            <button type="button" class="btn btn-primary blue" ng-click="cancelClick()">Cancel <i class="fa fa-ban" aria-hidden="true"></i></button>
+          </div>
+        </div>
+      </div>  
+    
+    </div></div>
+
+</form>
+</div>

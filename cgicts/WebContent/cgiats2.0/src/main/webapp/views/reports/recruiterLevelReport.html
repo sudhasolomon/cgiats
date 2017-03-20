@@ -1,0 +1,77 @@
+<div ng-controller = "recruiterlevelcontroller"  ng-init = "onload()">
+
+<!-- BEGIN PAGE HEADER--> 
+<div class="sub-page-header">
+  <div class="page-bar">
+    <ul class="page-breadcrumb">
+          	<li><a href="#/dashboard" ng-if="!(rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_Recruiter' || rsLoginUser.userRole === 'ATS_Executive')">Home</a> 
+				<a href="#/india_joborders/my_indiajobOrder" ng-if="(rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_Recruiter')">Home</a>
+				<a href="#/candidates/missingData" ng-if="(rsLoginUser.userRole === 'ATS_Executive')">Home</a>
+				<i class="fa fa-circle"></i>
+				</li>
+      <li>
+        <span>Reports</span> 
+        <i class="fa fa-circle"></i>
+      </li>
+      <li>
+        <a href="#/reports/JobOrderMetric">Job Order Metric</a> 
+        <i class="fa fa-circle"></i>
+      </li>
+      <li>
+        <a href="#/reports/dmwisejobordersreport">DM Wise Serviced Report</a> 
+        <i class="fa fa-circle"></i>
+      </li>  
+      <li>
+        <span>Recruiter Wise Serviced Report</span> 
+      </li>  
+    </ul> 
+  </div>
+</div>
+<!-- END PAGE HEADER-->
+
+
+<br>
+	<div class="row">
+		<div class="col-md-6 animated slideInRight">
+			<div id="containerside" style="height: 400px"></div>
+		</div>
+	 
+		<div class="col-md-6 animated slideInLeft">
+			 
+            <div class="row">
+			<div id="containerside2" style="height: 200px"></div>
+		</div>
+		<div ng-show="recJoborderTable" class="animated slideInUp">
+		<b class="reporttablehead">{{statusName}} Submittals Details done by {{recName}} </b>
+	            <table id="table" bs-table-control="recByJobOrderId.RecJoborderTableControl" >
+		        <thead>
+		            <!-- <tr>
+		            	<th data-field="recName"  data-sortable="false"></th>
+		                <th data-field="clientName" data-sortable="false"></th>
+		                <th data-field="SUBMITTED" data-sortable="false"></th>
+		                <th data-field="INTERVIEWING"  data-sortable="false"></th>
+		                 <th data-field="CONFIRMED"  data-sortable="false"></th>
+		                <th data-field="STARTED" data-sortable="false"></th>
+		                
+		            </tr> -->
+		            
+		            <tr>
+		            	<th data-field="orderId"  data-sortable="false"></th>
+		                <th data-field="candidateFullName" data-sortable="false"></th>
+		                <th data-field="clientName" data-sortable="false"></th>
+		                <th data-field="jobTitle"  data-sortable="false"></th>
+		                 <th data-field="createdOrUpdatedBy"  data-sortable="false"></th>
+		                <th data-field="createdOrUpdatedOn" data-sortable="false"></th>
+		                
+		            </tr>
+		        </thead>
+		        <tbody>
+		           
+		        </tbody>
+	    		</table>  
+	    		</div>
+             
+		</div>
+	</div>
+
+</div>

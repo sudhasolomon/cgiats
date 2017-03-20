@@ -1,0 +1,128 @@
+<div ng-controller="clientmetriccontroller" ng-init="onload()">
+<script src="assets/global/scripts/alljquery02.js"></script>
+
+
+<style type="text/css">
+
+rect
+{
+    display:none!important
+}
+</style>
+
+    
+<!-- BEGIN PAGE HEADER--> 
+<div class="sub-page-header">
+  <div class="page-bar">
+    <ul class="page-breadcrumb">
+         	<li><a href="#/dashboard" ng-if="!(rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_Recruiter' || rsLoginUser.userRole === 'ATS_Executive')">Home</a> 
+				<a href="#/india_joborders/my_indiajobOrder" ng-if="(rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_Recruiter')">Home</a>
+				<a href="#/candidates/missingData" ng-if="(rsLoginUser.userRole === 'ATS_Executive')">Home</a>
+				<i class="fa fa-circle"></i>
+				</li>
+      <li>
+        <span>Reports</span> 
+        <i class="fa fa-circle"></i>
+      </li>
+      <li>
+        <span>Client Metric</span> 
+      </li> 
+    </ul> 
+  </div>
+</div>
+<!-- END PAGE HEADER-->
+
+
+
+
+<!-- BEGIN MAIN CONTENT -->
+
+
+<form name="searchsubmitaldm" class="tab-form-demo" ng-submit="getrecdata()" >
+
+<div class="fade-in-up" id="mustyear"  style="display:none;font-weight:bold;color:#ff0000;padding-bottom:10px;">Please select atleast one year</div>
+<div class="fade-in-up" id="muststatus"  style="display:none;font-weight:bold;color:#ff0000;padding-bottom:10px;">Please select a Status</div>
+
+
+<!-- <div class="row">
+
+<div class="totalfilters" id="filtersforsearch">
+
+<div class="col-md-3 reportfield" >
+<label>Year</label>
+<div class="multiselect" events="yearevent" ng-dropdown-multiselect="" options="yeardata" selected-model="year" extra-settings="manysettings"></div>
+</div>
+
+
+<div class="col-md-3 reportfield" >
+<label>Month</label>
+<div class="multiselect" events="monthevent" ng-dropdown-multiselect="" options="monthdata" selected-model="month" extra-settings="manysettings"></div>
+</div>
+
+
+<div class="col-md-3 reportfield">
+<label>Week</label>
+<div class="multiselect" events="weekevent" ng-dropdown-multiselect="" options="weekdata" selected-model="week" extra-settings="manysettings"></div>
+</div>
+
+<div class="col-md-2">
+<button type="button" ng-click="checkandgetdataforreport()" class="btn blue reportbutton">Update</button>
+</div>
+<div class="clearboth"></div>
+</div>
+<div class="filterbutton"><button class="pull-right" ng-click="showfilters();"><i class="fa fa-filter" aria-hidden="true"></i> Filters</button></div>
+</div> -->
+
+
+<div class="row">
+
+<div class="col-md-4 animated bounceInDown">
+<div class="col-md-12 reportfield">
+<label>Year</label>
+<div class="multiselect" events="yearevent" ng-dropdown-multiselect="" options="yeardata" selected-model="year" extra-settings="manysettings"></div>
+</div>
+
+
+<div class="col-md-12 reportfield">
+<label>Month</label>
+<div class="multiselect" events="monthevent" ng-dropdown-multiselect="" options="monthdata" selected-model="month" extra-settings="manysettings"></div>
+</div>
+
+
+<div class="col-md-12 reportfield">
+<label>Status</label>
+<div class="multiselect" events="statusevent" ng-dropdown-multiselect="" options="statusdata" selected-model="status" extra-settings="onesettings"></div>
+</div>
+
+
+
+<div class="col-md-12 reportfield">
+<label>Client</label>
+<div class="multiselect" events="clientevent" ng-dropdown-multiselect="" options="clientdata" selected-model="client" extra-settings="manysettings"></div>
+</div>
+
+<div class="col-md-12">
+<button type="button" ng-click="checkandgetdataforreport()" class="btn blue pull-right reportbutton">Update</button>
+</div>
+</div>
+
+<div class="col-md-6 animated zoomIn">
+			<!-- <div data-ac-chart="'pie'" data-ac-data="totalData"
+				data-ac-config="config" class="chart"></div> -->
+				
+				<div id="container" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto;"></div>
+				
+		</div>
+
+</div>
+
+</form>
+<!-- END MAIN CONTENT -->
+
+
+<br>
+	<div class="row">
+		
+	</div>
+
+</div>

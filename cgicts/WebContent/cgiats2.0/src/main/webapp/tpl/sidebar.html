@@ -1,0 +1,575 @@
+<div class="page-sidebar navbar-collapse collapse">
+    <!-- BEGIN SIDEBAR MENU --> 
+    <ul class="page-sidebar-menu" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" ng-class="{'page-sidebar-menu-closed': settings.layout.pageSidebarClosed}">  
+        
+              
+        <li class="nav-item" ng-if="!(rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_TL'  || rsLoginUser.userRole === 'IN_Recruiter')">
+            <a href="javascript:;" class="nav-link nav-toggle">
+                <i class="icon-home"></i>
+                <span class="title">Dashboard</span>
+                <span class="arrow"></span>
+            </a>
+            <ul class="sub-menu">
+                <li ng-if="!(rsLoginUser.userRole === 'ATS_Executive')">
+                    <a href="#/dashboard">
+                	<i class="icon-home"></i><span class="title"> ATS Dashboard</span>
+            		</a>
+                </li>   
+                 <li ng-if="(rsLoginUser.userRole === 'Manager' ||  rsLoginUser.userRole === 'DM' || rsLoginUser.userRole === 'Administrator')">
+                    <a href="#/dmsummaryreport">
+                        <i class="icon-check"></i> DM's Summary Report
+                    </a>
+                </li>
+                <li ng-if="(rsLoginUser.userRole === 'Manager' || rsLoginUser.userRole === 'ADM' || rsLoginUser.userRole === 'DM' || rsLoginUser.userRole === 'Administrator'
+                            || rsLoginUser.userRole === 'Recruiter')">
+                    <a href="#/recruitersreport">
+                        <i class="icon-check"></i> Recruiter's Report
+                    </a>
+                </li>
+                
+                <li ng-if="!(rsLoginUser.userRole === 'ATS_Executive')" style="display: none;">
+                    <a href="#/recruitersRankReport" ng-if="!(rsLoginUser.userRole === 'Recruiter')">
+                        <i class="icon-check"></i> Recruiter's Rank Report
+                    </a>
+                </li> 
+                
+                <li>
+                    <a href="#/jobboardstats">
+                	<i class="icon-check"></i> Job Board Stats
+            		</a>
+                </li> 
+            </ul>
+        </li>
+        
+        
+        
+        
+        
+        
+        
+        
+       <!-- ng-if="!(rsLoginUser.userRole === 'ATS_Executive')" -->
+        <li class="nav-item">
+            <a href="javascript:;" class="nav-link nav-toggle">
+                <i class="fa fa-users"></i>
+                <span class="title">Candidates</span>
+                <span class="arrow"></span>
+            </a>
+            <ul class="sub-menu">
+                <li ng-if="!(rsLoginUser.userRole === 'IN_Recruiter' || rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_TL' ||
+                 rsLoginUser.userRole === 'ATS_Executive' )">
+                    <a href="#/candidates/search">
+                        <i class="icon-check"></i> Search</span>
+                    </a>
+                </li>   
+                 <li ng-if="!(rsLoginUser.userRole === 'IN_Recruiter' || rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_TL' )">
+                    <a href="#/candidates/add">
+                        <i class="icon-check"></i> Add Candidate</span>
+                    </a>
+                </li> 
+                 <li ng-if="!(rsLoginUser.userRole === 'IN_Recruiter' || rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_TL' || 
+                 rsLoginUser.userRole === 'ATS_Executive')">
+                    <a href="#/candidates/view">
+                        <i class="icon-check"></i> View Candidates</span>
+                    </a>
+                </li> 
+                 <li ng-if="!(rsLoginUser.userRole === 'IN_Recruiter' || rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_TL' || 
+                 rsLoginUser.userRole === 'ATS_Executive')">
+                    <a href="#/candidates/status">
+                        <i class="icon-check"></i> Candidate Status</span>
+                    </a>
+                </li>   
+                <li ng-if="!(rsLoginUser.userRole === 'DM' || rsLoginUser.userRole === 'Recruiter' 
+          				|| rsLoginUser.userRole === 'ADM' || rsLoginUser.userRole === 'Manager' 
+          				|| rsLoginUser.userRole === 'DivisionHead' || rsLoginUser.userRole === 'AccountManager' || rsLoginUser.userRole === 'ATS_Executive')">
+                    <a href="#/candidates/india">
+                        <i class="icon-check"></i> India Candidates</span>
+                    </a>
+                </li>   
+            </ul>
+        </li>
+        <li class="nav-item" ng-if="!(rsLoginUser.userRole === 'AccountManager' || rsLoginUser.userRole === 'IN_Recruiter' || rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_TL'  
+                         || rsLoginUser.userRole === 'ATS_Executive')">
+            <a href="javascript:;" class="nav-link nav-toggle">
+                <i class="fa fa-file-text-o"></i>
+                <span class="title">US Job Orders</span>
+                <span class="arrow "></span>
+            </a>
+            <ul class="sub-menu">
+                <li ng-if="!(rsLoginUser.userRole === 'Manager' || rsLoginUser.userRole === 'DivisionHead' || rsLoginUser.userRole === 'IN_Recruiter' || rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_TL' )">
+                    <a href="#/joborders/myJobOrders">
+                        <i class="icon-check"></i> My Job Orders </a>
+                </li>
+                 <li>
+                    <a href="#/joborders/hotJobOrders">
+                        <i class="icon-check"></i> Hot Job Orders </a>
+                </li>
+               <!--  <li >
+                    <a href="#/joborders/pendingJobOrders">
+                        <i class="icon-check"></i> Pending Job Orders </a>
+                </li>  -->
+                <li>
+                    <a href="#/joborders/allJobOrders">
+                        <i class="icon-check"></i> All Job Orders </a>
+                </li>
+                <li>
+                    <a href="#/joborders/emJobOrders">
+                        <i class="icon-check"></i> EM Job Orders </a>
+                </li>
+                <li ng-if="!(rsLoginUser.userRole === 'Recruiter' || rsLoginUser.userRole === 'Manager' || rsLoginUser.userRole === 'DivisionHead' || rsLoginUser.userRole === 'IN_Recruiter' || rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_TL' )">
+                    <a href="#/joborders/createJobOrder">
+                        <i class="icon-check"></i> Create Job Order </a>
+                </li>
+                <li ng-if="!(rsLoginUser.userRole === 'Recruiter')">
+                    <a href="#/joborders/deletedJobOrders">
+                        <i class="icon-check"></i> Deleted Job Orders </a>
+                </li> 
+            </ul>
+        </li>
+        
+        
+        <li class="nav-item" ng-if="!(rsLoginUser.userRole === 'DM' || rsLoginUser.userRole === 'Recruiter' 
+          				|| rsLoginUser.userRole === 'ADM' 
+          				|| rsLoginUser.userRole === 'DivisionHead' || rsLoginUser.userRole === 'AccountManager' || rsLoginUser.userRole === 'ATS_Executive')" >
+            <a href="javascript:;" class="nav-link nav-toggle">
+                <i class="fa fa-file-text-o"></i>
+                <span class="title">India Job Orders</span>
+                <span class="arrow "></span>
+            </a>
+            <ul class="sub-menu">
+                <li ng-if="!(rsLoginUser.userRole === 'Manager' || rsLoginUser.userRole === 'DivisionHead' || rsLoginUser.userRole === 'DM' || rsLoginUser.userRole === 'Recruiter' || rsLoginUser.userRole === 'ADM')">
+                    <a href="#/india_joborders/my_indiajobOrder">
+                        <i class="icon-check"></i> My Job Orders </a>
+                </li>
+                <li>
+                    <a href="#/india_joborders/all_indiajobOrder">
+                        <i class="icon-check"></i> All Job Orders </a>
+                </li> 
+                <li ng-if="!(rsLoginUser.userRole === 'IN_Recruiter' || rsLoginUser.userRole === 'Manager' || rsLoginUser.userRole === 'DivisionHead' || rsLoginUser.userRole === 'DM' || rsLoginUser.userRole === 'Recruiter' || rsLoginUser.userRole === 'ADM')">
+                    <a href="#/india_joborders/create_indiajobOrder">
+                        <i class="icon-check"></i> Create Job Order </a>
+                </li>
+                 <li ng-if="!(rsLoginUser.userRole === 'Recruiter' || rsLoginUser.userRole === 'IN_Recruiter')">
+                    <a href="#/india_joborders/delete_indiajobOrder">
+                        <i class="icon-check"></i> Deleted Job Orders </a>
+                </li>  
+                 <li style="display: none;">
+                    <a href="#/joborders/resultJObOrder">
+                        <i class="icon-check"></i> Result Job Orders </a>
+                </li> 
+            </ul>
+        </li>
+        
+        
+         <li class="nav-item" ng-if="!(rsLoginUser.userRole === 'ATS_Executive')">
+            <a href="javascript:;" class="nav-link nav-toggle">
+                <i class="fa fa-search" aria-hidden="true"></i>
+                <span class="title">Search Engines</span>
+                <span class="arrow "></span>
+            </a>
+            <ul class="sub-menu">
+                <li ng-if="!(rsLoginUser.userRole.startsWith('IN_'))">
+                    <a href="https://hiring.monster.com/login.aspx" target="_blank">
+                        <i class="icon-check"></i> Monster </a>
+                </li>
+                 <li ng-if="!(rsLoginUser.userRole.startsWith('IN_'))">
+                    <a href="https://employer.dice.com/daf/servlet/DAFctrl?op=1201" target="_blank">
+                        <i class="icon-check"></i> Dice </a>
+                </li> 
+                 <li ng-if="!(rsLoginUser.userRole.startsWith('IN_'))">
+                    <a href="https://accounts.careerbuilder.com/share/login.aspx" target="_blank">
+                        <i class="icon-check"></i> Career Builder </a>
+                </li>
+                <li ng-if="!(rsLoginUser.userRole.startsWith('IN_'))">
+                    <a href="http://www.techfetch.com/emp/EMP_login.aspx" target="_blank">
+                        <i class="icon-check"></i> Tech fetch</a>
+                </li> 
+                 <li ng-if="(rsLoginUser.userRole.startsWith('IN_'))">
+                    <a href="https://login.recruit.naukri.com" target="_blank">
+                        <i class="icon-check"></i> Naukri</a>
+                </li> 
+            </ul>
+        </li> 
+        
+        
+        
+        <li class="nav-item">
+            <a href="javascript:;" class="nav-link nav-toggle">
+                <i class="fa fa-bar-chart"></i>
+                <span class="title">Reports</span>
+                <span class="arrow "></span>
+            </a>
+            <ul class="sub-menu" >
+            
+            
+            
+            
+            
+            <li class="nav-item" ng-if="!(rsLoginUser.userRole === 'ATS_Executive')">
+            <a href="javascript:;" class="nav-link nav-toggle">
+                <i class="icon-check"></i>
+                <span>Analytics</span>
+                <span class="arrow "></span>
+            </a>
+			<ul class="sub-menu">
+                <li ng-if="(rsLoginUser.userRole === 'Manager')">
+                    <a href="#/reports/JobOrderMetric" >
+                        <i class="icon-check"></i> Job Order Report</a>
+                </li>
+                
+                
+                <li ng-if="(rsLoginUser.userRole === 'Manager' || rsLoginUser.userRole === 'ADM' || rsLoginUser.userRole === 'DM' || rsLoginUser.userRole === 'Recruiter'
+                            || rsLoginUser.userRole === 'IN_DM'  || rsLoginUser.userRole === 'IN_Recruiter'  || rsLoginUser.userRole === 'IN_TL') "> 
+                    <a href="#/reports/recruiter_metric" >
+                        <i class="icon-check"></i> Recruiter Report</a>
+                </li>
+                
+                
+                <li ng-if="(rsLoginUser.userRole === 'Manager' || rsLoginUser.userRole === 'ADM' || rsLoginUser.userRole === 'DM'
+                            || rsLoginUser.userRole === 'IN_DM')">
+                    <a href="#/reports/dm_metric" >
+                        <i class="icon-check"></i> DM Report</a>
+                </li>
+                
+                
+                
+                
+                 <li ng-if="(rsLoginUser.userRole === 'Manager')">
+                    <a href="#/customReports/dmsRankReport" >
+                        <i class="icon-check"></i> DMs Rank Report </a>
+                </li>
+                
+                
+                <li ng-if="(rsLoginUser.userRole === 'Manager')">
+                    <a href="#/reports/locationReport" >
+                        <i class="icon-check"></i> Location Report </a>
+                </li>
+                
+                
+                <!-- <li ng-if="!(rsLoginUser.userRole === 'Recruiter')" > 
+                    <a href="#/reports/ClientMetric" >
+                        <i class="icon-check"></i> Client Metric</a>
+                </li> -->
+                
+</ul>
+</li>
+
+
+
+
+
+            <!-- <li ng-if="!(rsLoginUser.userRole === 'Recruiter')">
+                    <a href="#/reports/recruiter_report" >
+                        <i class="icon-check"></i> Recruiter's Report</a>
+                </li> -->
+               
+                
+                
+                <li ng-if="!(rsLoginUser.userRole === 'Recruiter' || rsLoginUser.userRole === 'IN_Recruiter')" style="display: none">
+                    <a href="#/reports/liverecruitersreport" >
+                        <i class="icon-check"></i> Live Recruiter's Report</a>
+                </li>
+                
+                
+                
+                
+                <!-- <li ng-if="!(rsLoginUser.userRole === 'Recruiter')">
+                    <a href="#/RecruitersReportBySource" >
+                        <i class="icon-check"></i> Recruiter's Report By Source</a>
+                </li> -->
+                
+
+             <!--     <li ng-if="!(rsLoginUser.userRole === 'Recruiter')">
+                    <a href="#/reports/stackedbarreport" >
+                        <i class="icon-check"></i> Stacked bar Report</a>
+                </li>
+
+                <li ng-if="!(rsLoginUser.userRole === 'Recruiter')">
+                    <a href="#/reports/barreport" >
+                        <i class="icon-check"></i> Bar Report</a>
+                </li> -->
+
+
+
+
+
+<!-- <li>
+                    <a href="#/customReports/jobOrderReport" >
+                        <i class="icon-check"></i> Job Order Report </a>
+                </li> -->
+                
+               <!--    <li>
+                    <a href="#/customReports/DMClientReport" >
+                        <i class="icon-check"></i> DMs Client Report </a>
+                </li> -->
+                
+                  <li ng-if="(rsLoginUser.userRole === 'Manager')" >
+                    <a href="#/customReports/clientsReport" >
+                        <i class="icon-check"></i> Client Stats Report </a>
+                </li>
+                
+              <!--    <li>
+                    <a href="#/customReports/clientDetailsReport" >
+                        <i class="icon-check"></i> Client Details Report </a>
+                </li> -->
+                
+                <li ng-if="(rsLoginUser.userRole === 'Manager' || rsLoginUser.userRole === 'ADM' || rsLoginUser.userRole === 'DM')" >
+                    <a href="#/customReports/sourceReport" >
+                        <i class="icon-check"></i> Resume Source Report </a>
+                </li>
+                
+                 <li ng-if="!(rsLoginUser.userRole === 'Recruiter' || rsLoginUser.userRole === 'IN_Recruiter' || rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_TL'  || rsLoginUser.userRole === 'ATS_Executive')">
+                    <a href="#/reports/turnaroundreport" >
+                        <i class="icon-check"></i> TAT Report </a>
+                </li>
+                
+                 <li ng-if="!(rsLoginUser.userRole === 'Recruiter' || rsLoginUser.userRole === 'IN_Recruiter' || rsLoginUser.userRole === 'ATS_Executive')">
+                    <a href="#/reports/loginInfo" >
+                        <i class="icon-check"></i> Login Info Report</a>
+                </li>
+
+
+
+<li class="nav-item" ng-if="(rsLoginUser.userRole === 'HR' || rsLoginUser.userRole === 'DM')">
+            <a href="javascript:;" class="nav-link nav-toggle">
+                <i class="icon-check"></i>
+                <span>Consultant</span>
+                <span class="arrow "></span>
+            </a>
+			<ul class="sub-menu">
+                <li ng-if="(rsLoginUser.userRole === 'HR')">
+                    <a href="#/reports/consultant/info">
+                        <i class="icon-check"></i> Info </a>
+                </li>
+                <li>
+                    <a href="#/offerletter/offerLetterReports">
+                        <i class="icon-check"></i> Offer Letters </a>
+                </li>
+                <li>
+                    <a href="#/offerletter/deleted_offerletters">
+                        <i class="icon-check"></i>Deleted Offer Letters </a>
+                </li>
+                
+</ul>
+</li>
+
+ 
+<li class="nav-item" ng-if="!(rsLoginUser.userRole === 'DM' || rsLoginUser.userRole === 'Recruiter' || rsLoginUser.userRole.startsWith('IN_'))">
+            <a href="javascript:;" class="nav-link nav-toggle">
+                <i class="icon-check"></i>
+                <span>Candidates</span>
+                <span class="arrow "></span>
+            </a>
+<ul class="sub-menu">
+                <li>
+                    <a href="#/candidates/missingData" >
+                        <i class="icon-check"></i> Missing Data Info </a>
+                </li>
+                <li>
+                    <a href="#/reports/resumes_update_count" >
+                        <i class="icon-check"></i> Resumes Update Count </a>
+                </li>
+                 <li ng-if="!(rsLoginUser.userRole === 'Recruiter')">
+                    <a href="#/reports/resume_audit_logs" >
+                        <i class="icon-check"></i> Resume Audit Logs </a>
+                </li>
+               
+                
+</ul>
+</li>
+
+
+ 
+
+            </ul>
+        </li>
+        
+        
+        <li class="nav-item" ng-if="!(rsLoginUser.userRole === 'DM' || rsLoginUser.userRole === 'Recruiter' || rsLoginUser.userRole === 'ADM' || rsLoginUser.userRole === 'ATS_Executive')" style="display: none;">
+            <a href="javascript:;" class="nav-link nav-toggle">
+                 <i class="fa fa-bar-chart"></i>
+                <span>India Reports</span>
+                <span class="arrow "></span>
+            </a>
+		<ul class="sub-menu">
+                <li>
+                    <a href="#/indiaReports/jobOrderStats" >
+                        <i class="icon-check"></i> JobOrder Stats </a>
+                </li>
+                
+                <li>
+                    <a href="#/indiaReports/submitalStats" >
+                        <i class="icon-check"></i> Submittal Stats </a>
+                </li>
+                
+                  <li>
+                    <a href="#/indiaReports/clientwise_submitalStats" >
+                        <i class="icon-check"></i> Client Wise Submittal Stats </a>
+                </li>
+                
+                <li>
+                    <a href="#/indiaReports/indiadmsummaryreport" >
+                        <i class="icon-check"></i> DM Summary Report </a>
+                </li>
+                
+                 <li>
+                    <a href="#/indiaReports/recruiter_productivity_report" >
+                        <i class="icon-check"></i> Recruiter's Report </a>
+                </li>
+               
+                
+</ul>
+</li>
+        
+      
+      
+            <li class="nav-item" ng-if="!(rsLoginUser.userRole === 'DM' || rsLoginUser.userRole === 'Recruiter' || rsLoginUser.userRole === 'ADM' ||
+           rsLoginUser.userRole === 'AccountManager' || rsLoginUser.userRole === 'Manager' || rsLoginUser.userRole === 'DivisionHead' ||
+           rsLoginUser.userRole === 'IN_Recruiter' || rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_TL'  || rsLoginUser.userRole === 'ATS_Executive')">
+            <a href="javascript:;" class="nav-link nav-toggle">
+            <i class="fa fa-wrench" aria-hidden="true"></i>
+                <span class="title">Settings</span>
+                <span class="arrow "></span>
+            </a>
+            <ul class="sub-menu">
+                <li >
+                    <a href="#/settings/users" ng-if="(rsLoginUser.userRole === 'HR' || rsLoginUser.userRole === 'EM' || rsLoginUser.userRole === 'Administrator' ||
+                    rsLoginUser.userId === 'Hari' || rsLoginUser.userId === 'sriniB')">
+                        <i class="icon-check"></i> Users </a>
+                </li>
+                 <li  ng-if="(rsLoginUser.userRole === 'EM' || rsLoginUser.userRole === 'Administrator' ||
+                    rsLoginUser.userId === 'Hari' || rsLoginUser.userId === 'sriniB')">
+                    <a href="#/settings/appConfiguration" >
+                        <i class="icon-check"></i> Configuration </a>
+                </li>
+                 <li ng-if="(rsLoginUser.userId === 'Hari')">
+                    <a href="#/settings/mailConfiguration" >
+                        <i class="icon-check"></i>Mail Configuration </a>
+                </li>
+            </ul>
+        </li>   
+           
+        <li class="nav-item" ng-if="!(rsLoginUser.userRole === 'Recruiter' || rsLoginUser.userRole === 'ADM')" style="display: none;">
+            <a href="javascript:;" class="nav-link nav-toggle">
+                 <i class="fa fa-bar-chart"></i>
+                <span>Custom Reports</span>
+                <span class="arrow "></span>
+            </a>
+		<ul class="sub-menu">
+				 <li>
+                    <a href="#/customReports/jobOrderReport" >
+                        <i class="icon-check"></i> Job Order Report </a>
+                </li>
+                <li>
+                    <a href="#/customReports/DMClientReport" >
+                        <i class="icon-check"></i> DM Name/Client Report </a>
+                </li>
+                
+                <li>
+                    <a href="#/customReports/recruiterReport" >
+                        <i class="icon-check"></i> Recruiter Report </a>
+                </li>
+                
+                  <li>
+                    <a href="#/customReports/dmReport" >
+                        <i class="icon-check"></i> DM Report </a>
+                </li>
+                
+</ul>
+</li>  
+        <!-- <li class="nav-item">
+            <a href="javascript:;" class="nav-link nav-toggle">
+                <i class="icon-users"></i>
+                <span class="title">Clients</span>
+                <span class="arrow "></span>
+            </a>
+            <ul class="sub-menu">
+                <li>
+                    <a href="#">
+                        <i class="icon-check"></i> Search </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="icon-check"></i> Advanced search </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="icon-check"></i> Client List </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="icon-check"></i> Client Add / Edit </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="icon-check"></i> Contracts </a>
+                </li> 
+            </ul>
+        </li> -->
+        
+        
+        
+        <!-- <li class="nav-item">
+            <a href="javascript:;" class="nav-link nav-toggle">
+                <i class="fa fa-tasks"></i>
+                <span class="title">Tasks</span>
+                <span class="arrow "></span>
+            </a>
+            <ul class="sub-menu">
+                <li>
+                    <a href="#">
+                        <i class="icon-check"></i> Search </a>
+                </li>
+                 <li>
+                    <a href="#">
+                        <i class="icon-check"></i> Candidates </a>
+                </li> 
+                 <li>
+                    <a href="#">
+                        <i class="icon-check"></i> Jobs </a>
+                </li> 
+                 <li>
+                    <a href="#">
+                        <i class="icon-check"></i> Clients </a>
+                </li> 
+                 <li>
+                    <a href="#">
+                        <i class="icon-check"></i> Submittals </a>
+                </li>  
+            </ul>
+        </li> -->
+        
+        
+        
+        
+       
+        <!-- <li class="nav-item">
+            <a href="javascript:;" class="nav-link nav-toggle">
+                <i class="fa fa-cog" aria-hidden="true"></i>
+                <span class="title">Settings</span>
+                <span class="arrow "></span>
+            </a>
+            <ul class="sub-menu">
+                <li>
+                    <a href="#">
+                        <i class="icon-check"></i> Users </a>
+                </li>
+                 <li>
+                    <a href="#">
+                        <i class="icon-check"></i> Configuration </a>
+                </li> 
+                 <li>
+                    <a href="#">
+                        <i class="icon-check"></i> Access Privileges</a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="icon-check"></i> Mail Configuration</a>
+                </li> 
+            </ul>
+        </li> -->
+        
+        
+    </ul>
+    <!-- END SIDEBAR MENU -->
+</div>

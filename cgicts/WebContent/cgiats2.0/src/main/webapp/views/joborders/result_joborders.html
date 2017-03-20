@@ -1,0 +1,50 @@
+<div ng-controller = "resultJobOrdersController" ng-init = "onload()">
+<!-- BEGIN PAGE HEADER--> 
+<div class="sub-page-header">
+  <div class="page-bar">
+    <ul class="page-breadcrumb">
+         	<li><a href="#/dashboard" ng-if="!(rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_Recruiter' || rsLoginUser.userRole === 'ATS_Executive')">Home</a> 
+				<a href="#/india_joborders/my_indiajobOrder" ng-if="(rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_Recruiter')">Home</a>
+				<a href="#/candidates/missingData" ng-if="(rsLoginUser.userRole === 'ATS_Executive')">Home</a>
+				<i class="fa fa-circle"></i>
+				</li>
+      <li>
+        <span>Candidates</span>
+        <i class="fa fa-circle"></i>
+      </li>
+      <li>
+        <span>Search</span>
+      </li>
+    </ul>
+  </div>
+</div>
+<!-- END PAGE HEADER-->
+
+
+<!-- Table --> 
+            <div class="row fade-in-up table-scrollable">
+            
+	            <table id="table" bs-table-control="resultJobOrder.resultBsTableControl" ng-show="resultTable"  >
+		        <thead>
+		            <tr>
+		                <th data-field="state" data-checkbox="true"></th>
+		                <th data-field="firstName" data-sortable="true"></th>
+		                <th data-field="title" data-sortable="true"></th>
+		                <th data-field="location" data-sortable="true"></th>
+		                <th data-field="createdOn" data-sortable="true"></th>
+		                <th data-field="updatedOn" data-sortable="true"></th>
+		                <th data-field="status" data-sortable="true"></th>
+		                <th data-field="visaType" data-sortable="true"></th>
+		                 <th data-field="resume" data-formatter="candidateresumeFormatter" data-events="candidateResumeEvents"></th> 
+		                <th data-field="actions" data-formatter="searchactionFormatter" data-events="searchoperateEvents"></th>
+		            </tr>
+		        </thead>
+		        <tbody>
+		           
+		        </tbody>
+	    		</table>  
+            </div>  
+            <!-- End Table -->
+
+
+</div>

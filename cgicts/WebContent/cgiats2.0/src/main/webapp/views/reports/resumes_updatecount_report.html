@@ -1,0 +1,124 @@
+<div ng-controller="resumesupdatecountcontroller"  ng-init="onload()">
+<style>
+#table .firCol
+{
+padding-left:200px!important;
+}
+</style>
+
+<!-- BEGIN PAGE HEADER--> 
+<div class="sub-page-header">
+  <div class="page-bar">
+    <ul class="page-breadcrumb">
+          	<li><a href="#/dashboard" ng-if="!(rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_Recruiter' || rsLoginUser.userRole === 'ATS_Executive')">Home</a> 
+				<a href="#/india_joborders/my_indiajobOrder" ng-if="(rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_Recruiter')">Home</a>
+				<a href="#/candidates/missingData" ng-if="(rsLoginUser.userRole === 'ATS_Executive')">Home</a>
+				<i class="fa fa-circle"></i>
+				</li>
+      <li>
+        <span>Reports</span>
+        <i class="fa fa-circle"></i>
+      </li>
+      <li>
+        <span>Resumes Update Count</span>
+      </li>
+      
+    </ul> 
+     
+  </div>
+</div>
+<!-- END PAGE HEADER--> 
+
+<!-- <div class="row">
+       <div class="form-group">
+           
+            <div class="col-md-4">
+            <label>Created Between :</label>
+             <input type="daterange" ng-model="Created" id="indiaSubmittalStatsRangesId" class="dropDown" ranges="ranges" placeholder="Custom Dates" required></div>
+             
+             <button type="button" class="btn blue" style="margin-top: 25px;" ng-click="resumeUpdateCount()"><i class="fa fa-search"></i> View </button>
+             </div></div> -->
+      <div ng-show="dateValidation">
+      <div style="color: red; text-align: right;"><b>Please give valid dates</b></div>
+      </div>       
+              <div class="row">
+       <div class="form-group">
+              
+              <div class="col-md-2">
+              <label></label>
+              <select style="margin-top: 5px;" class="dropDown" ng-model="resumeUpdate.resumeUpdateMonthandYear">
+              <option value="">Select</option>
+              <option ng-repeat="date in dates" value="{{date.monthIndex}}">{{date.month}}</option>
+              </select>
+              </div>
+             
+              <div class="col-md-2">
+              <br>
+              <button type="button" ng-click="viewByMonth(resumeUpdate)" class="btn blue" style="margin-top: 5px;"><i class="fa fa-search"></i> View By Month </button>
+             </div>
+            
+              <div class="col-md-2">
+                <label class="">Start Date:</label>
+                <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Start Date" uib-datepicker-popup="{{DateFormat}}" is-open="resumeUpdateStartDatePopup.opened" datepicker-options="resumeUpdateStartDateOptions" close-text="Close" alt-input-formats="altInputFormats" ng-model="resumeUpdate.resumeUpdateStartDate" readonly="true"/>
+                  <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="resumeUpdateStartDateopen()"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+                </div>
+              </div>
+              
+              
+              <div class="col-md-2">
+                <label class="">End Date:</label>
+                <div class="input-group">
+                  <input type="text" class="form-control" placeholder="End Date" uib-datepicker-popup="{{DateFormat}}" is-open="resumeUpdateEndDatePopup.opened" datepicker-options="resumeUpdateEndDateOptions" close-text="Close" alt-input-formats="altInputFormats" ng-model="resumeUpdate.resumeUpdateEndDate" readonly="true"/>
+                  <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="resumeUpdateEndDateopen()"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+                </div>
+              </div>
+              
+             <div class="col-md-2">
+             <br>
+            <button type="button" ng-click="viewByDates(resumeUpdate)" class="btn blue" style="margin-top: 5px;"><i class="fa fa-search"></i> View By Dates</button>
+			</div>
+			
+			<div class="col-md-2">
+             <br>
+			 <button type="button" class="btn blue" ng-csv="totalResumeUpdateCount" ng-disabled="(resumeUpdateData && resumeUpdateData.length == 0)" ng-if="!(rsLoginUser.userRole === 'Recruiter' || rsLoginUser.userRole === 'DivisionHead')"
+									filename="resumeUpdateCount_{{currentDateWithTime | date:'MM-dd-yyyy hh:mm:ss a'}}.csv" ng-click="getTimeFnc();"
+									csv-header="['Name','Count','Avg Count/day']"
+									charset="utf-8" style="margin-top:5px;">
+									Export <i class="fa fa-upload" aria-hidden="true"></i>
+								</button>
+								</div>
+            </div>
+       </div>
+
+ <div class="row fade-in-up table-scrollable">
+            
+	            <table id="table" bs-table-control="candidate.bsTableControl" ng-show="resumeCountTable">
+		        <thead>
+		            <tr>
+		                <!-- <th data-field="S.No" data-formatter="indexformat"></th> -->
+		                <th class="firCol" data-field="Name" width="50%" ></th>
+		                <th data-field="Count" width="25%"></th>
+		                <th data-field="Avg Count/day" width="25%"></th>
+		            </tr>
+		        </thead>
+		          <tfoot>
+		        <tr class="totl">
+		        <!-- <td></td> -->
+		        <td style="text-align: center;" width="50%">Total</td>
+		        <td style="text-align: center;" id="total" width="25%"></td>
+		        <td style="text-align: center;" id="avgtotal" width="25%"></td>
+		        </tr>
+		        </tfoot>
+		        <tbody>
+		           
+		        </tbody>
+	    		</table>  
+            </div>  
+            
+</div>
+

@@ -1,0 +1,869 @@
+<div ng-controller="fillprojectcontroller"  ng-init="onload()">
+
+<!-- BEGIN PAGE HEADER--> 
+<div class="sub-page-header">
+  <div class="page-bar">
+    <ul class="page-breadcrumb">
+         	<li><a href="#/dashboard" ng-if="!(rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_Recruiter' || rsLoginUser.userRole === 'ATS_Executive')">Home</a> 
+				<a href="#/india_joborders/my_indiajobOrder" ng-if="(rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_Recruiter')">Home</a>
+				<a href="#/candidates/missingData" ng-if="(rsLoginUser.userRole === 'ATS_Executive')">Home</a>
+				<i class="fa fa-circle"></i>
+				</li>
+      <li>
+        <span>Reports</span>
+        <i class="fa fa-circle"></i>
+      </li>
+      <li>
+        <span>Fill Project Details</span>
+      </li>
+      
+    </ul> 
+     
+  </div>
+</div>
+<!-- END PAGE HEADER--> 
+
+
+
+
+<!-- BEGIN MAIN CONTENT --> 
+ 
+    <form  name="AddCandidateForm" class="tab-form-demo" novalidate=""  ng-submit="createsubmital(project)" >
+<div ng-show="errMsg">
+<div style="color: red; text-align: right;"><b>{{errMsg}}</b></div>
+</div>
+<div class="fade-in-up" id="res">Please Fill the mandatory fields in all the tabs</div>
+
+<div class="fade-in-up" id="res01">No Data available with this Candidate Id</div>
+    <uib-tabset active="activeForm">
+
+    <uib-tab index="0" heading="Candidate Info" active="tabs[0].active">
+
+
+    <div class="row fade-in-up">
+    <div class="col-md-12">
+    <div class="row">
+    		
+    		<div class="col-md-4">
+    		<label class="">EM/DM/SM/AM</label>
+    		<div class="row">
+    		<div class="col-md-6">
+    			<div class="form-group">
+    			<input type="hidden"   ng-model="project.candidateInfoId">
+    			<input type="hidden"   ng-model="project.candidateId">
+                <input type="text" class="form-control" placeholder="First Name"   Readonly="readonly" ng-model="project.bdmFirstName">
+              </div>
+            </div>
+            
+            <div class="col-md-6">
+    			<div class="form-group">
+                <input type="text" class="form-control" placeholder="Last Name"   Readonly="readonly" ng-model="project.bdmLastName">
+              </div>
+            </div>
+    		</div>
+              	</div>
+              	
+              	<div class="col-md-4">
+    		<label class="">	Recruiter's Name</label>
+    		<div class="row">
+    		<div class="col-md-6">
+    			<div class="form-group">
+                <input type="text" class="form-control" placeholder="First Name"   Readonly="readonly" ng-model="project.recruiterFirstName">
+              </div>
+            </div>
+            
+            <div class="col-md-6">
+    			<div class="form-group">
+                <input type="text" class="form-control" placeholder="Last Name"   Readonly="readonly" ng-model="project.recruiterLastName">
+              </div>
+            </div>
+    		</div>
+              	</div>
+            
+              	
+            <div class="col-md-4">
+              	<div class="form-group">
+                <label class="">Job Order Id</label>
+                <input valid-number class="form-control" placeholder="ID"   Readonly="readonly" ng-model="project.jobOrderId">
+              </div>
+            </div>
+            
+            <div class="col-md-4">
+              	<div class="form-group">
+                <label class="control-label">Candidate First Name</label>
+                <input type="text" class="form-control" placeholder="First Name"   ng-model="project.firstName">
+              </div>
+              </div>
+              
+              
+              <div class="col-md-4">
+              	<div class="form-group">
+                <label class="">Candidate Last Name</label>
+                <input type="text" class="form-control" placeholder="Last Name"   ng-model="project.lastName">
+              </div>
+              </div>
+              
+              
+              <div class="col-md-4">
+              	<div class="form-group">
+                <label class="">Date of Birth</label>
+  				<div class="input-group">
+                  <input type="text" class="form-control" ng-click="DateOfBirthopen()" uib-datepicker-popup="{{DateFormat}}" is-open="DateOfBirthPopup.opened" datepicker-options="DateOfBirthOptions" close-text="Close" alt-input-formats="altInputFormats" ng-model="project.dateOfBirth" readonly="true"/>
+                  <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="DateOfBirthopen()"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+                </div>
+              </div>
+              </div>
+</div>          
+
+              
+<div class="row">
+              
+              <div class="col-md-4">
+              	<div class="form-group">
+                <label class="">SSN</label>
+                <input valid-number class="form-control" placeholder="SSN" maxlength="9"   ng-model="project.ssn">
+              </div>
+              </div>
+              
+              <div class="col-md-4">
+              	<div class="form-group">
+                <label class="">Source</label>
+                <select class="form-control" ng-model="project.source" >
+                  <option value="">Select</option>
+                  <option value="C2C">C2C</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="col-md-4">
+              	<div class="form-group">
+                <label class="">Address 1</label>
+                <input type="text" class="form-control" placeholder="Address 1"   ng-model="project.street1">
+              </div>
+              </div>
+            
+        </div>          
+              
+<div class="row">         
+
+              <div class="col-md-4">
+              	<div class="form-group">
+                <label class="">Address 2</label>
+                <input type="text" class="form-control" placeholder="Address 2"   ng-model="project.street2">
+              </div>
+              </div>
+              
+              <div class="col-md-4">
+              	<div class="form-group">
+                <label class="">City</label>
+                <input type="text" class="form-control" placeholder="City"   ng-model="project.city">
+              </div>
+              </div>
+              
+              
+              <div class="col-md-4">
+              	<div class="form-group">
+                <label class="">State</label>
+                <select class="form-control"  ng-model="project.state" ng-options="name for (name, value) in usstates">
+                  <option value="">Select</option>
+                </select>
+              </div>
+            </div>
+
+        </div>          
+
+              
+<div class="row">  
+             
+             <div class="col-md-4">
+              	<div class="form-group">
+                <label class="">Zip</label>
+                <input valid-number class="form-control" placeholder="Zip"  maxlength="5"  ng-model=" project.zipCode">
+              </div>
+              </div>
+              
+              
+              <div class="col-md-4">
+              	<div class="form-group">
+                <label class="">Country</label>
+                <input type="text" class="form-control" placeholder="Country"   ng-model="project.country" readonly="true">
+              </div>
+              </div>
+              
+              
+              <div class="col-md-4">
+                  <div class="form-group">
+                    <label>Phone (Home)</label>
+                    <input ui-phone class="form-control" placeholder="Phone Home" ng-model="project.candidatePhone" >
+                  </div>
+                </div>
+                
+                
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label>Mobile</label>
+                    <input ui-phone class="form-control" placeholder="Mobile" ng-model="project.phoneAlt" >
+                  </div>
+                </div>
+              
+              <div class="col-md-4">
+              <div class="form-group">
+                <label class="">Email</label>
+                <input type="email" class="form-control" placeholder="Email Address" ng-model="project.email" >
+              </div>
+            </div>
+    </div>          
+    </div>
+    </div>
+      
+      <div class="row">
+      </div> <hr>
+      <div class="row fade-in-up">
+        <div class="col-md-12">
+          <div class="pull-right"> 
+            <button type="button" class="btn light-blue" ng-click="#"><i class="fa fa-arrow-circle-left"></i> Previous</button>
+            <button type="button" class="btn blue" ng-click="tabs[1].active = true";">Next <i class="fa fa-arrow-circle-right"></i></button>
+            <button type="button" class="btn btn-primary blue" ng-click="cancel()" >Cancel <i class="fa fa-ban" aria-hidden="true"></i></button>
+          </div>
+        </div>
+      </div>
+    </uib-tab>
+ 
+
+
+
+    <uib-tab index="1" heading="Employment" active="tabs[1].active">
+    
+      <div class="row fade-in-up"> 
+        <div class="col-md-12">
+        
+        <div class="row">
+              
+              <div class="col-md-4">
+              	<div class="form-group">
+                <label class="">Employment Status</label>
+                <select class="form-control" ng-model="project.employmentStatus" >
+                  <option value="">Select</option>
+                  <option value="W2 Salary">W2 Salary</option>
+                </select>
+              </div>
+              </div>
+              
+              
+              <div class="col-md-4">
+              	<div class="form-group">
+                <label class="">Immigration Status</label>
+                <select class="form-control" ng-model="project.immigrationStatus" >
+                  <option value="">Select</option>
+                  <option value="Not Available">Not Available</option>
+                  <option value="US Citizen">US Citizen</option>
+                  <option value="Green Card">Green Card</option>
+                  <option value="EAD">EAD</option>
+                  <option value="TN Visa">TN Visa</option>
+                  <option value="Canadian">Canadian</option>
+                  <option value="H1B Visa">H1B Visa</option>
+                  <option value="H4 Visa">H4 Visa</option>
+                  <option value="L1 Visa">L1 Visa</option>
+                  <option value="L2 Visa">L2 Visa</option>
+                  <option value="OPT">OPT</option>
+                  <option value="CPT">CPT</option>
+                  <option value="Corp to Corp">Corp to Corp</option>
+                  <option value="Citizen">Citizen</option>
+                  </select>
+              </div>
+            </div>
+            
+            <div class="col-md-4">
+              	<div class="form-group">
+                <label class="">Salary/Pay Rate</label>
+                <input data-format="currency" type="text" class="form-control" placeholder="Salary/Pay Rate"  ng-model="project.salaryRate">
+              </div>
+              </div>
+              
+              
+              
+              <div class="col-md-4">
+              	<div class="form-group">
+                <label class="">Cola/Per DIEM</label>
+                <input type="text" class="form-control" placeholder="Cola/Per DIEM"  ng-model="project.perDiem">
+              </div>
+              </div>
+              
+              
+              
+              
+              <div class="col-md-4">
+              	<div class="form-group">
+                <label class="">Start Date</label>
+  				<div class="input-group">
+                  <input type="text" class="form-control" ng-click="StartDateopen()" uib-datepicker-popup="{{DateFormat}}" is-open="StartDatePopup.opened" datepicker-options="StartDateOptions" close-text="Close" alt-input-formats="altInputFormats" ng-model="project.startDate" readonly="true"/>
+                  <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="StartDateopen()"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+                </div>
+              </div>
+              </div>
+              
+              
+              
+              
+              <div class="col-md-4">
+              	<div class="form-group">
+                <label class="">End Date</label>
+  				<div class="input-group">
+                  <input type="text" class="form-control" ng-click="EndDateopen()" uib-datepicker-popup="{{DateFormat}}" is-open="EndDatePopup.opened" datepicker-options="EndDateOptions" close-text="Close" alt-input-formats="altInputFormats" ng-model="project.endDate" readonly="true"/>
+                  <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="EndDateopen()"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+                </div>
+              </div>
+              </div>
+              
+            
+        </div>   
+      </div>
+      </div> 
+
+<hr>
+
+<div class="row fade-in-up">
+        <div class="col-md-12">
+          <div class="row"> 
+          
+            <div class="col-md-4">
+              	<div class="form-group">
+                <label class="">Client Name</label>
+                <input type="text" class="form-control" placeholder="Client Name"  ng-model="project.clientName">
+              </div>
+              </div>
+              
+              
+              <div class="col-md-4">
+              	<div class="form-group">
+                <label class="">Contact First Name</label>
+                <input type="text" class="form-control" placeholder="First Name"  ng-model="project.clientContactFirstName">
+              </div>
+              </div>
+              
+              
+              <div class="col-md-4">
+              	<div class="form-group">
+                <label class="">Last Name</label>
+                <input type="text" class="form-control" placeholder="Last Name"  ng-model="project.clientContactLastName">
+              </div>
+              </div>
+              
+              
+              <div class="col-md-4">
+              	<div class="form-group">
+                <label class="">Phone</label>
+                <div class="row">
+                <div class="col-md-8"><input ui-phone class="form-control" placeholder="Phone Home" ng-model="project.clientPhone" ></div>
+                <div class="col-md-4"><input valid-number class="form-control" placeholder="Extn"  ng-model="project.extenstion"></div>
+                </div>
+              </div>
+              </div>
+              
+              
+              <div class="col-md-4">
+              	<div class="form-group">
+                <label class="">Fax</label>
+                <input ui-phone class="form-control" placeholder="Fax" ng-model="project.fax" >
+              </div>
+              </div>
+              
+              
+              
+              
+              <div class="col-md-4">
+              <div class="form-group">
+                <label class="">Email</label>
+                <input type="email" class="form-control" placeholder="Email Address" ng-model="project.clientEmail" >
+              </div>
+            </div>
+            
+            <div class="col-md-4">
+              	<div class="form-group">
+                <label class="">Address 1</label>
+                <input type="text" class="form-control" placeholder="Address 1"   ng-model="project.clientStreet1">
+              </div>
+              </div>
+
+              <div class="col-md-4">
+              	<div class="form-group">
+                <label class="">Address 2</label>
+                <input type="text" class="form-control" placeholder="Address 2"   ng-model="project.clientStreet2">
+              </div>
+              </div>
+              
+              <div class="col-md-4">
+              	<div class="form-group">
+                <label class="">City</label>
+                <input type="text" class="form-control" placeholder="City"   ng-model="project.clientcity">
+              </div>
+              </div>
+              
+              
+              <div class="col-md-4">
+              	<div class="form-group">
+                <label class="">State</label>
+                <select class="form-control"  ng-model="project.clientState" ng-options="name for (name, value) in usstates" >
+                  <option value="">Select</option>
+                 
+                </select>
+              </div>
+            </div>
+              
+             
+             
+             <div class="col-md-4">
+              	<div class="form-group">
+                <label class="">Zip</label>
+                <input valid-number  class="form-control" placeholder="Zip" maxlength="5"   ng-model="project.clientZipCode">
+              </div>
+              </div>
+              
+              
+              <div class="col-md-4">
+              	<div class="form-group">
+                <label class="">Country</label>
+                <input type="text" class="form-control" placeholder="Country" readonly="true"   ng-model="project.clientCountry">
+              </div>
+              </div>
+              
+            
+            
+               </div>          
+
+              
+<div class="row"> 
+            
+            
+            
+            <div class="col-md-4">
+              	<div class="form-group">
+                <label class="">Invoicing</label>
+                <select class="form-control"  ng-model="project.clientinvoicing" >
+                  <option value="">Select</option>
+                  <option value="WEEKLY">Weekly</option>
+                </select>
+              </div>
+            </div>
+            
+            
+            
+            
+            
+            <div class="col-md-4">
+              	<div class="form-group">
+                <label class="">Payment Terms</label>
+                <select class="form-control"  ng-model="project.clientpaymentTerms" >
+                  <option value="">Select</option>
+                  <option value="NET 45 DAYS">Net 45 Days</option>
+                </select>
+              </div>
+            </div>
+              
+              
+              <script src="assets/global/scripts/alljquery.js"></script>
+              <div class="col-md-4">
+              	<div class="form-group">
+                <label class="">Bill Rate</label>
+                <input data-format="currency" type="text" class="form-control" placeholder="Bill Rate"   ng-model="project.clientbillRate">
+              </div>
+              </div>
+              <div class="col-md-4 radiogroup">
+              	<div class="form-group">
+              	<div class="col-md-6 row"><label class="">OT Eligibility</label></div>
+                <div class="col-md-6">
+                <input type="radio" class="form-control radiobtn" value="Yes" radio-group="clientot" ng-model="project.clientotEligibility" > Yes
+                <input type="radio" class="form-control radiobtn" value="No" radio-group="clientot" ng-model="project.clientotEligibility" > No
+                </div>
+              </div>
+              </div>
+              <div class="col-md-4">
+              	<div class="form-group">
+                <label class="">OT Rate</label>
+                <input data-format="currency" type="text" class="form-control" placeholder="OT Rate" ng-disabled="project.clientotEligibility !== 'Yes'"  ng-model="project.clientotRate">
+              </div>
+              </div>
+              
+              
+              
+          </div>
+        </div>
+      </div>
+      
+      <hr>
+      <div class="row fade-in-up">
+        <div class="col-md-12">
+          <div class="row">
+          
+          
+				<div class="col-md-4">
+              	<div class="form-group">
+                <label class="">End Client Name</label>
+                <input type="text" class="form-control" placeholder="EnD Client Name" ng-model="project.endClientName">
+              </div>
+              </div>
+              
+              
+              
+              
+              <div class="col-md-4">
+              	<div class="form-group">
+                <label class="">Project Manager's Name</label>
+                <input type="text" class="form-control" placeholder="Project Manager's Name" ng-model="project.projectManagerName">
+              </div>
+              </div>          
+          
+            
+            <div class="col-md-4">
+              	<div class="form-group">
+                <label class="">Address 1</label>
+                <input type="text" class="form-control" placeholder="Address 1"   ng-model="project.invoicingStreet1">
+              </div>
+              </div>
+            
+                 
+
+              <div class="col-md-4">
+              	<div class="form-group">
+                <label class="">Address 2</label>
+                <input type="text" class="form-control" placeholder="Address 2"   ng-model="project.invoicingstreet2">
+              </div>
+              </div>
+              
+              <div class="col-md-4">
+              	<div class="form-group">
+                <label class="">City</label>
+                <input type="text" class="form-control" placeholder="City"   ng-model="project.invoicingcity">
+              </div>
+              </div>
+              
+              
+              <div class="col-md-4">
+              	<div class="form-group">
+                <label class="">State</label>
+                <select class="form-control"  ng-model="project.invoicingState" ng-options="name for (name, value) in usstates">
+                  <option value="">Select</option>
+                 
+                </select>
+              </div>
+            </div>
+              
+ </div>
+ 
+ 
+ <div class="row">            
+             
+             <div class="col-md-4">
+              	<div class="form-group">
+                <label class="">Zip</label>
+                <input valid-number class="form-control" placeholder="Zip" maxlength="5"   ng-model="project.invoicingZipCode">
+              </div>
+              </div>
+              
+              
+              <div class="col-md-4">
+              	<div class="form-group">
+                <label class="">Country</label>
+                <input type="text" class="form-control" placeholder="Country" readonly="true"  ng-model="project.invoicingCountry">
+              </div>
+              </div>
+              
+              
+              
+          <div class="col-md-4">
+              	<div class="form-group">
+                <label class="">Phone</label>
+                <div class="row">
+                <div class="col-md-8"><input ui-phone class="form-control" placeholder="Phone Home" ng-model="project.projectManagerPhone" ></div>
+                <div class="col-md-4"><input valid-number class="form-control" placeholder="Extn"  ng-model="project.projectManagerExtension"></div>
+                </div>
+              </div>
+              </div>
+          
+          
+          
+          </div>
+          </div>
+          </div>
+      
+      
+      
+      
+      <hr>
+      <div class="row fade-in-up">
+        <div class="col-md-12">
+          <div class="pull-right"> 
+            <button type="button" class="btn blue" ng-click="tabs[0].active = true"><i class="fa fa-arrow-circle-left"></i> Previous</button>
+            <button type="button" class="btn blue" ng-click="tabs[2].active = true">Next <i class="fa fa-arrow-circle-right"></i></button>
+            <button type="button" class="btn btn-primary blue" ng-click="cancel()">Cancel <i class="fa fa-ban" aria-hidden="true"></i></button>
+          </div>
+        </div>
+      </div>
+    </uib-tab>
+
+
+
+
+
+
+    <uib-tab index="2" heading="C2C Agency" active="tabs[2].active">
+      <div class="row fade-in-up">
+                <div class="col-md-12">
+                 <div class="row">
+                
+                
+                <div class="col-md-4">
+              	<div class="form-group">
+                <label class="">Agency Name</label>
+                <input type="text" class="form-control" placeholder="Agency Name"   ng-model="project.c2cAgencyName">
+              </div>
+              </div>
+              
+              
+              
+              
+              <div class="col-md-4">
+              	<div class="form-group">
+                <label class="">Contact First Name</label>
+                <input type="text" class="form-control" placeholder="First Name"   ng-model="project.c2cContactFirstName">
+              </div>
+              </div>
+              
+              
+              
+              
+              <div class="col-md-4">
+              	<div class="form-group">
+                <label class="">Contact Last Name</label>
+                <input type="text" class="form-control" placeholder="Last Name"   ng-model="project.c2cContactLastName">
+              </div>
+              </div>
+              
+              
+              
+              
+              <div class="col-md-4">
+              	<div class="form-group">
+                <label class="">Phone</label>
+                <div class="row">
+                <div class="col-md-8"><input ui-phone class="form-control" placeholder="Phone Home" ng-model="project.contactPersonPhone" ></div>
+                <div class="col-md-4"><input valid-number class="form-control" placeholder="Extn"  ng-model="project.contactPersonExtension"></div>
+                </div>
+              </div>
+              </div>
+              
+              
+              <div class="col-md-4">
+              	<div class="form-group">
+                <label class="">Fax</label>
+                <input ui-phone class="form-control" placeholder="Fax" ng-model="project.contactPersonFax" >
+              </div>
+              </div>
+              
+              
+              
+              
+              <div class="col-md-4">
+              <div class="form-group">
+                <label class="">Email</label>
+                <input type="email" class="form-control" placeholder="Email Address" ng-model="project.contactPersonEmail" >
+              </div>
+            </div>
+            
+            
+              
+              
+               
+            
+            <div class="col-md-4">
+              	<div class="form-group">
+                <label class="">Address 1</label>
+                <input type="text" class="form-control" placeholder="Address 1"   ng-model="project.c2cstreet1">
+              </div>
+              </div>
+            
+                 
+
+              <div class="col-md-4">
+              	<div class="form-group">
+                <label class="">Address 2</label>
+                <input type="text" class="form-control" placeholder="Address 2"   ng-model="project.c2cstreet2">
+              </div>
+              </div>
+              
+              <div class="col-md-4">
+              	<div class="form-group">
+                <label class="">City</label>
+                <input type="text" class="form-control" placeholder="City"   ng-model="project.c2ccity">
+              </div>
+              </div>
+              
+              
+              <div class="col-md-4">
+              	<div class="form-group">
+                <label class="">State</label>
+                <select class="form-control"  ng-model="project.c2cstate" ng-options="name for (name, value) in usstates" >
+                  <option value="">Select</option>
+                 
+                </select>
+              </div>
+            </div>
+              
+             
+             
+             <div class="col-md-4">
+              	<div class="form-group">
+                <label class="">Zip</label>
+                <input valid-number class="form-control" placeholder="Zip" maxlength="5"   ng-model="project.c2czipCode">
+              </div>
+              </div>
+              
+              
+              <div class="col-md-4">
+              	<div class="form-group">
+                <label class="">Country</label>
+                <input type="text" class="form-control" placeholder="Country" readonly="true"  ng-model="project.c2ccountry">
+              </div>
+              </div>
+              
+    </div>
+    
+    
+    
+    <div class="row">
+    
+    <div class="col-md-12">
+<div class="row">
+
+<div class="col-md-8">
+              	
+
+
+<b>Benefits: All W2 full-time Employees are benefits eligible *</b><br><br>
+<div class="row">
+<div class="col-md-6">
+              	<div class="form-group">
+                <label class="">Paid Time Off:</label>
+                <select class="form-control" ng-model="project.paidTimeOff" >
+                  <option value="">Select</option>
+                  <option value="0 Days">0 Days</option>
+                  <option value="5 Days">5 Days</option>
+                  <option value="10 Days">10 Days</option>
+                  <option value="15 Days">15 Days</option>
+                </select>
+              </div>
+              </div>
+	</div>
+	
+	
+	
+	
+	
+	<b>Eligible employee electing to Waive</b><br><br>
+<div class="row">
+<div class="col-md-6">
+              	<div class="form-group">
+                <label class="">For Medical</label>
+                <select class="form-control" ng-model="project.medical" >
+                  <option value="">Select</option>
+                  <option value="YES">Yes</option>
+                  <option value="NO">No</option>
+                </select>
+              </div>
+              </div>
+              <div class="col-md-6">
+              	<div class="form-group">
+                <label class="">For Dental/Vision</label>
+                <select class="form-control" ng-model="project.dentalVision" >
+                  <option value="">Select</option>
+                  <option value="YES">Yes</option>
+                  <option value="NO">No</option>
+                </select>
+              </div>
+              </div>
+              
+	</div>
+	
+	
+	
+
+</div>
+              
+              
+              
+              
+              
+              
+              <div class="col-md-4">
+              	<div class="form-group">
+                <b>Relocation Benefits</b><br><br>
+                
+                <label class="horizantalcheckbox" ng-repeat="benifit in reLocationBenifitList"> <input type="checkbox" 
+							checklist-model="project.relocationBenefits" checklist-value="benifit">
+							{{benifit}} &nbsp;
+						</label>
+                
+              </div>
+              </div>              	
+
+
+</div>
+              </div>
+    
+    
+    
+    </div>
+    
+    
+    
+    
+    
+    <div class="row">
+    
+    <div class="col-md-6">
+              	<div class="form-group">
+                <label class="">Any Exceptions</label>
+                <textarea type="text" style="height:107px;"  class="form-control" placeholder="Any Exceptions" ng-model = "project.expections"  ></textarea>
+              </div>
+              </div>
+              
+              <div class="col-md-6">
+              	<div class="form-group">
+                <label class="">Any Special Instructions</label>
+                <textarea type="text" style="height:107px;"  class="form-control" placeholder="Any Special Instructions" ng-model = "project.specialInstructions"  ></textarea>
+              </div>
+              </div>
+    
+    </div>
+                </div>
+              </div>
+
+      <hr>
+      <div class="row fade-in-up">
+        <div class="col-md-12">
+          <div class="pull-right"> 
+            <button type="button" class="btn blue" ng-click="tabs[1].active = true"><i class="fa fa-arrow-circle-left"></i> Previous</button>
+            <button type="submit" class="btn blue" ng-click="fillprojectsvalidate()" >Save/Create <i class="fa fa-check" aria-hidden="true"></i></button>
+            <button type="button" class="btn btn-primary blue" ng-click="cancel()" >Cancel <i class="fa fa-ban" aria-hidden="true"></i></button>
+            
+          </div>
+        </div>
+      </div>
+    </uib-tab>
+
+    </uib-tabset>  
+
+    </form>
+
+<!-- END MAIN CONTENT -->
+
+
+
+
+</div>

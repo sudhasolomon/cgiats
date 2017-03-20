@@ -1,0 +1,1036 @@
+<div ng-controller="createofferlettercontroller" ng-init="onload()">
+
+
+	<!-- BEGIN PAGE HEADER-->
+	<div class="sub-page-header">
+		<div class="page-bar">
+			<ul class="page-breadcrumb">
+				<li><a href="#/dashboard">Home</a> <i class="fa fa-circle"></i>
+				</li>
+				<li><span>Reports</span> <i class="fa fa-circle"></i></li>
+				<li><span>Consultant</span> <i class="fa fa-circle"></i></li>
+				<li><span>Offer Letter</span></li>
+			</ul>
+
+		</div>
+	</div>
+	<!-- END PAGE HEADER-->
+	
+
+
+
+
+	<!-- BEGIN MAIN CONTENT -->
+
+	<form name="offerletterform" class="tab-form-demo" novalidate=""
+		ng-submit="createofferletter()">
+
+		<div class="fade-in-up" id="res">Please Fill the mandatory fields in all the tabs</div>
+		<uib-tabset active="activeForm"> <uib-tab index="0"
+			heading="Candidate" active="tabs[0].active">
+
+		<div class="row fade-in-up">
+			<div class="col-md-12">
+				<div class="row">
+
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="">BDM/DM ID</label> <input type="text"
+								class="form-control" placeholder="BDM/DM ID" Readonly="readonly"
+								ng-model="offerLetterDto.bdmName">
+						</div>
+					</div>
+
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="">BDM/DM Name</label> <input type="text"
+								class="form-control" placeholder="BDM/DM Name"
+								Readonly="readonly" ng-model="offerLetterDto.bdmName">
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="">Recruiter's Name</label> <input type="text"
+								class="form-control" placeholder="Recruiter's Name"
+								Readonly="readonly" ng-model="offerLetterDto.recruiterName">
+						</div>
+					</div>
+
+				</div>
+
+
+
+
+
+
+
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="">First Name</label> <input type="text"
+								class="form-control" placeholder="First Name"
+								ng-model="offerLetterDto.firstName">
+						</div>
+					</div>
+
+
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="">Last Name</label> <input type="text"
+								class="form-control" placeholder="Last Name"
+								ng-model="offerLetterDto.lastName">
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="">Date of Birth</label>
+							<div class="input-group">
+								<input type="text" id="perstartdate" class="form-control"
+									uib-datepicker-popup="{{DateFormat}}"
+									is-open="visaDatePopup.opened"
+									datepicker-options="visaDateOptions" close-text="Close"
+									alt-input-formats="altInputFormats"
+									ng-model="offerLetterDto.strDateofbirth" ng-keyup="" /> <span
+									class="input-group-btn">
+									<button type="button" class="btn btn-default"
+										ng-click="visaDateopen()">
+										<i class="glyphicon glyphicon-calendar"></i>
+									</button>
+								</span>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="">Gender</label> <select class="form-control"
+								ng-model="offerLetterDto.gender">
+								<option value="">Select</option>
+								<option value="Male">Male</option>
+								<option value="Female">Female</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="">SSN</label> <input type="text"
+								class="form-control" placeholder="SSN" maxlength="9"
+								ng-model="offerLetterDto.ssn">
+						</div>
+					</div>
+
+
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="">Immigration Status</label> <select
+								class="form-control" ng-model="offerLetterDto.immigrationStatus">
+								<option value="">Select</option>
+								<option value="Not Available">Not Available</option>
+								<option value="US Citizen">US Citizen</option>
+								<option value="Green Card">Green Card</option>
+								<option value="EAD">EAD</option>
+								<option value="TN Visa">TN Visa</option>
+								<option value="Canadian">Canadian</option>
+								<option value="H1B Visa">H1B Visa</option>
+								<option value="H4 Visa">H4 Visa</option>
+								<option value="L1 Visa">L1 Visa</option>
+								<option value="L2 Visa">L2 Visa</option>
+								<option value="OPT">OPT</option>
+								<option value="CPT">CPT</option>
+								<option value="Corp to Corp">Corp to Corp</option>
+								<option value="Citizen">Citizen</option>
+							</select>
+						</div>
+					</div>
+				</div>
+
+
+
+				<div class="row">
+
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="">Address 1</label> <input type="text"
+								class="form-control" placeholder="Street 1"
+								ng-model="offerLetterDto.street1">
+						</div>
+					</div>
+
+
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="">Address 2</label> <input type="text"
+								class="form-control" placeholder="Street 2"
+								ng-model="offerLetterDto.street2">
+						</div>
+					</div>
+
+
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="">City</label> <input type="text"
+								class="form-control" placeholder="City"
+								ng-model="offerLetterDto.city">
+						</div>
+					</div>
+
+				</div>
+
+
+
+
+				<div class="row">
+
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="">State</label> <select class="form-control"
+								ng-model="offerLetterDto.state">
+								<option value="">Select</option>
+								<option value="AL">Alabama, AL</option>
+								<option value="AK">Alaska, AK</option>
+								<option value="AZ">Arizona, AZ</option>
+								<option value="AR">Arkansas, AR</option>
+								<option value="CA">California, CA</option>
+								<option value="CO">Colorado, CO</option>
+								<option value="CT">Connecticut, CT</option>
+								<option value="DE">Delaware, DE</option>
+								<option value="FL">Florida, FL</option>
+								<option value="GA">Georgia, GA</option>
+								<option value="HI">Hawaii, HI</option>
+								<option value="ID">Idaho, ID</option>
+								<option value="IL">Illinois, IL</option>
+								<option value="IN">Indiana, IN</option>
+								<option value="IA">Iowa, IA</option>
+								<option value="KS">Kansas, KS</option>
+								<option value="KY">Kentucky, KY</option>
+								<option value="LA">Louisiana, LA</option>
+								<option value="MA">Massachusetts, MA</option>
+								<option value="MD">Maryland, MD</option>
+								<option value="ME">Maine, ME</option>
+								<option value="MI">Michigan, MI</option>
+								<option value="MN">Minnesota, MN</option>
+								<option value="MO">Missouri, MO</option>
+								<option value="MS">Mississippi, MS</option>
+								<option value="MT">Montana, MT</option>
+								<option value="NC">North Carolina, NC</option>
+								<option value="ND">North Dakota, ND</option>
+								<option value="NE">Nebraska, NE</option>
+								<option value="NH">New Hampshire, NH</option>
+								<option value="NJ">New Jersey, NJ</option>
+								<option value="NM">New Mexico, NM</option>
+								<option value="NV">Nevada, NV</option>
+								<option value="NY">New York, NY</option>
+								<option value="OH">Ohio, OH</option>
+								<option value="OK">Oklahoma, OK</option>
+								<option value="OR">Oregon, OR</option>
+								<option value="PA">Pennsylvania, PA</option>
+								<option value="RI">Rhode Island, RI</option>
+								<option value="SC">South Carolina, SC</option>
+								<option value="SD">South Dakota, SD</option>
+								<option value="TN">Tennessee, TN</option>
+								<option value="TX">Texas, TX</option>
+								<option value="UT">Utah, UT</option>
+								<option value="VA">Virginia, VA</option>
+								<option value="VT">Vermont, VT</option>
+								<option value="WA">Washington, WA</option>
+								<option value="WI">Wisconsin, WI</option>
+								<option value="WV">West Virginia, WV</option>
+								<option value="WY">Wyoming, WY</option>
+								<option value="Others">Others</option>
+							</select>
+						</div>
+					</div>
+
+
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="">Country</label> <input type="text"
+								class="form-control" placeholder="Country"
+								ng-model="offerLetterDto.country" readonly="true">
+						</div>
+					</div>
+
+
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="">Zip</label> <input valid-number
+								class="form-control" placeholder="zip" maxlength="5"
+								ng-model="offerLetterDto.zipcode">
+						</div>
+					</div>
+
+				</div>
+
+
+
+
+
+
+
+
+
+				<div class="row">
+
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="">Phone</label> <input ui-phone
+								class="form-control" placeholder="Phone"
+								ng-model="offerLetterDto.phone">
+						</div>
+					</div>
+
+
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="">Email</label> <input type="email"
+								class="form-control" placeholder="Email Address"
+								ng-model="offerLetterDto.email">
+						</div>
+					</div>
+
+
+				</div>
+
+
+
+
+
+
+
+
+
+
+
+
+			</div>
+		</div>
+
+
+		<div class="row"></div>
+		<hr>
+		<div class="row fade-in-up">
+			<div class="col-md-12">
+				<div class="pull-right">
+					<button type="button" class="btn light-blue" ng-click="#">
+						<i class="fa fa-arrow-circle-left"></i> Previous
+					</button>
+					<button type="button" class="btn blue"
+						ng-click="tabs[1].active = true">
+						Next <i class="fa fa-arrow-circle-right"></i>
+					</button>
+					<button type="button" class="btn btn-primary blue" ng-click="cancelAction()">
+						Cancel <i class="fa fa-ban" aria-hidden="true"></i>
+					</button>
+				</div>
+			</div>
+		</div>
+		</uib-tab> <uib-tab index="1" heading="Job Description" active="tabs[1].active">
+
+		<div class="row fade-in-up">
+			<div class="col-md-12">
+<script src="assets/global/scripts/alljquery.js"></script>
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<label>Position Title</label> <input type="text"
+								class="form-control" placeholder="Position Title"
+								ng-model="offerLetterDto.positionTitle">
+						</div>
+					</div>
+
+					<div class="col-md-4">
+						<div class="form-group">
+							<label>End Client's Name</label> <input type="text"
+								class="form-control" placeholder="End Client's Name"
+								ng-model="offerLetterDto.endclientName">
+						</div>
+					</div>
+
+					<div class="col-md-4">
+						<div class="form-group">
+							<label>Salary/Pay Rate</label> <input data-format="currency" type="text" class="form-control"
+								placeholder="Salary" ng-model="offerLetterDto.salaryRate">
+						</div>
+					</div>
+
+					<div class="col-md-4">
+						<div class="form-group">
+							<label>Work Location</label> <input type="text"
+								class="form-control" placeholder="Work Location"
+								ng-model="offerLetterDto.workLocation">
+						</div>
+					</div>
+
+
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="">State</label> <select class="form-control"
+								ng-model="offerLetterDto.workLocationState">
+								<option value="">Select</option>
+								<option value="AL">Alabama, AL</option>
+								<option value="AK">Alaska, AK</option>
+								<option value="AZ">Arizona, AZ</option>
+								<option value="AR">Arkansas, AR</option>
+								<option value="CA">California, CA</option>
+								<option value="CO">Colorado, CO</option>
+								<option value="CT">Connecticut, CT</option>
+								<option value="DE">Delaware, DE</option>
+								<option value="FL">Florida, FL</option>
+								<option value="GA">Georgia, GA</option>
+								<option value="HI">Hawaii, HI</option>
+								<option value="ID">Idaho, ID</option>
+								<option value="IL">Illinois, IL</option>
+								<option value="IN">Indiana, IN</option>
+								<option value="IA">Iowa, IA</option>
+								<option value="KS">Kansas, KS</option>
+								<option value="KY">Kentucky, KY</option>
+								<option value="LA">Louisiana, LA</option>
+								<option value="MA">Massachusetts, MA</option>
+								<option value="MD">Maryland, MD</option>
+								<option value="ME">Maine, ME</option>
+								<option value="MI">Michigan, MI</option>
+								<option value="MN">Minnesota, MN</option>
+								<option value="MO">Missouri, MO</option>
+								<option value="MS">Mississippi, MS</option>
+								<option value="MT">Montana, MT</option>
+								<option value="NC">North Carolina, NC</option>
+								<option value="ND">North Dakota, ND</option>
+								<option value="NE">Nebraska, NE</option>
+								<option value="NH">New Hampshire, NH</option>
+								<option value="NJ">New Jersey, NJ</option>
+								<option value="NM">New Mexico, NM</option>
+								<option value="NV">Nevada, NV</option>
+								<option value="NY">New York, NY</option>
+								<option value="OH">Ohio, OH</option>
+								<option value="OK">Oklahoma, OK</option>
+								<option value="OR">Oregon, OR</option>
+								<option value="PA">Pennsylvania, PA</option>
+								<option value="RI">Rhode Island, RI</option>
+								<option value="SC">South Carolina, SC</option>
+								<option value="SD">South Dakota, SD</option>
+								<option value="TN">Tennessee, TN</option>
+								<option value="TX">Texas, TX</option>
+								<option value="UT">Utah, UT</option>
+								<option value="VA">Virginia, VA</option>
+								<option value="VT">Vermont, VT</option>
+								<option value="WA">Washington, WA</option>
+								<option value="WI">Wisconsin, WI</option>
+								<option value="WV">West Virginia, WV</option>
+								<option value="WY">Wyoming, WY</option>
+								<option value="Others">Others</option>
+							</select>
+						</div>
+					</div>
+
+
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="">StartDate Assignment</label>
+							<div class="input-group">
+								<input type="text" id="perstartdate" class="form-control"
+									uib-datepicker-popup="{{DateFormat}}"
+									is-open="startDatePopup.opened"
+									datepicker-options="startDateOptions" close-text="Close"
+									alt-input-formats="altInputFormats"
+									ng-model="offerLetterDto.strStartdateOfAssignment" ng-keyup="">
+								<span class="input-group-btn">
+									<button type="button" class="btn btn-default"
+										ng-click="startDateopen()">
+										<i class="glyphicon glyphicon-calendar"></i>
+									</button>
+								</span>
+							</div>
+
+						</div>
+					</div>
+
+
+				</div>
+
+
+				<div class="row">
+
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="">Overtime (Hours Paid ?)</label>
+						</div>
+					</div>
+
+					<div class="col-md-4">
+						<div class="form-group">
+							<input type="radio" class="form-control radiobtn" value="Yes"
+								radio-group="overtime" ng-model="offerLetterDto.overtime">
+							Yes <input type="radio" class="form-control radiobtn" value="No"
+								radio-group="overtime" ng-model="offerLetterDto.overtime">
+							No
+						</div>
+					</div>
+
+				</div>
+
+
+
+
+
+
+
+
+				<div class="row">
+
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="">Backgound Check</label>
+						</div>
+					</div>
+
+					<div class="col-md-4">
+						<div class="form-group">
+							<input type="radio" class="form-control radiobtn" value="Yes"
+								radio-group="backgroundcheck"
+								ng-model="offerLetterDto.backgroundcheck"> Yes <input
+								type="radio" class="form-control radiobtn" value="No"
+								radio-group="backgroundcheck"
+								ng-model="offerLetterDto.backgroundcheck"> No
+						</div>
+					</div>
+
+				</div>
+
+
+
+
+
+
+
+
+
+
+				<div class="row">
+
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="">Drug Check</label>
+						</div>
+					</div>
+
+					<div class="col-md-4">
+						<div class="form-group">
+							<input type="radio" class="form-control radiobtn" value="Yes"
+								radio-group="drugcheck" ng-model="offerLetterDto.drugcheck">
+							Yes <input type="radio" class="form-control radiobtn" value="No"
+								radio-group="drugcheck" ng-model="offerLetterDto.drugcheck">
+							No
+						</div>
+					</div>
+
+				</div>
+
+
+
+
+				<div class="row">
+
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="">Commission/Bonus Eligible</label>
+						</div>
+					</div>
+
+
+
+
+
+
+					<div class="col-md-4">
+						<div class="form-group">
+							<input type="radio" class="form-control radiobtn" value="Yes"
+								radio-group="comission"
+								ng-model="offerLetterDto.commibonusEligible" ng-change="rdo()">
+							Yes <input type="radio" class="form-control radiobtn" value="No"
+								radio-group="comission"
+								ng-model="offerLetterDto.commibonusEligible" ng-change="rdo()">
+							No
+							<div class="row"
+								ng-if="(offerLetterDto.commibonusEligible === 'Yes')?true:false">
+								<label class="">If Yes Describe Bonus</label> <input type="text"
+									class="form-control" placeholder="Describe Bonus"
+									ng-model="offerLetterDto.bonusDescription">
+							</div>
+						</div>
+					</div>
+
+
+
+				</div>
+
+
+
+
+
+			</div>
+		</div>
+
+		<hr>
+		<div class="row fade-in-up">
+			<div class="col-md-12">
+				<div class="pull-right">
+					<button type="button" class="btn blue"
+						ng-click="tabs[0].active = true">
+						<i class="fa fa-arrow-circle-left"></i> Previous
+					</button>
+					<button type="button" class="btn blue"
+						ng-click="tabs[2].active = true">
+						Next <i class="fa fa-arrow-circle-right"></i>
+					</button>
+					<button type="button" class="btn btn-primary blue" ng-click="cancelAction()">
+						Cancel <i class="fa fa-ban" aria-hidden="true"></i>
+					</button>
+				</div>
+			</div>
+		</div>
+		</uib-tab> <uib-tab index="2" heading="C2C Consultant" active="tabs[2].active">
+		<div class="row fade-in-up">
+			<div class="col-md-12">
+
+
+
+
+				<div class="row">
+
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="">Company Name</label> <input type="text"
+								class="form-control" placeholder="Company Name"
+								ng-model="offerLetterDto.companyName">
+						</div>
+					</div>
+
+
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="">Tax Id No</label> <input type="text"
+								class="form-control" placeholder="Tax Id No"
+								ng-model="offerLetterDto.taxId">
+						</div>
+					</div>
+
+
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="">Xtn</label> <input type="text"
+								class="form-control" placeholder="Xtn"
+								ng-model="offerLetterDto.client_extension">
+						</div>
+					</div>
+
+
+
+
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="">Address 1</label> <input type="text"
+								class="form-control" placeholder="Address 1"
+								ng-model="offerLetterDto.clientstreet1">
+						</div>
+					</div>
+
+
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="">Address 2</label> <input type="text"
+								class="form-control" placeholder="Address 2"
+								ng-model="offerLetterDto.clientstreet2">
+						</div>
+					</div>
+
+
+
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="">City</label> <input type="text"
+								class="form-control" placeholder="City"
+								ng-model="offerLetterDto.clientcity">
+						</div>
+					</div>
+
+
+
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="">State</label> <select class="form-control"
+								ng-model="offerLetterDto.clientstate">
+								<option value="">Select</option>
+								<option value="AL">Alabama, AL</option>
+								<option value="AK">Alaska, AK</option>
+								<option value="AZ">Arizona, AZ</option>
+								<option value="AR">Arkansas, AR</option>
+								<option value="CA">California, CA</option>
+								<option value="CO">Colorado, CO</option>
+								<option value="CT">Connecticut, CT</option>
+								<option value="DE">Delaware, DE</option>
+								<option value="FL">Florida, FL</option>
+								<option value="GA">Georgia, GA</option>
+								<option value="HI">Hawaii, HI</option>
+								<option value="ID">Idaho, ID</option>
+								<option value="IL">Illinois, IL</option>
+								<option value="IN">Indiana, IN</option>
+								<option value="IA">Iowa, IA</option>
+								<option value="KS">Kansas, KS</option>
+								<option value="KY">Kentucky, KY</option>
+								<option value="LA">Louisiana, LA</option>
+								<option value="MA">Massachusetts, MA</option>
+								<option value="MD">Maryland, MD</option>
+								<option value="ME">Maine, ME</option>
+								<option value="MI">Michigan, MI</option>
+								<option value="MN">Minnesota, MN</option>
+								<option value="MO">Missouri, MO</option>
+								<option value="MS">Mississippi, MS</option>
+								<option value="MT">Montana, MT</option>
+								<option value="NC">North Carolina, NC</option>
+								<option value="ND">North Dakota, ND</option>
+								<option value="NE">Nebraska, NE</option>
+								<option value="NH">New Hampshire, NH</option>
+								<option value="NJ">New Jersey, NJ</option>
+								<option value="NM">New Mexico, NM</option>
+								<option value="NV">Nevada, NV</option>
+								<option value="NY">New York, NY</option>
+								<option value="OH">Ohio, OH</option>
+								<option value="OK">Oklahoma, OK</option>
+								<option value="OR">Oregon, OR</option>
+								<option value="PA">Pennsylvania, PA</option>
+								<option value="RI">Rhode Island, RI</option>
+								<option value="SC">South Carolina, SC</option>
+								<option value="SD">South Dakota, SD</option>
+								<option value="TN">Tennessee, TN</option>
+								<option value="TX">Texas, TX</option>
+								<option value="UT">Utah, UT</option>
+								<option value="VA">Virginia, VA</option>
+								<option value="VT">Vermont, VT</option>
+								<option value="WA">Washington, WA</option>
+								<option value="WI">Wisconsin, WI</option>
+								<option value="WV">West Virginia, WV</option>
+								<option value="WY">Wyoming, WY</option>
+								<option value="Others">Others</option>
+							</select>
+						</div>
+					</div>
+
+
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="">Country</label> <input type="text"
+								class="form-control" placeholder="Country"
+								ng-model="offerLetterDto.clientcountry" readonly="true">
+						</div>
+					</div>
+
+
+
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="">Zip</label> <input valid-number
+								class="form-control" placeholder="Zip" maxlength="5"
+								ng-model="offerLetterDto.clientzipcode">
+						</div>
+					</div>
+
+
+
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="">Work Phone</label> <input ui-phone
+								class="form-control" placeholder="Work Phone"
+								ng-model="offerLetterDto.clientphone">
+						</div>
+					</div>
+
+
+
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="">Fax</label> <input ui-phone class="form-control"
+								placeholder="Fax" ng-model="offerLetterDto.client_fax">
+						</div>
+					</div>
+
+
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="">Email</label> <input type="email"
+								class="form-control" placeholder="Email Address"
+								ng-model="offerLetterDto.clientemail">
+						</div>
+					</div>
+
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="">Payment Terms</label> <input type="text"
+								class="form-control" placeholder="Payment Terms"
+								ng-model="offerLetterDto.paymentTerms">
+						</div>
+					</div>
+
+
+
+
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="">Contact Person First Name</label> <input
+								type="text" class="form-control" placeholder="First Name"
+								ng-model="offerLetterDto.contactPersonFirstName">
+						</div>
+					</div>
+
+
+
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="">Contact Person Last Name</label> <input
+								type="text" class="form-control" placeholder="Last Name"
+								ng-model="offerLetterDto.contactPersonLastName">
+						</div>
+					</div>
+
+
+
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="">Designation</label> <input type="text"
+								class="form-control" placeholder="Designation"
+								ng-model="offerLetterDto.titleOfName">
+						</div>
+					</div>
+
+
+
+
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="">Sole Proprietor/Individual</label> <select
+								class="form-control" ng-model="offerLetterDto.individual">
+								<option value="">Select</option>
+								<option value="Yes">Yes</option>
+								<option value="No">No</option>
+							</select>
+						</div>
+					</div>
+
+
+
+
+				</div>
+
+
+
+			</div>
+		</div>
+
+		<hr>
+		<div class="row fade-in-up">
+			<div class="col-md-12">
+				<div class="pull-right">
+					<button type="button" class="btn blue"
+						ng-click="tabs[1].active = true">
+						<i class="fa fa-arrow-circle-left"></i> Previous
+					</button>
+					<button type="button" class="btn blue"
+						ng-click="tabs[3].active = true">
+						Next <i class="fa fa-arrow-circle-right"></i>
+					</button>
+					<button type="button" class="btn btn-primary blue" ng-click="cancelAction()">
+						Cancel <i class="fa fa-ban" aria-hidden="true"></i>
+					</button>
+
+				</div>
+			</div>
+		</div>
+		</uib-tab> <uib-tab index="3" heading="Offer Details" active="tabs[3].active">
+		<div class="row fade-in-up">
+			<div class="col-md-12">
+
+
+
+
+
+
+				<div class="row">
+
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="">Offer From</label>
+						</div>
+					</div>
+
+					<div class="col-md-8">
+						<div class="form-group">
+							<input type="radio" class="form-control radiobtn"
+								value="Charter Global" radio-group="offerform"
+								ng-model="offerLetterDto.offerFrom"> Charter Global <input
+								type="radio" class="form-control radiobtn" value="Red Galaxy"
+								radio-group="offerform" ng-model="offerLetterDto.offerFrom">
+							Red Galaxy <input type="radio" class="form-control radiobtn"
+								value="Sapeare" radio-group="offerform"
+								ng-model="offerLetterDto.offerFrom"> Sapeare <input
+								type="radio" class="form-control radiobtn" value="Other"
+								radio-group="offerform" ng-model="offerLetterDto.offerFrom">
+							Other
+						</div>
+					</div>
+
+				</div>
+
+
+				<br>
+
+
+				<div class="row">
+
+
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="control-label">Benefits: All W2 full-time
+								Employees are eligible </label>
+						</div>
+					</div>
+
+					<div class="col-md-8">
+
+
+						<div class="form-group">
+							<input type="radio" class="form-control radiobtn"
+								value="category1" radio-group="w2employee"
+								ng-model="offerLetterDto.benifitsCategory"> Category
+							1(Salaried) <input type="radio" class="form-control radiobtn"
+								value="category2" radio-group="w2employee"
+								ng-model="offerLetterDto.benifitsCategory"> Category
+							2(Hourly)
+							<div style="padding-bottom: 15px;">
+								<div class="row" id="sal" style="float: left;">
+									<input type="checkbox" class="form-checkbox splchk"
+										ng-model="offerLetterDto.electingMedicalSalired"
+										ng-disabled="offerLetterDto.benifitsCategory != 'category1'">
+									EE Electing Medical(s) <br> <input type="checkbox"
+										class="form-checkbox splchk"
+										ng-model="offerLetterDto.waviningMedicalSalired"
+										ng-disabled="offerLetterDto.benifitsCategory != 'category1'">
+									EE Waiving Medical(s)
+								</div>
+
+								<div class="row" id="hor"
+									style="margin-left: 30px; float: left;">
+									<input type="checkbox" class="form-checkbox splchk"
+										ng-model="offerLetterDto.electingMedicalHourly"
+										ng-disabled="offerLetterDto.benifitsCategory != 'category2'">
+									EE Electing Medical <br> <input type="checkbox"
+										class="form-checkbox splchk"
+										ng-model="offerLetterDto.waviningMedicalHourly"
+										ng-disabled="offerLetterDto.benifitsCategory != 'category2'">
+									EE Waiving Medical
+								</div>
+								<div class="clearboth"></div>
+							</div>
+						</div>
+
+
+
+					</div>
+
+				</div>
+
+
+
+
+
+
+
+
+
+				<div class="row">
+
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="">Relocation Benefits</label>
+						</div>
+					</div>
+
+					<div class="col-md-8">
+						<div class="form-group">
+							<!--   <input type="checkbox" class="form-checkbox" ng-model="offerLetterDto.choice"> Airfare
+                <input type="checkbox" class="form-checkbox" ng-model="offerLetterDto.choice"> 1 Week motel
+                <input type="checkbox" class="form-checkbox" ng-model="offerLetterDto.choice"> 1 Week meals
+                <input type="checkbox" class="form-checkbox" ng-model="offerLetterDto.choice"> 1 Week rental/cab
+                 -->
+
+
+							<label ng-repeat="benifit in reLocationBenifitList"> <input
+								type="checkbox"
+								checklist-model="offerLetterDto.relocationBenefitArray"
+								checklist-value="benifit"> {{benifit}} &nbsp;
+							</label>
+						</div>
+
+					</div>
+
+
+
+					<div class="row">
+
+						<div class="col-md-6">
+							<div class="form-group">
+								<label>Any Exceptions</label>
+								<textarea type="text" rows="3" class="form-control"
+									placeholder="Any Exceptions"
+									ng-model="offerLetterDto.expections"></textarea>
+							</div>
+						</div>
+
+
+
+						<div class="col-md-6">
+							<div class="form-group">
+								<label>Any Special Instructions</label>
+								<textarea type="text" rows="3" class="form-control"
+									placeholder="Any Special Instructions"
+									ng-model="offerLetterDto.specialInstructions"></textarea>
+							</div>
+						</div>
+					</div>
+
+
+
+					<br>
+					<br> <span class="smltxt">* Full-Time employee =
+						Employees working an average of 30 hours or more per week.</span>
+
+
+				</div>
+			</div>
+
+			<hr>
+			<div class="row fade-in-up">
+				<div class="col-md-12">
+					<div class="pull-right">
+						<button type="button" class="btn blue"
+							ng-click="tabs[2].active = true">
+							<i class="fa fa-arrow-circle-left"></i> Previous
+						</button>
+						<button type="submit" class="btn blue" ng-click="offerlettervalidation()">Save / Create <i class="fa fa-check" aria-hidden="true"></i></button>
+						<button type="button" class="btn btn-primary blue" ng-click="cancelAction()">
+							Cancel <i class="fa fa-ban" aria-hidden="true"></i>
+						</button>
+
+					</div>
+				</div>
+			</div>
+		</div>
+		</uib-tab> </uib-tabset>
+
+	</form>
+
+	<!-- END MAIN CONTENT -->
+
+
+
+</div>

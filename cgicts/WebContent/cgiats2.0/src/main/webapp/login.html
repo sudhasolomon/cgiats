@@ -1,0 +1,210 @@
+<html ng-app="app" ng-controller="loginController" ng-init="onload()">
+<head>
+<title>Welcome To CGI ATS</title>
+<link href="assets/layouts/layout/css/custom.css" rel="stylesheet" />
+<link href="assets/layouts/layout/css/animate.css" rel="stylesheet" />
+<link href="assets/global/plugins/font-awesome/css/font-awesome.min.css"
+	rel="stylesheet" />
+<script src="assets/global/plugins/angularjs/angular.min.js"></script>
+<script
+	src="assets/global/plugins/angularjs/plugins/jcs-auto-validate.min.js"></script>
+<script src="js/modules/login/login.js"></script>
+<script src="js/modules/candidates/CandidatesModule.js"></script>
+
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+
+
+
+
+<style type="text/css">
+.error-msg {
+	position: absolute;
+	margin: 35px 0px 0px -150px;
+	color: #ffff00;
+}
+</style>
+<script type="text/javascript">
+	$(document).ready(function() {
+
+		$("#forgot-password").click(function() {
+			$("#loginbox").addClass("bounceOutUp");
+			setTimeout(function() {
+
+				$("#forgotpwdbox").css("display", "block");
+			}, 450);
+		});
+
+		$("#cancelpwd").click(function() {
+			$("#forgotpwdbox").addClass("zoomOut");
+			;
+			setTimeout(function() {
+				;
+				location.reload();
+			}, 50);
+		});
+
+		$("#relogin").click(function() {
+			$("#forgotpwdbox").addClass("zoomOut");
+			;
+			setTimeout(function() {
+				;
+				location.reload();
+			}, 50);
+		});
+
+	});
+</script>
+</head>
+<body>
+<div class="underlay" >
+<div class="loadcont">
+<img src="assets/layouts/layout/img/newloading.gif" width="100px"><b>Loading....</b>
+</div>
+</div>
+	<div class="login-main animated BounceInDown" id="loginbox">
+
+		<form name="AddCandidateForm" class="tab-form-demo" novalidate=""
+			ng-submit="loginsbt()">
+
+			<div class="login-left">
+							<div class="login-logo">
+					<img src="assets/layouts/layout/img/logo.png" alt="logo"
+						class="logo-default">
+				</div>
+<div class="invaliduser">Invalid User Name / Password</div>
+				<div class="login-controls ">
+					<div class="login-form-controls form-group lt-bx">
+						<label>&nbsp;</label> <input type="text"
+							placeholder="User Name" required="" ng-model="username"
+							class="login-input"><i class="fa fa-user"
+							aria-hidden="true"></i>
+					</div>
+
+
+
+					<div class="login-form-controls form-group">
+						<label>&nbsp;</label> <input type="password"
+							placeholder="Password" required="" ng-model="password"
+							class="form-control login-input"><i class="fa fa-lock"
+							aria-hidden="true"></i>
+					</div>
+
+					<div class="clearboth"></div>
+				</div>
+
+				<div class="login-link">
+					<a href="#" id="forgot-password">Forgot Password ?</a>
+				</div>
+			</div>
+
+			<button class="login-btn" type="submit" ng-click="">
+				<i class="fa fa-arrow-right" aria-hidden="true"></i>
+				<div class="login-txt">Login</div>
+			</button>
+
+			<div class="clearboth"></div>
+
+		</form>
+	</div>
+
+ 
+	<div class="login-main animated zoomIn" id="forgotpwdbox">
+
+		<form name="forgotpassword" class="tab-form-demo">
+
+			<div class="login-left">
+				<div class="cancelbtn">
+					<a href="#" id="cancelpwd"><i class="fa fa-times-circle"
+						aria-hidden="true"></i> Cancel</a>
+				</div>
+
+				<div class="login-logo">
+					<img src="assets/layouts/layout/img/logo.png" alt="logo"
+						class="logo-default">
+				</div>
+
+
+				<h2 class="login-head">Forgot Password</h2>
+
+				<div class="login-controls" id="passwordfields">
+					<div class="login-form-controls form-group frgtpwd lt-bx">
+						<input type="text"
+							placeholder="User Name" class="login-input" ng-model="fusername"><i
+							class="fa fa-user" aria-hidden="true"></i>
+					</div>
+
+					<div class="ordiv">
+						<span>OR</span>
+					</div>
+
+					<div class="login-form-controls form-group frgtpwd">
+						<input type="email"
+							placeholder="Email Address" class="login-input" ng-model="email"><i
+							class="fa fa-envelope-o" aria-hidden="true"></i>
+					</div>
+
+					<div class="clearboth"></div>
+					<h4 id="forgterror">{{errormsg}}</h4>
+				</div>
+
+
+
+				<h4 id="recovermsg">
+					<br> {{recovermsg}} <br>
+					<br> <a href="#" id="relogin">Click Here to Login</a>
+				</h4>
+
+
+
+			</div>
+
+
+
+			<button ng-click="checkfields()" id="subtn" class="login-btn" type="submit">
+				<i class="fa fa-arrow-right" aria-hidden="true"></i>
+				<div class="login-txt forgotpwd">Recover</div>
+			</button>
+
+			<div class="clearboth"></div>
+
+
+		</form>
+	</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>

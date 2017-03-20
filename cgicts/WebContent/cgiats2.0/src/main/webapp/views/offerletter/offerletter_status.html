@@ -1,0 +1,124 @@
+<div ng-controller="offerletterstatuscontroller" ng-init="onload()">
+
+	<!-- BEGIN PAGE HEADER-->
+	<div class="sub-page-header">
+		<div class="page-bar">
+			<ul class="page-breadcrumb">
+				<li><a href="#/dashboard">Home</a> <i class="fa fa-circle"></i>
+				</li>
+				<li><span> Reports</span> <i class="fa fa-circle"></i></li>
+				<li><span>Consultant</span> <i class="fa fa-circle"></i></li>
+				<li><span>Offer Letters Status</span></li>
+			</ul>
+		</div>
+	</div>
+	<!-- END PAGE HEADER-->
+	
+
+
+
+	<!-- BEGIN MAIN CONTENT -->
+
+	<div ng-show="errmsg">
+		<div style="color: red; text-align: right;">
+			<b>{{errmsg}}</b>
+		</div>
+	</div>
+
+
+
+	<form name="offerLetterStatusFormId" class="tab-form-demo"
+		ng-submit="saveOfferLetterStatus()">
+		<div class="row fade-in-up">
+			<div class="col-md-8">
+				<div class="row">
+
+					<div class="col-md-6">
+						<div class="form-group">
+							<label class="control-label">Status</label> <select
+								class="form-control ng-pristine ng-valid ng-valid-required ng-touched"
+								required="" ng-model="offerLetterHistoryDto.status"
+								ng-options="status.value as status.value for status in  offerLetterStatusList">
+								<option value="" disabled selected>Select</option>
+							</select>
+						</div>
+					</div>
+
+
+					<div class="col-md-6">
+						<div class="form-group">
+							<label class="">Start Date</label>
+							<div class="input-group">
+								<input type="text" class="form-control"
+									ng-click="StartDateopen()"
+									uib-datepicker-popup="{{DateFormat}}"
+									is-open="StartDatePopup.opened"
+									datepicker-options="StartDateOptions" close-text="Close"
+									alt-input-formats="altInputFormats"
+									ng-model="offerLetterHistoryDto.strStatusCreatedOn"
+									readonly="true" /> <span class="input-group-btn">
+									<button type="button" class="btn btn-default"
+										ng-click="StartDateopen()">
+										<i class="glyphicon glyphicon-calendar"></i>
+									</button>
+								</span>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+
+
+				<div class="row">
+
+					<div class="col-md-12">
+						<div class="form-group">
+							<label class="">Notes</label>
+							<textarea type="text" style="height: 125px;" class="form-control"
+								placeholder="Notes.." ng-model="offerLetterHistoryDto.notes"></textarea>
+						</div>
+					</div>
+
+				</div>
+
+
+
+
+
+
+
+
+
+
+
+
+				<div class="row fade-in-up">
+					<div class="col-md-12">
+						<div class="pull-right">
+							<button type="button" class="btn btn-primary blue" ui-sref="offerLetterReports">
+								Cancel <i class="fa fa-ban" aria-hidden="true"></i>
+							</button>
+							<button type="submit" class="btn blue">
+								Update Status<i class="fa fa-check" aria-hidden="true"></i>
+							</button>
+						</div>
+					</div>
+				</div>
+
+
+			</div>
+		</div>
+
+	</form>
+
+
+
+
+
+
+
+
+	<!-- END MAIN CONTENT -->
+
+</div>

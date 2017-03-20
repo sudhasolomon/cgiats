@@ -1,0 +1,184 @@
+<div ng-controller="myprofilecontroller"  ng-init="onload()">
+
+<!-- BEGIN PAGE HEADER--> 
+<div class="sub-page-header">
+  <div class="page-bar">
+    <ul class="page-breadcrumb">
+          	<li><a href="#/dashboard" ng-if="!(rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_Recruiter' || rsLoginUser.userRole === 'ATS_Executive')">Home</a> 
+				<a href="#/india_joborders/my_indiajobOrder" ng-if="(rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_Recruiter')">Home</a>
+				<a href="#/candidates/missingData" ng-if="(rsLoginUser.userRole === 'ATS_Executive')">Home</a>
+				<i class="fa fa-circle"></i>
+				</li>
+      <li>
+        <span>My Profile</span>
+      </li>
+    </ul> 
+     
+  </div>
+</div>
+<!-- END PAGE HEADER--> 
+
+
+
+
+<!-- BEGIN MAIN CONTENT -->
+
+
+<form name="myprofileform" class="tab-form-demo"  ng-submit="saveOrUpdateProfile()" >
+
+
+<div class="row fade-in-up">
+    <div class="col-md-12">
+    
+    
+    
+    
+    <div class="row">
+    
+    
+    
+    
+    		<div class="col-md-3">
+    
+    
+    
+    <br>
+      <div class="profilecircle"><img class="profilepic"  ng-if="isCroppedImageVisible" ng-src="{{myCroppedImage}}"/>
+       <img ng-if="!isCroppedImageVisible" class="profilepic"
+								ng-src="{{'data:image/'+rsLoginUser.imageExt+';base64,'+rsLoginUser.base64Image}}"
+								width="200" height="200" >
+      </div>
+      <br>
+<button type="button" class="btn blue" ng-click="uploadphoto()" style="width:100%;" >Upload photo</button>
+    <input type="file" id="fileInput" style="display:none;" />
+  <div class="imageundermask" id="mainimg">
+  <div class="imgpopinner">
+  <div class="cropArea">
+    <img-crop image="myImage" result-image="myCroppedImage"></img-crop>
+  </div>
+  
+  <button type="button" class="btn blue pull-right popupbtns" ng-click="cropsave()" >Save<i class="fa fa-check" ></i></button>
+  <button type="button" class="btn blue pull-right popupbtns" ng-click="cropcancel()" >Cancel <i class="fa fa-ban"></i></button>
+  
+  
+  </div>
+  </div>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    
+              	
+              	
+            </div>
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            <div class="col-md-9">
+			
+			
+			<div class="row">
+			<div class="col-md-6">
+              	<div class="form-group">
+                <label class="">User ID</label>
+                <input type="text" class="form-control" placeholder="User ID" ng-model="rsLoginUser.userId" readonly="">
+              </div>
+              </div>
+              </div>
+              
+              <div class="row">
+              
+              <div class="col-md-6">
+              	<div class="form-group">
+                <label class="control-label">First Name</label>
+                <input type="text" class="form-control" placeholder="First Name" ng-model="userProfile.firstName" required="">
+              </div>
+              </div>
+              
+              
+              
+              <div class="col-md-6">
+              	<div class="form-group">
+                <label class="">Last Name</label>
+                <input type="text" class="form-control" placeholder="Last Name" ng-model="userProfile.lastName" >
+              </div>
+              </div>
+              
+              </div>
+              
+              <div class="row">
+              
+              <div class="col-md-6">
+              	<div class="form-group">
+                <label class="">Phone</label>
+                <input ui-phone class="form-control" placeholder="Phone" ng-model="userProfile.phone" >
+              </div>
+              </div>
+              
+              <div class="col-md-6">
+              	<div class="form-group">
+                <label class="">City</label>
+                <input type="text" class="form-control" placeholder="City" ng-model="userProfile.city" >
+              </div>
+              </div>
+              
+              </div>
+              
+              
+              <div class="row">
+              
+              <div class="col-md-6">
+              	<div class="form-group">
+                <label class="control-label">Email</label>
+                <input type="email" class="form-control" placeholder="Email Address" ng-model="userProfile.email"  required>
+              </div>
+              </div>
+              
+              <div class="col-md-6">
+              	<div class="form-group">
+                <label class="">Assigned Dm</label>
+                <input type="text" class="form-control" placeholder="Assigned Dm" ng-model="rsLoginUser.assignedBdm" readonly="">
+              </div>
+              </div>
+
+            </div>
+            </div>
+            
+<div class="row fade-in-up">
+        <div class="col-md-12">
+          <div class="pull-right"> 
+            <button type="button" class="btn btn-primary blue" ng-click="cancelprofile()" >Cancel <i class="fa fa-ban" aria-hidden="true"></i></button>
+            <button type="submit" class="btn blue" >Update Profile<i class="fa fa-check" aria-hidden="true"></i></button>
+          </div>
+        </div>
+      </div>            
+
+
+
+    </div>
+    
+    
+    
+    </div>
+    </div>
+
+
+
+  
+  
+</form>
+<!-- END MAIN CONTENT -->
+
+</div>

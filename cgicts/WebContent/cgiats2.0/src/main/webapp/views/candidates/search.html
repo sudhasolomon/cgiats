@@ -1,0 +1,359 @@
+
+<div ng-controller="SearchController" ng-init="onload()" id="searchControllerId">
+<script src="assets/global/scripts/alljquery.js"></script>
+
+<!-- BEGIN PAGE HEADER--> 
+<div class="sub-page-header">
+  <div class="page-bar">
+    <ul class="page-breadcrumb">
+          	<li><a href="#/dashboard" ng-if="!(rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_Recruiter' || rsLoginUser.userRole === 'ATS_Executive')">Home</a> 
+				<a href="#/india_joborders/my_indiajobOrder" ng-if="(rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_Recruiter')">Home</a>
+				<a href="#/candidates/missingData" ng-if="(rsLoginUser.userRole === 'ATS_Executive')">Home</a>
+				<i class="fa fa-circle"></i>
+				</li>
+      <li>
+        <span>Candidates</span>
+        <i class="fa fa-circle"></i>
+      </li>
+      <li>
+        <span>Search</span>
+      </li>
+    </ul>
+    <div class="page-toolbar">
+      <div class="btn-group">
+       <!--  <button type="button" class="btn btn-primary blue save-queries">Save Queries <i class="fa fa-save"></i></button> -->
+        <a href="#/candidates/add" class="btn btn-primary blue">Add Candidate <i class="fa fa-plus"></i></a> 
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END PAGE HEADER--> 
+
+<!-- BEGIN MAIN CONTENT -->
+
+  <form role="form" novalidate="" ng-submit="" name="myForm" >
+  <div class="undermask" id="deleteErrInfo"><div class="popupcont"><div class="popuphead">Delete Info<span class="pull-right" id="closebtn01"><img width="16" height="16" src="assets/global/img/portlet-remove-icon-white.png" class="ng-scope"></span></div><div id="deleteErrMsgDivId"></div></div></div>
+    <!-- BEGIN Search Forms -->
+    <div ng-show="searchForm">
+
+      <!-- BEGIN Forms Row -->
+      <div class="row fade-in-up">
+        <div class="col-md-6">
+        
+        <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label>Search with Saved Queries</label>
+                <div class="row">
+                	<div class="col-md-11">
+                	<select class="form-control" ng-model="list_category" ng-options="obj.queryName as obj.queryName for obj in list_categories" ng-change=SavedQueries()>  
+                     <option value="">Select</option>
+                 	</select>
+                	</div>
+                	<div class="col-md-1" style="margin-left:-21px;">
+                	 <span class="btn blue" ng-click="removeQuery();"><i class="fa fa-trash-o" title="Delete Query"></i></span> 
+                	</div>
+                </div>
+              </div>
+           </div>
+        </div>
+         <div class="form-group">
+          	<input type="text" name="mailData" ng-bind="dataFromChecked" style="display: none;"/>
+            <label class="">Resume Search</label>
+            <textarea class="form-control" rows="2" placeholder="Ex: (&quot;Project Manag&quot; OR PMP) AND SDLC AND (Agile OR Scrum OR JIRA) AND software AND develop*" ng-model="keywords"></textarea>
+          </div>
+      <div class="form-group">
+            <label>Location</label>
+            <input type="text" class="form-control" placeholder="City, State, Country" ng-autocomplete="location" details="details" options="options" id="autoLocation" ng-blur="locblur()">
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+            <div class="form-group">
+                <label>Created Between</label>
+                <input type="daterange" ng-model="Created" ranges="ranges" id="createdBetween" class="form-control" readonly="true">
+              </div>
+          </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Candidate ID</label>
+                <input type="number" min="0" max="2147483647" class="form-control" placeholder="Candidate ID" ng-model="candidateid">
+                <input type=hidden ng-model="queryName">
+                <input type="hidden" ng-model="queryNameAutopopulate">
+                <input type="hidden" ng-model="queryId">
+                
+              </div>
+            </div>
+          </div>
+          
+        </div>
+
+        <div class="col-md-6">
+        	    <div class="form-group">
+            <label>Key Skills</label>
+            <div class="input-group">
+              <div class="input-group-btn">
+                <button type="button" class="btn green dropdown-toggle" data-toggle="dropdown">{{keySkillsItem}}
+                  <i class="fa fa-angle-down"></i>
+                </button>
+                <ul class="dropdown-menu"> 
+                  <li ng-repeat="item in keySkillsItems"><a ng-click="keySkillSelected(item)">{{item}}</a></li>
+                </ul> 
+              </div>
+              <!-- /btn-group -->
+              <input type="text" ng-model="keyskills" class="form-control" placeholder="Ex: (Java OR J2EE) AND (JSP OR JSF) OR (Hibernate AND Spring)">
+              <!-- /btn-group -->
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Job Title</label>
+            <div class="input-group">
+              <div class="input-group-btn">
+                <button type="button" class="btn green dropdown-toggle" data-toggle="dropdown">{{jobTitleItem}}
+                  <i class="fa fa-angle-down"></i>
+                </button>
+                <ul class="dropdown-menu"> 
+                  <li ng-repeat="item in jobTitleItems"><a ng-click="jobTitleSelected(item)">{{item}}</a></li>
+                </ul>
+              </div>
+              <!-- /btn-group -->
+              <input type="text" ng-model="title" class="form-control" placeholder="Ex: (&quot;Project manager&quot; OR &quot;Quality Assurance Manager&quot;)">
+              <!-- /btn-group -->
+            </div>
+          </div>
+         
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>States</label>
+                <select class="StatesBox form-control" multiple=""  ng-model="state" ng-options="name for (name, value) in usstates">
+
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Work Authorization</label>
+                <select class="WorkAuthorizationBox form-control" multiple="" ng-model="visatype">
+                  <option>Not Available</option>
+                  <option>US Citizen</option>
+                  <option>Green Card</option>
+                  <option>EAD</option>
+                  <option>TN Visa</option>
+                  <option>Canadian</option>
+                  <option>H1B Visa</option>
+                  <option>H4 Visa</option>
+                  <option>L1 Visa</option>
+                  <option>L2 Visa</option>
+                  <option>OPT</option>
+                  <option>CPT</option>
+                  <option>Corp to Corp</option>
+                  <option>Citizen</option>
+                </select>
+              </div>
+            </div>
+          </div>
+			
+        </div>
+
+      </div>
+       <!-- END Forms Row -->
+
+
+      <!-- BEGIN Advanced Forms Row -->
+      <div class="row fade-in-up" ng-show="advancedSearch">
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>First Name</label>
+                <input type="text" class="form-control" placeholder="First Name" ng-model="firstname">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Last Name</label>
+                <input type="text" class="form-control" placeholder="Last Name" ng-model="lastname">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Email</label>
+                <input type="email" class="form-control" placeholder="Email" ng-model="email">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Phone</label>
+                <input ui-phone class="form-control" placeholder="(999) 999-9999" ng-model="phone">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Education</label>
+                <select class="educationBox form-control" multiple="" ng-model="education">
+                  <option>All</option>
+                  <option>High School</option>
+                  <option>Associate</option>
+                  <option>Pre-Bachelors</option>
+                  <option>Bachelors</option>
+                  <option>Post-Bachelors, Pre-Masters</option>
+                  <option>MBA</option>
+                  <option>Masters</option>
+                  <option>Post-Masters, Pre-Doctorate</option>
+                  <option>Doctorate</option>
+                  <option>Military Service</option>
+                  <option>Vocational School</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Years of Experience</label>
+                <div class="row">
+                  <div class="col-md-6">
+                    <input type="number" class="form-control" placeholder="MIN" ng-model="minexp" readonly>
+                  </div>
+                  <div class="col-md-6">
+                    <input type="number" class="form-control" placeholder="MAX" ng-model="maxexp" readonly>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Compensation</label>
+                <div class="row">
+                  <div class="col-md-6">
+                    <input type="number" class="form-control" placeholder="MIN" ng-model="minsal" readonly>
+                  </div>
+                  <div class="col-md-6">
+                    <input type="number" class="form-control" placeholder="MAX" ng-model="maxsal" readonly>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+       <div class="row fade-in-up">
+        <div class="col-md-8">
+      <div class="row">
+      <div class="form-group impoints">
+      <b>NOTE :</b><br>
+1. Do not copy search strings from other documents.<br>
+2. Special characters are not supporting in this version (Ex: .,#,$,/,\).<br>
+3. Wildcard search inside double quotation is not supporting in this version (Ex : \"Project Manag*\").
+      </div>
+      </div>
+      </div>
+      </div>
+      <!-- END Advanced Forms Row -->
+
+      <!-- BEGIN Advanced Buttons Row -->
+      <div class="row pull-right">
+    
+        <div class="col-md-12"> <a class="link advancedBtn" ng-click="advancedSearch = !advancedSearch">Advanced Search <i class="fa fa-search-plus"></i></a>
+			<button type="submit" class="btn btn-primary blue" ng-click ="searchCandidateWithoutSave();">Search <i class="fa fa-search"></i></button>
+        	<button type="submit" class="btn btn-primary blue" ng-click="searchCandidate();">Save & Search <i class="fa fa-search"></i></button>  
+        	<button type="submit" class="btn btn-primary grey-cascade" ng-click="reset(myForm);">Reset <i class="fa fa-refresh"></i></button>  
+
+        </div>
+      </div>
+      <!-- BEGIN Advanced Buttons Row -->
+
+    </div>
+    <!-- END Search Forms -->
+
+
+    <!-- BEGIN Search Toggle Button -->
+    <div class="row" ng-show="searchToggle">
+      
+    </div>
+    <!-- END Search Toggle Button -->
+
+
+    <!-- BEGIN Search Table -->
+    <div class="row SearchGridTable" ng-show="showGridTable" block-ui="main" class="block-ui-main"> 
+      <div class="col-md-12">
+        <div class="portlet-body">
+          <div class="dataTables_wrapper no-footer"> 
+
+            <div class="row">
+              <div class="col-md-7 col-sm-7">
+                 <div class="btn-group pull-left">
+                  <button class="btn sbold green send-email" ng-click="sendEmails()">
+                    Send Email <i class="fa fa-send"></i>
+                  </button>
+                  <button class="btn sbold green" ng-click="sendSms()">
+                    Send SMS <i class="fa fa-send"></i>
+                  </button>
+                </div>
+                <div  class="mesgerror fade-in-up msgrooro">Please select atleast one record</div>
+              </div>
+              <div class="col-md-5">
+               <div ng-show="searchToggle">
+       			 <a href="javascript:;" class="btn sbold blue pull-right" ng-show="searchBtn" ng-click="searchToggleBtn()">Search Candidates <i class="fa fa-search"></i></a>
+      			</div>
+              </div>
+            </div> 
+            </div></div></div></div>
+
+            <!-- Table --> 
+            <div class="row fade-in-up table-scrollable">
+            
+	            <table id="table" bs-table-control="candidate.candidateBsTableControl" ng-show="searchTable"  >
+		        <thead>
+		            <tr>
+		                <th data-field="state" data-checkbox="true"></th>
+		                <th data-field="firstName" data-sortable="true"></th>
+		                <th data-field="title" data-sortable="true"></th>
+		                <th data-field="location" data-sortable="true"></th>
+		                <th data-field="createdOn" data-sortable="true"></th>
+		                <th data-field="updatedOn" data-sortable="true"></th>
+		                <th data-field="status" data-sortable="true"></th>
+		                <th data-field="visaType" data-sortable="true"></th>
+		                 <th data-field="resume" data-formatter="candidateresumeFormatter" data-events="candidateResumeEvents"></th> 
+		                <th data-field="actions" data-formatter="searchactionFormatter" data-events="searchoperateEvents"></th>
+		            </tr>
+		        </thead>
+		        <tbody>
+		           
+		        </tbody>
+	    		</table>  
+            </div>  
+            <!-- End Table -->
+            
+     <div class="row SearchGridTable" ng-show="showGridTable" block-ui="main" class="block-ui-main"> 
+      <div class="col-md-12">
+        <div class="portlet-body">
+          <div class="dataTables_wrapper no-footer"> 
+
+            <div class="row">
+              <div class="col-md-7 col-sm-7">
+                 <div class="btn-group pull-left">
+                  <button class="btn sbold green send-email" ng-click="sendEmails()">
+                    Send Email <i class="fa fa-send"></i>
+                  </button>
+                  <button class="btn sbold green" ng-click="sendSms()">
+                    Send SMS <i class="fa fa-send"></i>
+                  </button>
+                </div>
+                <div  class="mesgerror fade-in-up msgrooro">Please select atleast one record</div>
+              </div>
+              <div class="col-md-5">
+               <div ng-show="searchToggle">
+       			 <a href="javascript:;" class="btn sbold blue pull-right" ng-show="searchBtn" ng-click="searchToggleBtn()">Search Candidates <i class="fa fa-search"></i></a>
+      			</div>
+              </div>
+            </div> 
+            </div></div></div></div>
+
+  </form>
+
+</div>
+<!-- END MAIN CONTENT -->

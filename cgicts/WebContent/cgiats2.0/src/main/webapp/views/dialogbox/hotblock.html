@@ -1,0 +1,35 @@
+<md-dialog>
+  <form name ="reasonForm" ng-submit="answer(use)">
+<div >
+<!-- <span>{{candidateData.id}} :employee</span> -->
+    <md-toolbar style="background-color:#00CED1">
+      <div class="md-toolbar-tools">
+        <h2>Reason</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <img width="16" height="16" src="assets/global/img/portlet-remove-icon-white.png" />
+        </md-button>
+      </div>
+    </md-toolbar></div>
+
+    <md-dialog-content>
+      <div class="md-dialog-content">
+      <div class="form-group">
+      		<label class="control-label">Reason:</label><br>
+			<textarea ng-model="use" class="searchpoptextarea" name="reason" ng-trim="false" required  rows="8" cols="60" maxlength="250" ></textarea><br>
+    		<span>{{250 - use.length}} Characters left</span></div>
+    		<label style="color: red;">{{msg}}</label>
+      </div>
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+      <span flex></span>
+      <md-button style="background-color:#3399FF; color:white" ng-click="cancel()" md-autofocus>
+       Cancel
+      </md-button>
+      <md-button  style="background-color:#3399FF; color:white" ng-click="answer(use)" style="margin-right:20px;" md-autofocus>
+        Save
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog> 

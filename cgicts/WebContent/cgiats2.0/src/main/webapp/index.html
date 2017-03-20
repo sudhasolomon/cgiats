@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8 no-js" data-ng-app="CgiATSapp"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js" data-ng-app="CgiATSapp"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en" data-ng-app="CgiATSapp">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+
+<head>
+  <title data-ng-bind="'CGI ATS | ' + $state.current.data.pageTitle"></title>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <meta content="" name="description" />
+  <meta content="" name="author" />
+  <link rel="shortcut icon" href="favicon.ico" />
+
+  <!-- BEGIN GLOBAL MANDATORY STYLES -->
+  <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" />
+  <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" />
+  <link href="assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+  <link href="assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" />
+  <link href="assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" />
+  <link href="assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" />
+  <!-- END GLOBAL MANDATORY STYLES -->
+
+  <!-- BEGIN THEME GLOBAL STYLES -->
+  <link href="assets/global/css/components.css" rel="stylesheet"/>
+  <link href="assets/global/css/angularjs-datetime-picker.css" rel="stylesheet"/>
+  <link href="assets/global/css/plugins.min.css" rel="stylesheet" />
+  <!-- END THEME GLOBAL STYLES -->
+
+  <!-- BEGIN THEME LAYOUT STYLES -->
+  <link href="assets/layouts/layout/css/layout.css" rel="stylesheet" />
+  <link href="assets/layouts/layout/css/themes/darkblue.min.css" rel="stylesheet" />
+  <link href="assets/layouts/layout/css/custom.css" rel="stylesheet" />
+  <link href="assets/layouts/layout/css/animate.css" rel="stylesheet" />
+  <!-- END THEME STYLES --> 
+
+  <!-- BEGIN APP STYLES -->
+  <link href="assets/pages/css/cgiats.css" rel="stylesheet" />
+  <!-- END APP STYLES --> 
+  <!-- <script src="https://cdn.plot.ly/plotly-latest.min.js"></script> -->
+  <!-- DIALOG BOX -->
+  <link href="resources/css/angular-material.1.0.0.css" rel="stylesheet" />
+  <link href="resources/css/jquery.growl.css" rel="stylesheet" />
+  <!-- FOR RADIO BUTTON AND CHECK BOX -->
+   <!--  <link href="assets/layouts/layout/css/stylesheet-pure-css.css" rel="stylesheet" /> -->
+  <style type="text/css">
+  #notifications {
+	  cursor: pointer;
+	  position: fixed;
+	  right: 0px;
+	  z-index: 9999;
+	  top: 0px;
+	  margin-top: 22px;
+	  margin-right: 15px;
+	  max-width: 400px;  
+	}
+  </style>
+</head>
+
+
+<body ng-controller="MainController" class="page-header-fixed page-sidebar-closed-hide-logo page-on-load" ng-class="{'page-content-white': settings.layout.pageContentWhite,'page-container-bg-solid': settings.layout.pageBodySolid, 'page-sidebar-closed': settings.layout.pageSidebarClosed}">
+
+
+
+
+
+<div class="underlay" >
+<div class="loadcont">
+<img src="assets/layouts/layout/img/newloading.gif" width="100px"><b>Loading....</b>
+</div>
+</div>
+
+
+  <!-- BEGIN PAGE SPINNER -->
+  <div ng-spinner-bar class="page-spinner-bar">
+    <div class="bounce1"></div>
+    <div class="bounce2"></div>
+    <div class="bounce3"></div>
+  </div>
+  <!-- END PAGE SPINNER -->
+  <!-- BEGIN HEADER -->
+  <header>
+    <div data-ng-include="'tpl/header.html'" data-ng-controller="HeaderController" class="page-header navbar navbar-fixed-top"> </div>
+  </header>
+  <!-- END HEADER -->
+  <div class="clearfix"> </div>
+  <!-- BEGIN CONTAINER -->
+  <section>
+    <div class="page-container">
+      <!-- BEGIN SIDEBAR -->
+      <div data-ng-include="'tpl/sidebar.html'" data-ng-controller="SidebarController" class="page-sidebar-wrapper" style="position: fixed;"> </div>
+      <!-- END SIDEBAR -->
+      <!-- BEGIN CONTENT -->
+      <div class="page-content-wrapper">
+        <div class="page-content">
+          <!-- BEGIN ACTUAL CONTENT -->
+          <div ui-view> </div>
+          <!-- END ACTUAL CONTENT -->
+        </div>
+      </div>
+      <!-- END CONTENT -->
+    </div>
+  </section>
+  <!-- END CONTAINER -->
+  <!-- BEGIN FOOTER -->
+  <footer>
+    <div data-ng-include="'tpl/footer.html'" data-ng-controller="FooterController" class="page-footer"> </div>
+  </footer>
+  <!-- END FOOTER -->
+
+
+  <!-- BEGIN CORE JQUERY PLUGINS -->
+  <!--[if lt IE 9]>
+        <script src="assets/global/plugins/respond.min.js"></script>
+        <script src="assets/global/plugins/excanvas.min.js"></script> 
+        <![endif]-->
+  <script src="assets/global/plugins/jquery.min.js"></script>
+  <script src="assets/global/plugins/bootstrap/js/bootstrap.min.js"></script>
+  <script src="assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js"></script>
+  <script src="assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+  <script src="assets/global/plugins/jquery.blockui.min.js"></script>
+  <script src="assets/global/plugins/jquery.cokie.min.js"></script>
+  <script src="assets/global/plugins/uniform/jquery.uniform.min.js"></script>
+  <script src="assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+  <script src="assets/global/plugins/bootstrap-daterangepicker/moment.min.js"></script> 
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyABJ7qZacsu1anoW_y6qy26_UsygVJyf9E&libraries=places"></script>
+  <script src="assets/global/plugins/bootstrap-table-master/bootstrap-table.js"></script> 
+  <!-- END CORE JQUERY PLUGINS -->
+  <!-- BEGIN CORE ANGULARJS PLUGINS -->
+
+  <script src="assets/global/plugins/angularjs/angular.min.js"></script>
+    <script src="assets/global/plugins/angularjs/jquery.maskedinput.js"></script>
+  <script src="assets/global/plugins/angularjs/FileSaver.js"></script>
+  <script src="assets/global/plugins/angularjs/angular-sanitize.min.js"></script>
+  <script src="assets/global/plugins/angularjs/angular-touch.min.js"></script>
+  <script src="assets/global/plugins/angularjs/plugins/angular-ui-router.min.js"></script>
+  <script src="assets/global/plugins/angularjs/plugins/json-export-excel.js"></script>
+  <script src="assets/global/plugins/angularjs/plugins/ngStorage/ngStorage.min.js"></script>
+  <script src="assets/global/plugins/angularjs/plugins/jcs-auto-validate.min.js"></script>
+  <script src="assets/global/plugins/angularjs/plugins/ocLazyLoad.min.js"></script>
+  <script src="assets/global/plugins/angularjs/plugins/ui-bootstrap-tpls.min.js"></script>   
+  <script src="js/services/modelDialogs/angular-highlight.js"></script>
+  <script src="assets/global/plugins/bootstrap-table-master/bootstrap-table-angular.js"></script>  
+  <script src="assets/global/plugins/angularjs/plugins/block-ui/angular-block-ui.js"></script> 
+  
+  
+  
+  <!-- END CORE ANGULARJS PLUGINS -->
+
+  <!-- BEGIN APP LEVEL ANGULARJS SCRIPTS -->
+  <script src="js/main.js"></script>
+  <script src="js/constants.js"></script>
+  <script src="js/angular-idle.min.js"></script>
+  
+  <script src="js/directives/global-directives.js"></script>
+  <script src="js/directives/checklist-model.js"></script>
+  <script src="js/directives/valid-number.js"></script>
+  <script src="js/directives/ng-bs-daterangepicker.js"></script>
+  <script src="js/directives/jqueryinputmask.js"></script>
+  <script src="js/directives/ngAutoComplete.js"></script>
+  <script src="js/services/smsService.js"></script>
+   <script src="js/services/mailService.js"></script>
+   <script src="js/services/DateRangeService.js"></script>
+  <!-- END APP LEVEL ANGULARJS SCRIPTS -->
+  <!-- BEGIN APP LEVEL JQUERY SCRIPTS -->
+  <script src="assets/global/scripts/app.js"></script>
+    <script src="assets/global/scripts/ng-img-crop.js"></script>
+    <script src="assets/global/scripts/angularjs-datetime-picker.js"></script>
+    <!-- <script src="assets/global/scripts/angularjs-datetime-picker.min.js"></script> -->
+    <script src="assets/global/scripts/ng-csv.js"></script>
+    
+    <script src="assets/global/scripts/angucomplete-alt.js"></script>
+    <script src="assets/global/scripts/plotly-latest.min.js"></script>
+    
+  <script src="assets/layouts/layout/scripts/layout.js"></script>
+  <!-- END APP LEVEL JQUERY SCRIPTS --> 
+  
+   <!-- CANDIDATE APP MODULES -->
+  <script id="Load_JS_Files_Before_Module"></script> 
+  <script src="js/modules/dashboard/DashboardModule.js"></script>
+  <script src="js/modules/candidates/CandidatesModule.js"></script> 
+  <script src="js/modules/candidates/AddEditCandidates.js"></script> 
+  <script src="js/modules/candidates/SearchModule.js"></script>
+  <script src="js/modules/candidates/viewcandidates.js"></script>  
+  <script src="js/modules/candidates/error_page_controller.js"></script>
+  <script src="js/modules/others/access_Denied_Controller.js"></script> 
+  <script src="js/modules/candidates/indiacandidates.js"></script>  
+  <script src="js/modules/candidates/addEditIndiaCandidates.js"></script> 
+  <script src="js/modules/candidates/missingdatainfo.js"></script> 
+  <script src="js/modules/candidates/candidates_status.js"></script>  
+  <!-- END APP MODULES -->
+  
+  <!-- JOB ORDERS MODULE -->
+  <script src="js/modules/joborders/joborders_module.js"></script>
+  <script src="js/modules/joborders/my_joborders.js"></script>
+  <script src="js/modules/joborders/create_joborders.js"></script>
+  <script src="js/modules/joborders/all_joborders.js"></script>
+  <script src="js/modules/joborders/hot_joborders.js"></script>
+  <script src="js/modules/joborders/pending_joborders.js"></script>
+  <script src="js/modules/joborders/em_joborders.js"></script>
+  <script src="js/modules/joborders/delete_joborders.js"></script>
+  <script src="js/modules/joborders/result_joborders.js"></script>
+   <script src="js/modules/joborders/open_joborders.js"></script>
+   <script src="js/modules/joborders/submityourprofile.js"></script>
+   <script src="js/modules/dashboard/dmsummaryrepoer.js"></script>
+   <script src="js/modules/dashboard/recruitersreport.js"></script>
+   <script src="js/modules/dashboard/new_recruitersreport.js"></script>
+   
+  <script src="js/modules/login/login.js"></script>
+  
+  
+   <!-- India JOB ORDERS MODULE -->
+   <script src="js/modules/india_joborders/indiajoborders_module.js"></script>
+  <script src="js/modules/india_joborders/create_indiajoborders.js"></script>
+  <script src="js/modules/india_joborders/my_indiajoborders.js"></script>
+  <script src="js/modules/india_joborders/all_indiajoborders.js"></script>
+  <script src="js/modules/india_joborders/delete_indiajoborders.js"></script>
+  
+      <!-- INDIA SUBMITALS MODULE -->
+  <script src="js/modules/india_submitals/indiasubmital_module.js"></script>
+  <script src="js/modules/india_submitals/create_indiasubmitals.js"></script>
+  <script src="js/modules/india_submitals/edit_indiasubmitals.js"></script>
+  
+  <!-- SUBMITALS MODULE -->
+  <script src="js/modules/submitals/submitals_module.js"></script>
+  <script src="js/modules/submitals/create_submitals.js"></script>
+  <script src="js/modules/submitals/edit_submitals.js"></script>
+  <script src="js/modules/submitals/submittal_list.js"></script>
+  
+  
+  <!-- REPORTS MODULE -->
+  <script src="js/modules/reports/reports_module.js"></script>
+  <script src="js/modules/reports/consultant_info.js"></script>
+  <script src="js/modules/reports/fillproject_details.js"></script>
+  <script src="js/modules/reports/resumes_updatecount_report.js"></script>
+  <script src="js/modules/reports/Recruiter_report.js"></script>
+  <script src="js/modules/reports/liverecruitersreport.js"></script>
+  <script src="js/modules/reports/recruiters_report_by_source.js"></script>
+  <script src="js/modules/reports/login_info.js"></script>
+  <script src="js/modules/reports/bar_reports.js"></script>
+  <script src="js/modules/reports/total_report.js"></script>
+  <script src="js/modules/reports/recruiterLevelReport.js"></script>
+  <script src="js/modules/reports/Dm_Metric.js"></script>
+
+  <script src="js/modules/reports/customreportsmodule.js"></script>
+   <script src="js/modules/reports/customdmreport.js"></script>
+   <script src="js/modules/reports/customrecruiterreport.js"></script>
+   <script src="js/modules/reports/locationreport.js"></script>
+   <script src="js/modules/reports/dm_clientreport.js"></script>
+   <script src="js/modules/reports/customjoborderreport.js"></script>
+   <script src="js/modules/reports/client_report.js"></script>
+   <script src="js/modules/reports/clientDetails_report.js"></script>
+   <script src="js/modules/reports/source_report.js"></script>
+
+   <script src="js/modules/reports/turnaroundreport.js"></script>
+
+   <script src="js/modules/reports/resume_audit_log_report.js"></script>
+
+
+ <script src="js/modules/reports/client_metric.js"></script>
+
+ <script src="js/modules/reports/titlewise_metric.js"></script>
+
+  <script src="js/modules/reports/recruiter_Metric.js"></script>
+ 
+
+  <script src="js/modules/reports/stacked_bar_report.js"></script>
+
+  <script src="js/modules/reports/dmwisejoborders.js"></script>
+
+  
+  <!-- OFFER LETTER MODULE -->
+  <script src="js/modules/offerletter/offerletter_module.js"></script>
+  <script src="js/modules/offerletter/create_offerletter.js"></script>
+  <script src="js/modules/offerletter/offerletter_reports.js"></script>
+  <script src="js/modules/offerletter/offerletter_status.js"></script>
+  <script src="js/modules/offerletter/deleted_offerletters.js"></script>
+  
+  
+  
+  <!-- HELP MODULE -->
+<!--   <script src="js/modules/help/help_module.js"></script> -->
+  <script src="js/modules/help/help.js"></script>
+    <script src="js/modules/myaccount/changepassword.js"></script>
+    <script src="js/modules/myaccount/myprofile.js"></script>
+  
+  
+  
+  
+  <!-- APP LEVEL PLUGINS FOR DIALOG BOX -->
+  <script src="js/services/modelDialogs/angular-animate.min.1.4.8.js"></script>
+  <script src="js/services/modelDialogs/angular-aria.min.1.4.8.js"></script>
+  <script src="js/services/modelDialogs/angular-material.1.0.0.js"></script>
+  <script src="js/services/modelDialogs/angular-messages.min.1.4.8.js"></script>
+  <script src="js/services/modelDialogs/ng-csv.js"></script>
+  <script src="js/services/notification-growl/jquery.growl.js"></script>
+  
+  <script src="assets/global/scripts/angular-charts.js"></script>
+  <script src="assets/global/scripts/angular-charts.min.js"></script>
+  <script src="assets/global/scripts/d3.js"></script>
+  
+ <!--  <script src="assets/global/scripts/angular-fusioncharts.js"></script>
+  <script src="assets/global/scripts/fusioncharts.js"></script>  -->
+  
+<!--   <script type="text/javascript" src="http://static.fusioncharts.com/code/latest/fusioncharts.js"></script>
+<script type="text/javascript" src="http://static.fusioncharts.com/code/latest/themes/fusioncharts.theme.fint.js?cacheBust=56"></script> -->
+ <script src="assets/global/scripts/fusioncharts.js"></script>
+  <script src="assets/global/scripts/fusioncharts.theme.fint.js"></script>
+   <script src="assets/global/scripts/fusioncharts.widgets.js"></script>
+   
+   <!-- INDIA REPORTS -->
+	<script src="js/modules/india_reports/indiajoborder_stats.js"></script>
+	<script src="js/modules/india_reports/indiareports_module.js"></script>
+	<script src="js/modules/india_reports/indiasubmital_stats.js"></script>
+	<script src="js/modules/india_reports/indiasubmitals.js"></script>
+	<script src="js/modules/india_reports/clientwise_indiasubmital_stats.js"></script>
+	<script src="js/modules/india_reports/indiadmsummaryreport.js"></script>
+	<script src="js/modules/india_reports/india_recruiter_productivity_report.js"></script>
+	
+	
+	
+	<!-- Settings MOdule -->
+	<script src="js/modules/settings/userDetails.js"></script>
+	<script src="js/modules/settings/settingsmodule.js"></script>
+	<script src="js/modules/settings/addUser.js"></script>
+	<script src="js/modules/settings/appConfiguration.js"></script>
+	<script src="js/modules/settings/mailConfiguration.js"></script>
+	
+	
+	<!-- Job Borad Stats -->
+	<script src="js/modules/dashboard/jobboardstats.js"></script>  
+	
+	
+	
+	<script src="assets/global/scripts/angularjs-dropdown-multiselect.js"></script>
+	<script src="assets/global/scripts/lodash.min.js"></script> 
+	
+
+	<script src="js/modules/reports/highcharts.src.js"></script>
+
+	
+<!-- 	  <script type="text/javascript" src="http://static.fusioncharts.com/code/latest/fusioncharts.js"></script>
+<script type="text/javascript" src="http://static.fusioncharts.com/code/latest/themes/fusioncharts.theme.fint.js?cacheBust=56"></script> -->
+	
+</body> 
+</html>

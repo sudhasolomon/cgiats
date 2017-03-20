@@ -1,0 +1,101 @@
+<div ng-controller = "clientwise_indiaSubmitalStatsController" ng-init="onload()">
+
+<!-- BEGIN PAGE HEADER--> 
+<div class="sub-page-header">
+  <div class="page-bar">
+    <ul class="page-breadcrumb">
+         	<li><a href="#/dashboard" ng-if="!(rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_Recruiter' || rsLoginUser.userRole === 'ATS_Executive')">Home</a> 
+				<a href="#/india_joborders/my_indiajobOrder" ng-if="(rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_Recruiter')">Home</a>
+				<a href="#/candidates/missingData" ng-if="(rsLoginUser.userRole === 'ATS_Executive')">Home</a>
+				<i class="fa fa-circle"></i>
+				</li>
+      <li>
+        <span>Reports</span>
+        <i class="fa fa-circle"></i>
+      </li>
+      <li>
+        <span>India Reports</span>
+        <i class="fa fa-circle"></i>
+      </li>
+      <li>
+        <span>Client Wise Submittal Status</span>
+      </li>
+    </ul> 
+     <!-- <div class="page-toolbar">
+      <div class="btn-group"> 
+        <a href="#/candidates/search" class="btn btn-primary blue">Search Candidate <i class="fa fa-search"></i></a> 
+      </div>
+    </div> -->
+  </div>
+</div>
+<!-- END PAGE HEADER--> 
+
+
+<form role="form" novalidate="" ng-submit="SubmittalStats()" >
+    <!-- BEGIN Search Forms -->
+    <br>
+       <div class="row">
+       <div class="form-group">
+           
+            <div class="col-md-4">
+            <label>Created Between :</label>
+             <input type="daterange" ng-model="Created" id="indiaSubmittalStatsRangesId" class="dropDown" ranges="ranges" placeholder="Custom Dates" required></div>
+             
+             <div class="col-md-4">
+             <br>
+            <button type="submit" class="btn blue" style="margin-top: 5px;"><i class="fa fa-search"></i> View </button>
+            
+            <button type="button" class="btn blue" ng-csv="totalExportStatsData" ng-disabled="(submittalData && submittalData.length == 0)" ng-if="!(rsLoginUser.userRole === 'Recruiter' || rsLoginUser.userRole === 'DivisionHead')"
+									filename="submittalStatus_{{currentDateWithTime | date:'MM-dd-yyyy hh:mm:ss a'}}.csv" ng-click="getTimeFnc();"
+									csv-header="['Name','SUBMITTED','DMREJ','ACCEPTED','INTERVIEWING','CONFIRMED','REJECTED','STARTED','BACKOUT','OUTOFPROJ','NotUpdated']"
+									charset="utf-8" style="margin-top:5px;">
+									Export <i class="fa fa-upload" aria-hidden="true"></i>
+								</button> 
+			</div>
+            </div>
+       </div>
+    </form>
+        <!-- Table --> 
+           <div class="row fade-in-up table-scrollable">
+            
+	            <table class="table bt-table summaryreport" id="table" bs-table-control="indiaSubmitalStats.SubmitalStasTableControl" ng-show="indiaSubmitalStatsTable" >
+		        <thead>
+		            <tr>
+		                <th data-field="Client" data-sortable="true"></th>
+		                <th data-field="SUBMITTED"></th>
+		                <th data-field="DMREJ"></th>
+		                <th data-field="ACCEPTED"></th>
+		                <th data-field="INTERVIEWING"></th>
+		                <th data-field="CONFIRMED"></th>
+		                <th data-field="REJECTED"></th>
+		                <th data-field="STARTED"></th>
+		                <th data-field="BACKOUT"></th>
+		                <th data-field="OUTOFPROJ"></th>
+		                <th data-field="NU"></th>
+		            </tr>
+		        </thead>
+		
+		        <tfoot>
+		        <tr class="totl">
+		           <td colspan="1">Total</td>
+		           		<td id="submitted"></td>
+		                <td id="dmrej"></td>
+		                <td id="accepcted"></td>
+		                <td id="interviewing"></td>
+		                <td id="confirmed"></td>
+		                <td id="rejected"></td>
+		                <td id="started" class="strtdtlt" style="color:#000000!important;"></td>
+		                <td id="backout"></td>
+		                <td id="outofproj"></td>
+		                <td id="notup"></td>
+		           
+		           </tr>
+		        </tfoot>
+		        <tbody>
+		           
+		        </tbody>
+	    		</table>  
+            </div>   
+            <!-- End Table -->
+            </div>
+            

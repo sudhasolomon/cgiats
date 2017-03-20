@@ -1,0 +1,65 @@
+<md-dialog ng-cloak>
+<form>
+<div>
+    <md-toolbar style="background-color:#00CED1">
+      <div class="md-toolbar-tools">
+        <h2>Email Configuration</h2>
+         <span flex></span> 
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <img width="16" height="16" src="assets/global/img/portlet-remove-icon-white.png" />
+        </md-button>
+      </div>
+    </md-toolbar></div>
+    
+     <md-dialog-content>
+      <div class="md-dialog-content">
+      
+      
+  <form role="form" novalidate="" >
+    <!-- BEGIN Search Forms -->
+    <div style="color: red;" align="right"><b>{{errMsg}}</b></div>
+    <br>
+    
+       <div class="row">
+       <div class="form-group">
+              
+              <div class="col-md-10">
+              <label>Reports Name:</label>
+              <select class="dropDown" ng-model="config.reportName" required="required">
+              <option value="">Select</option>
+              <option value="Resume Uploaded/Updated">Resume Uploaded/Updated</option>
+              <option value="JobOrdersInOpenStatus">JobOrdersInOpenStatus</option>
+              <option value="JobOrdersWithOutSubmittals">JobOrdersWithOutSubmittals</option>
+                <option value="JobOrdersWithLessNoOfSubmittals">JobOrdersWithLessNoOfSubmittals</option>
+              </select>
+              </div>
+              <br>
+              
+            </div></div><br>
+            
+              <div class="row">
+       <div class="form-group">
+             <div class="col-md-10">
+                <label class="">Email</label>
+                <br>
+                <input type="email" class="form-control" placeholder="Email" ng-model="config.email" required="required">
+               </div>
+       </div></div>
+    </form>
+      
+      </div>
+     
+    </md-dialog-content>
+    
+      <md-dialog-actions layout="row">
+      <span flex></span>
+        <md-button style="background-color:#3399FF; color:white" ng-click="answer(config)" style="margin-right:20px;" md-autofocus>
+        Save
+      </md-button>
+      <md-button style="background-color:#3399FF; color:white" ng-click="cancel()" md-autofocus>
+       Cancel
+      </md-button>
+    </md-dialog-actions>
+ 
+</form>
+</md-dialog>

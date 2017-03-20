@@ -1,0 +1,69 @@
+<div ng-controller = "loginInfoController" ng-init="onload()">
+
+<div class="sub-page-header">
+  <div class="page-bar">
+    <ul class="page-breadcrumb">
+          	<li><a href="#/dashboard" ng-if="!(rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_Recruiter' || rsLoginUser.userRole === 'ATS_Executive')">Home</a> 
+				<a href="#/india_joborders/my_indiajobOrder" ng-if="(rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_Recruiter')">Home</a>
+				<a href="#/candidates/missingData" ng-if="(rsLoginUser.userRole === 'ATS_Executive')">Home</a>
+				<i class="fa fa-circle"></i>
+				</li>
+      <li>
+        <span>Reports</span>
+        <i class="fa fa-circle"></i>
+      </li>
+      <li>
+        <span>Login Info Report</span>
+      </li>
+    </ul> 
+  </div>
+</div>
+
+ <form role="form" novalidate="" ng-submit="loginInfo()" >
+ <br>
+ <div class="row">
+       <div class="form-group">
+            <div class="col-md-4 ">
+             <label>Created Between :</label>
+             <input type="daterange" id="loginInfoRange" ng-model="Created" class="dropDown" ranges="ranges" placeholder="Custom Dates" readonly="readonly" required>
+            </div>
+             <div class="col-md-4">
+             <br>
+            <button type="submit" class="btn blue" ><i class="fa fa-search"></i> View</button>
+            </div>
+            </div>
+            </div>
+ </form>
+ <br>
+ <div class="row" ng-show = "statusButtons">
+  <div class="form-group">
+            <div class="col-md-2">
+            <img src="resources/img/login.png" width="20px" height="20px"> <label><b>: User Logged-in</b></label>
+            </div>
+            <div class="col-md-2">
+             <img src="resources/img/logout.png" width="20px" height="20px"> <label><b>: User Logged-out</b></label>
+            </div>
+    </div>
+ </div>
+   <!-- Table --> 
+           <div class="row fade-in-up table-scrollable">
+            
+	            <table id="table" bs-table-control="loginAttempts.loginTableControl" ng-show="loginAttemptsTable" >
+		        <thead>
+		            <tr>
+		                <th data-field="Status" data-sortable="false"></th>
+		                <th data-field="Login User" data-sortable="true" ></th>
+		                <th data-field="Logout Date & Time" data-sortable="true" ></th>
+		                <th data-field="Logout Date & Time" data-sortable="true"></th>
+		                <th data-field="Duration" data-sortable="true"></th>
+		                <th data-field="# of Login Attempts" data-sortable="true"></th>
+		            </tr>
+		        </thead>
+		        <tbody>
+		           
+		        </tbody>
+	    		</table>  
+            </div>   
+            <!-- End Table -->
+
+</div>

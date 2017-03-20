@@ -1,0 +1,170 @@
+<div data-ng-controller="offerLetterReportscontroller"
+	ng-init="onload()">
+	<script src="assets/global/scripts/alljquery.js"></script>
+	<!-- BEGIN PAGE HEADER-->
+	<div class="sub-page-header">
+		<div class="page-bar">
+			<ul class="page-breadcrumb">
+				<li><a href="#/dashboard">Home</a> <i class="fa fa-circle"></i>
+				</li>
+				<li><span> Reports</span> <i class="fa fa-circle"></i></li>
+				<li><span>Consultant</span> <i class="fa fa-circle"></i></li>
+				<li><span>Offer Letters</span></li>
+			</ul>
+		</div>
+	</div>
+	<!-- END PAGE HEADER-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<!-- BEGIN MAIN CONTENT -->
+	
+
+	<form name="AddCandidateForm" class="tab-form-demo" novalidate=""
+		ng-submit="searchjoborder()">
+
+		<div class="undermask" id="submitalstatus">
+			<div class="popupcont">
+				<div class="popuphead">
+					Submital Details <span class="pull-right" id="closebtn"><img
+						width="16" height="16"
+						src="assets/global/img/portlet-remove-icon-white.png"
+						class="ng-scope"></span>
+				</div>
+				<div id="viewsubmittalid"></div>
+			</div>
+		</div>
+		<div class="undermask" id="submitaldelete">
+			<div class="popupcont">
+				<div class="popuphead">
+					Delete Submital <span class="pull-right" id="closebtndelete"><img
+						width="16" height="16"
+						src="assets/global/img/portlet-remove-icon-white.png"
+						class="ng-scope"></span>
+				</div>
+				<div id="deletesubmittal"></div>
+			</div>
+		</div>
+
+
+
+
+		<div class="row">
+
+			<div class="col-md-4">
+				<div class="form-group">
+					<label>Created Between</label> <input type="daterange" id="offerLetterRangesId"
+						ng-model="Created" ranges="ranges" required=""
+						class="form-control">
+				</div>
+			</div>
+
+			<div class="col-md-8" style="padding-top: 22px;">
+				<div>
+					<button type="submit" ng-click="srinivas()"
+						class="btn btn-primary blue">
+						Search <i class="fa fa-search"></i>
+					</button>
+					<button type="button" ng-click="resetAction()"
+						class="btn btn-primary grey-cascade">
+						Reset <i class="fa fa-refresh"></i>
+					</button>
+					<!-- <button ng-if="!(rsLoginUser.userRole === 'Recruiter')"
+						ng-disabled="(allJobOrdersList && allJobOrdersList.length == 0)"
+						ng-json-export-excel data="allJobOrdersList"
+						report-fields="{jobOrderId: 'ID',candidateId: 'Candidate ID',fullName: 'Candidate Name',email: 'Email',address: 'Location',companyName: 'Company Name',bdmName: 'DM',recruiterName: 'Recruiter',status: 'Status',updatedBy: 'Updated By',strUpdatedOn: 'Updated On'}"
+						filename="'offerLetters'" class="btn blue">
+						Export <i class="fa fa-upload" aria-hidden="true"></i>
+					</button> -->
+					
+					<button type="button" class="btn blue" ng-disabled="(offerLettersList && offerLettersList.length == 0)" ng-csv="exportOfferLettersList" ng-if="!(rsLoginUser.userRole === 'Recruiter')"
+									filename="offerLetters_{{currentDateWithTime | date:'MM-dd-yyyy hh:mm:ss a'}}.csv" ng-click="getTimeFnc();"
+									csv-header="['Job Order ID','Candidate ID','Candidate Name','Email','Location','Company Name','DM','Recruiter','Status','Updated By','Updated On']"
+									charset="utf-8">
+									Export <i class="fa fa-upload" aria-hidden="true"></i>
+								</button>
+				</div>
+			</div>
+
+
+
+
+			<div class="clearboth"></div>
+		</div>
+
+		<div id="searchtable">
+
+
+
+
+
+			<!-- Table -->
+			<div class="row fade-in-up table-scrollable">
+
+				<table id="table" data-filter-control="true"
+					ng-repeat="offerLetter in offerLetterReports"
+					bs-table-control="offerLetter.bsTableControl"
+					ng-show="jobOrderTable">
+					<thead>
+						<tr>
+							<!--  <th data-field="state" data-checkbox="true"></th> -->
+							<th data-field="jobOrderId" data-sortable="true"
+								data-filter-control="input">Job Order ID</th>
+							<th data-field="candidateId" data-sortable="true" data-filter-control="input">Candidate
+								ID</th>
+							<th data-field="fullName" data-sortable="true" data-filter-control="input">Candidate
+								Name</th>
+							<th data-field="email" data-sortable="true">Email</th>
+							<th data-field="address" data-sortable="true"
+								data-filter-control="input">Location</th>
+							<th data-field="companyName" data-sortable="true"
+								data-filter-control="input">Company Name</th>
+							<th data-field="bdmName" data-sortable="true"
+								data-filter-control="input">DM</th>
+							<th data-field="recruiterName" data-sortable="true"
+								data-filter-control="input">Recruiter</th>
+							<th data-field="status" data-sortable="true">Status</th>
+							<th data-field="updatedBy" data-sortable="true">Updated By</th>
+							<th data-field="strUpdatedOn" data-sortable="true">Updated
+								On</th>
+							<th data-field="actions"
+								data-formatter="offerLetterReportsOperateFormatter"
+								data-events="offerLetterReportsOperateEvents">Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+
+					</tbody>
+				</table>
+			</div>
+			<!-- End Table -->
+
+
+		</div>
+
+
+
+
+
+
+
+
+
+	</form>
+	<!-- END MAIN CONTENT -->
+
+
+
+</div>

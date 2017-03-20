@@ -1,0 +1,53 @@
+<div ng-controller = "indiaSubmitalController" ng-init="onload()">
+<script src="assets/global/scripts/alljquery.js"></script>
+
+<!-- BEGIN PAGE HEADER--> 
+<div class="sub-page-header">
+  <div class="page-bar">
+    <ul class="page-breadcrumb">
+          	<li><a href="#/dashboard" ng-if="!(rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_Recruiter' || rsLoginUser.userRole === 'ATS_Executive')">Home</a> 
+				<a href="#/india_joborders/my_indiajobOrder" ng-if="(rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_Recruiter')">Home</a>
+				<a href="#/candidates/missingData" ng-if="(rsLoginUser.userRole === 'ATS_Executive')">Home</a>
+				<i class="fa fa-circle"></i>
+				</li>
+      <li>
+        <span>Reports</span>
+        <i class="fa fa-circle"></i>
+      </li>
+      <li>
+        <span>India Reports</span>
+        <i class="fa fa-circle"></i>
+      </li>
+      <li>
+        <span>Submittals</span>
+      </li>
+    </ul> 
+     
+  </div>
+</div>
+<div class="undermask" id="submitalstatus"><div class="popupcont"><div class="popuphead">Submital Details <span class="pull-right" id="closebtn"><img width="16" height="16" src="assets/global/img/portlet-remove-icon-white.png" class="ng-scope"></span></div><div id="viewsubmittalid"></div></div></div>
+
+<!-- END PAGE HEADER--> 
+
+        <!-- Table --> 
+           <div class="row fade-in-up table-scrollable">
+            
+	            <table id="table" bs-table-control="indiaSubmital.SubmitalTableControl" ng-show="indiaSubmitalTable" >
+		        <thead>
+		            <tr>
+		                <th data-field="Created On"></th>
+		                <th data-field="Updated On"></th>
+		                <th data-field="Created By"></th>
+		                <th data-field="Status"></th>
+		                <th data-field="Candidate"></th>
+		                <th data-field="actions" data-formatter="operateFormatter"
+										data-events="operateEvents"></th>
+		                
+		            </tr>
+		        </thead>
+		        <tbody>
+		           
+		        </tbody>
+	    		</table>  
+            </div>   
+            <!-- End Table -->

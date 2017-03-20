@@ -1,0 +1,85 @@
+  <div class="page-header-inner" ng-controller="DashboardController">
+    <!-- BEGIN LOGO -->
+    <div class="page-logo">
+      <a href="#/dashboard" ng-if="!(rsLoginUser.userRole.startsWith('IN_') || rsLoginUser.userRole === 'ATS_Executive')">
+        <img src="{{settings.layoutPath}}/img/logo.png" alt="logo" class="logo-default" /> </a>
+        <a href="#/india_joborders/my_indiajobOrder" ng-if="(rsLoginUser.userRole.startsWith('IN_'))">
+        <img src="{{settings.layoutPath}}/img/logo.png" alt="logo" class="logo-default" /> </a>
+        <a href="#/candidates/missingData" ng-if="(rsLoginUser.userRole === 'ATS_Executive')">
+        <img src="{{settings.layoutPath}}/img/logo.png" alt="logo" class="logo-default" /> </a>
+      <div class="menu-toggler sidebar-toggler">
+        <!-- DOC: Remove the above "hide" to enable the sidebar toggler button on header -->
+      </div>
+    </div>
+   <!--  <div class="header-global-search">
+      <div class="col-md-12">
+        <div class="input-group">
+          <div class="input-group-btn">
+            <button type="button" class="btn green dropdown-toggle" data-toggle="dropdown">{{globalTitleItem}}
+              <i class="fa fa-angle-down"></i>
+            </button>
+             <ul class="dropdown-menu"> 
+                    <li ng-repeat="item in globalTitleItems"><a ng-click="globalTitleSelected(item)">{{item}}</a></li>
+              </ul>
+          </div>
+          /btn-group
+          <input type="text" class="form-control" placeholder="Key Words / Job Title">
+          <div class="input-group-btn">
+            <button type="button" class="btn blue"><i class="fa fa-search"></i>
+            </button>
+
+          </div>
+          /btn-group
+        </div>
+        /input-group
+      </div>
+    </div>  -->
+    <div class="header-global-search">
+    <div class="col-md-12 ">
+    <span style = "font-size : 26px;color:#b4bcc8">Applicant Tracking System</span>
+    </div></div>
+  </div>
+  <!-- END LOGO -->
+  <!-- END HEADER SEARCH BOX -->
+  <!-- BEGIN RESPONSIVE MENU TOGGLER -->
+  <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse"> </a>
+  <!-- END RESPONSIVE MENU TOGGLER -->
+  <!-- BEGIN TOP NAVIGATION MENU -->
+  <div class="top-menu fixedtoprt">
+      <ul class="nav navbar-nav pull-left">
+      <li class="dropdown dropdown-user">
+        <a href="#" class="dropdown-toggle" dropdown-menu-hover data-toggle="dropdown" data-close-others="true">
+          
+          <img class="img-circle" 
+								ng-src="{{'data:image/'+rsLoginUser.imageExt+';base64,'+rsLoginUser.base64Image}}"
+								>
+          <span class="username username-hide-on-mobile">{{rsLoginUser.fullName}} </span>
+          <i class="fa fa-angle-down"></i>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-default topdropdown-menu">
+          <li>
+            <a href="#/myprofile">
+              <i class="fa fa-user" aria-hidden="true"></i> My Profile </a>
+          </li>
+          <li>
+            <a href="#/changepassword">
+              <i class="fa fa-key" aria-hidden="true"></i> Change Password </a>
+          </li>
+          <li class="divider"> </li>
+          <li>
+            <a ng-click="logout()">
+              <i class="fa fa-power-off" aria-hidden="true"></i> Log Out </a>
+          </li>
+        </ul>
+      </li>
+      <!-- END USER LOGIN DROPDOWN -->
+    </ul>
+    
+    <div class="help-icon">
+<a href="#/help"><span class="helptxt">Help </span><i class="fa fa-question-circle" aria-hidden="true" title="Help Docs"></i></a>
+</div>
+    
+  </div>
+  <!-- BEGIN PAGE HEADER-->
+
+  <!-- END PAGE HEADER-->

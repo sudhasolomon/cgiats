@@ -1,0 +1,356 @@
+<html ng-app="allhotjobsapp" ng-controller="allhotjobcontroller" ng-init="onload()">
+<head>
+<meta>
+<title>Welcome to CGIATS - Hot Job Orders</title>
+<script src="assets/global/plugins/angularjs/angular.min.js"></script>
+	<link rel="stylesheet" href="js/modules/extrajs/ng-table.min.css">
+<script src="js/modules/extrajs/ng-table.js" rel="stylesheet"></script>
+
+<link href="assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+	<script src="assets/global/plugins/jquery.min.js"></script>
+	<script src="js/modules/extrajs/allhotjoborders.js"></script>
+	<script src="js/modules/extrajs/ng-grid.js"></script>
+	
+
+	
+	<link href="assets/layouts/layout/css/custom.css" rel="stylesheet" />
+	<link href="assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+	
+	<link href="js/modules/extrajs/ng-grid.css" rel="stylesheet" />
+		 <link href="assets/global/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css" rel="stylesheet" />
+			<link href="assets/global/plugins/bootstrap-table-master/bootstrap-table.css" rel="stylesheet" />
+				<link href="assets/global/plugins/angularjs/plugins/block-ui/angular-block-ui.css" rel="stylesheet" />
+	<script src="assets/global/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
+	 
+	
+	
+	<script src="js/services/modelDialogs/angular-material.1.0.0.js"></script>
+	<link href="resources/css/angular-material.1.0.0.css" rel="stylesheet" />
+	
+	
+	<script src="js/services/modelDialogs/angular-messages.min.1.4.8.js"></script>
+	<script src="assets/global/plugins/angularjs/plugins/ui-bootstrap-tpls.min.js"></script>
+	<script src="assets/global/plugins/angularjs/plugins/block-ui/angular-block-ui.js"></script>
+	<script src="assets/global/plugins/angularjs/plugins/jcs-auto-validate.min.js"></script>
+	<link href="assets/global/css/angularjs-datetime-picker.css" rel="stylesheet"/>
+	<script src="assets/global/plugins/bootstrap-daterangepicker/moment.min.js"></script>
+	<script src="js/directives/ng-bs-daterangepicker.js"></script>
+	<script src="js/services/DateRangeService.js"></script>
+	<script src="assets/global/scripts/angularjs-datetime-picker.js"></script>
+	<script src="assets/global/plugins/bootstrap-daterangepicker/moment.min.js"></script>
+	
+	
+	<script src="assets/global/plugins/angularjs/plugins/json-export-excel.js"></script>
+
+	<script src="js/constants.js"></script>
+
+
+<script src="assets/global/scripts/alljquery.js"></script>
+
+
+
+
+
+
+
+	
+	
+	
+
+<style type="text/css">
+	body
+	{
+	margin:0;
+	padding:0;}
+	.headsing
+{
+margin:0;
+padding:0;
+	width:100%!important;
+}
+.appname
+{
+margin:0;
+padding:10px;
+background-color:#2b3643;
+color:#b4bcc8;
+}
+.headsing .logo-default
+{
+margin-right:50px;}
+
+	</style>
+	
+</head>
+<body>
+
+
+
+
+
+
+ 
+	
+	
+
+<script type="text/javascript">
+$(document).ready(function(){
+	
+	
+	
+	setTimeout(function(){
+		   window.location.reload(1);
+		}, 900000);
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<div class="header-global-search headsing">
+    <div class="col-md-12 appname ">
+    <img src="assets/layouts/layout/img/logo.png" alt="logo" class="logo-default" /> <span style = "font-size : 24px;color:#b4bcc8">Applicant Tracking System - Hot Job Orders</span>
+    
+    </div></div>
+
+
+
+
+
+
+
+
+
+
+
+<!-- BEGIN MAIN CONTENT --> 
+
+<form name="AddCandidateForm" class="tab-form-demo" novalidate="" ng-submit="searchhotjoborder()" >
+
+<div class="undermask" id="submitalstatus"><div class="popupcont"><div class="popuphead">Submital Details <span class="pull-right" id="closebtn"><img width="16" height="16" src="assets/global/img/portlet-remove-icon-white.png" class="ng-scope"></span></div><div id="viewsubmittalid"></div></div></div>
+<div class="undermask" id="submitaldelete"><div class="popupcont"><div class="popuphead">Delete Submital <span class="pull-right" id="closebtndelete"><img width="16" height="16" src="assets/global/img/portlet-remove-icon-white.png" class="ng-scope"></span></div><div id="deletesubmittal"></div></div></div>
+
+<div class="row " style="display:none;">
+    <div class="col-md-12">
+
+<div class="row fade-in-up">
+    		
+    		<div class="">
+    		
+    		<div class="col-md-4">
+              	<div class="form-group">
+                <label>Priority</label>
+                <div class="multi">
+                <span class="blankmsg">Select</span>
+<input type="text" class="ddbox form-control"   readonly="readonly" id="priority" ><i class="fa fa-caret-down" aria-hidden="true"></i>
+<span class="errormsg">This field is required</span>
+<ul class="ddlist">
+	<li><input type="checkbox" value="High" checked="true">High</li>
+	<li><input type="checkbox" value="Medium" checked="true">Medium</li>
+	<li><input type="checkbox" value="Low" checked="true">Low</li>
+</ul>
+</div>
+             
+              </div>
+            </div>
+  
+            <div class="col-md-4">
+              	<div class="form-group">
+                <label>Status</label>
+                <div class="multi">
+                <span class="blankmsg">Select</span>
+<input type="text" class="ddbox form-control"   readonly="readonly" id="status" ><i class="fa fa-caret-down" aria-hidden="true"></i>
+<span class="errormsg">This field is required</span>
+<ul class="ddlist">
+	<li><input type="checkbox" value="Open" checked="true">Open</li>
+	<li><input type="checkbox" value="Assigned" checked="true">Assigned</li>
+	<li><input type="checkbox" value="Filled">Filled</li>
+	<li><input type="checkbox" value="Closed" >Closed</li>
+	<li><input type="checkbox" value="Reopen" checked="true">Reopen</li>
+</ul>
+</div>
+             
+              </div>
+            </div>
+   
+            <div class="col-md-4">
+              	<div class="form-group">
+                <label>Job Type</label>
+                <div class="multi">
+                <span class="blankmsg">Select</span>
+<input type="text" class="ddbox form-control"   readonly="readonly" id="jobtype" ><i class="fa fa-caret-down" aria-hidden="true"></i>
+<span class="errormsg">This field is required</span>
+<ul class="ddlist">
+	<li><input type="checkbox" value="Permanent" checked="true">Permanent</li>
+	<li><input type="checkbox" value="Contract" checked="true">Contract</li>
+	<li><input type="checkbox" value="Both" checked="true">Both</li>
+	<li><input type="checkbox" value="Not Specified" checked="true">Not Specified</li>
+</ul>
+</div>
+             
+              </div>
+            </div>
+            
+              <div class="clearboth"></div>
+              </div>
+              
+<div class="">              
+              
+              <div class="col-md-4">
+            <div class="form-group">
+                <label>Created Between</label>
+              </div>
+          </div>
+          
+                 <div class="col-md-4">
+              	<div class="form-group">
+                <label>Job Belongs To</label>
+                <div class="multi">
+                <span class="blankmsg">Select</span>
+<input type="text" class="ddbox form-control"   readonly="readonly" id="jobbelongsto" ><i class="fa fa-caret-down" aria-hidden="true"></i>
+<span class="errormsg">This field is required</span>
+<ul class="ddlist">
+	<li><input type="checkbox" value="CGI">CGI</li>
+	<li><input type="checkbox" value="Sapeare">Sapeare</li>
+	<li><input type="checkbox" value="RedGalaxy" >RedGalaxy</li>
+</ul>
+</div>    
+              </div>
+            </div>
+                 <div class="col-md-4">
+              	<div class="form-group">
+                <label>Job Order ID</label>
+                <input type="number" class="form-control" max="2147483647" min="0" placeholder="Job Order ID" ng-model="joborderid" >
+              </div>
+            </div>
+            
+              <div class="clearboth"></div>
+              </div>
+        
+          <div class="">
+          <div class="col-md-12">
+							<div class="pull-right">
+								<button type="submit" ng-click=""
+									class="btn btn-primary blue">
+									Search <i class="fa fa-search"></i>
+								</button>
+								<button type="button" ng-click="hotjobordersreset()"
+									class="btn btn-primary grey-cascade">
+									Reset <i class="fa fa-refresh"></i>
+								</button>
+								<!-- <button ng-if="!(rsLoginUser.userRole === 'Recruiter')" type="button"
+									ng-disabled="(allJobOrdersList && allJobOrdersList.length == 0)"
+									ng-json-export-excel data="allJobOrdersList"
+									report-fields="{jobOrderId: 'Id',priority: 'Priority',status: 'Status',type: 'Type',title:'Title',client: 'Client',excell_Location: 'Location',dm: 'Dm',assignedTo: 'Assigned To',updatedDate: 'UpdatedDate',sbm: 'Sbm',activeDays: 'ActiveDays'}"
+									filename="'alljoborders'" class="btn blue">
+									Export <i class="fa fa-upload" aria-hidden="true"></i>
+								</button> -->
+								
+								<button type="button" class="btn blue" ng-disabled="(hotJobOrdersList && hotJobOrdersList.length == 0)" ng-csv="exportHotJobOrdersList" ng-if="!(rsLoginUser.userRole === 'Recruiter')"
+									filename="hotjoborders_{{currentDateWithTime | date:'dd/MM/yyyy hh:mm:ss a'}}.csv" ng-click="getTimeFnc();"
+									csv-header="['Id','Priority','Status','Type','Title','Client','Location','Dm','Assigned To','UpdatedDate','Sbm','ActiveDays']"
+									charset="utf-8">
+									Export <i class="fa fa-upload" aria-hidden="true"></i>
+								</button>
+							</div>
+						</div>
+          </div>
+            
+    </div>
+  
+  
+    </div>
+    </div>
+    </form>
+    <!-- END MAIN CONTENT -->
+   
+    
+    
+    <div style="padding:70px 25px 25px 25px;" class="allhotjobsdiv">
+     <div class="pull-right" >
+					<ul class="pagination">
+						<li ng-repeat="page in pages" ng-class="{'active':(page.recordOffset===pageNo)}"><a style="cursor: pointer;" ng-click="nextPageRecords(page.recordOffset)">{{page.number}}</a></li>
+					</ul>
+				</div>
+    <div class="shngrcds01" style="padding-top:40px;">{{lblCurrentPageRecords}}</div>
+    <div class="gridStyle" ng-grid="gridOptions"></div>
+   
+   <table ng-table="tableParams" class="table allhotjobs" show-filter="true" style="margin-bottom:10px;margin-top:0px;">
+   <tbody id="rpt">
+    <tr ng-repeat="jobOrder in $data" repeat-end="onEnd()">
+        
+        <td title="'Id'" >{{jobOrder.jobOrderId}}</td>
+            
+        <td title="'Priority'" >
+         <i class="fa fa-circle" aria-hidden="true" style="color:green;" ng-if="(jobOrder.priority === 'LOW')"></i>
+          <i class="fa fa-circle" aria-hidden="true" style="color:#ff9900;" ng-if="(jobOrder.priority === 'MEDIUM')"></i>
+          <i class="fa fa-circle" aria-hidden="true" style="color:red;" ng-if="(jobOrder.priority === 'HIGH')"></i>
+            {{jobOrder.priority}}</td>
+            
+            <td title="'Status'" >
+         <i class="fa fa-arrow-circle-right" aria-hidden="true" style="color:#00a3cc;" title="OPEN" ng-if="(jobOrder.status === 'OPEN')"></i>
+          <i class="fa fa-user" aria-hidden="true" style="color:#3399ff;" title="ASSIGNED" ng-if="(jobOrder.status === 'ASSIGNED')"></i>
+          <i class="fa fa-folder-open-o" aria-hidden="true" title="REOPEN" style="color:#cc6600;" ng-if="(jobOrder.status === 'REOPEN')"></i>
+          <i class="fa fa-times" aria-hidden="true" style="color:#ff4d4d;" title="CLOSED" ng-if="(jobOrder.status === 'CLOSED')"></i>
+          <i class="fa fa-check-square-o" aria-hidden="true" style="color:#2db300;" title="FILLED" ng-if="(jobOrder.status === 'FILLED')"></i>
+          {{jobOrder.status}}</td>
+          
+          <td title="'Type'" >
+         <i class="fa fa-link" aria-hidden="true" title="PERMANENT" style="color:#336d30;" ng-if="(jobOrder.type === 'PERMANENT')"></i>
+         <i class="fa fa-chain-broken" aria-hidden="true" style="color:#ff0000;" title="CONTRACT" ng-if="(jobOrder.type === 'CONTRACT')"></i>
+         <i class="fa fa-venus-double" aria-hidden="true" title="BOTH" style="color:#804000;" ng-if="(jobOrder.type === 'BOTH')"></i>
+         <i class="fa fa-arrows-alt" aria-hidden="true" title="NOTSPECIFIED" style="color:#c96dad;" ng-if="(jobOrder.type === 'NOTSPECIFIED')"></i>
+          {{jobOrder.type}}</td>
+          
+          <td title="'Title'" >
+          {{jobOrder.title}}</td>
+          
+          <td title="'Client'" >
+          {{jobOrder.client}}</td>
+          
+          <td title="'Location'" >
+          {{jobOrder.location}}</td>
+          
+          <td title="'DM'" >
+          {{jobOrder.dm}}</td>
+          
+          <td title="'Assigned To'" >
+          {{jobOrder.assignedTo}}</td>
+          
+          <td title="'Updated on'" >
+          {{jobOrder.updatedDate}}</td>
+          
+          <td title="'Sbm'" >
+          {{jobOrder.sbm}}</td>
+          
+          <td title="'Active Days'" >
+          {{jobOrder.activeDays}}</td>
+          
+          
+    </tr>
+    
+    </tbody>
+    
+</table>
+    
+    </div>
+    
+
+
+<div class="header-global-search headsing navbar-fixed-bottom">
+    <div class="col-md-12 appname ">
+    2016 © Charter Global Inc.
+        </div></div>
+
+
+
+
+</body>
+</html>

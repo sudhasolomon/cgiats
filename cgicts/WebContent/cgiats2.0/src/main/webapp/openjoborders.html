@@ -1,0 +1,857 @@
+<html ng-app="openJobOrdersApp" ng-controller="openJobOrdersController" ng-init="onload()">
+<head>
+<meta>
+<title>Welcome to CGIATS - Open Job Orders</title>
+<script src="assets/global/plugins/angularjs/angular.min.js"></script>
+<link href="assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+	<script src="assets/global/plugins/jquery.min.js"></script>
+	<script src="js/modules/extrajs/openjoborders.js"></script>
+	<script src="js/modules/extrajs/bs-table.min.js"></script>
+	<!-- <script src="js/modules/extrajs/ng-grid.js"></script> -->
+	<script src="js/modules/extrajs/ng-table2.js"></script>
+
+<script src="assets/global/plugins/angularjs/jquery.maskedinput.js"></script>	
+<script src="js/directives/jqueryinputmask.js"></script>
+
+
+
+	
+	
+<script src="assets/global/plugins/bootstrap-table-master/bootstrap-table.js"></script>
+
+
+
+<link href="assets/global/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css" rel="stylesheet" />
+<link href="assets/global/plugins/bootstrap-table-master/bootstrap-table.css" rel="stylesheet" />
+<link href="assets/global/plugins/angularjs/plugins/block-ui/angular-block-ui.css" rel="stylesheet" />
+<script src="assets/global/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
+
+	
+	<link href="assets/layouts/layout/css/custom.css" rel="stylesheet" />
+	<link href="assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="assets/global/css/components.css" rel="stylesheet"/>
+	
+	<!-- <link href="js/modules/extrajs/ng-grid.css" rel="stylesheet" /> -->
+		 <link href="assets/global/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css" rel="stylesheet" />
+			<link href="assets/global/plugins/bootstrap-table-master/bootstrap-table.css" rel="stylesheet" />
+				<link href="assets/global/plugins/angularjs/plugins/block-ui/angular-block-ui.css" rel="stylesheet" />
+	<script src="assets/global/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
+	 
+	
+	
+	<script src="js/services/modelDialogs/angular-material.1.0.0.js"></script>
+	<link href="resources/css/angular-material.1.0.0.css" rel="stylesheet" />
+	
+	
+	<script src="js/services/modelDialogs/angular-messages.min.1.4.8.js"></script>
+	<script src="assets/global/plugins/angularjs/plugins/ui-bootstrap-tpls.min.js"></script>
+	<script src="assets/global/plugins/angularjs/plugins/block-ui/angular-block-ui.js"></script>
+	<script src="assets/global/plugins/angularjs/plugins/jcs-auto-validate.min.js"></script>
+	<link href="assets/global/css/angularjs-datetime-picker.css" rel="stylesheet"/>
+	<script src="assets/global/plugins/bootstrap-daterangepicker/moment.min.js"></script>
+	<script src="js/directives/ng-bs-daterangepicker.js"></script>
+	<script src="js/services/DateRangeService.js"></script>
+	<script src="assets/global/scripts/angularjs-datetime-picker.js"></script>
+	<script src="assets/global/plugins/bootstrap-daterangepicker/moment.min.js"></script>
+	
+	
+	
+
+	<script src="js/constants.js"></script>
+
+
+<script src="assets/global/scripts/alljquery.js"></script>
+
+
+
+
+<style type="text/css">
+body
+{
+margin:0;
+padding:0;
+}
+.table thead
+{
+background-color:#3598dc;
+color:#ffffff;
+}
+.table td, .table th
+{
+border:1px solid #dddddd;
+}
+.table thead tr th
+{
+border-bottom-color:#3598dc;
+padding-bottom:0px;
+}
+.table thead tr th input
+{
+padding:2px 5px 2px 5px;
+height:20px;
+}
+.pagination
+{
+margin:-100px -30px 0px 0px;
+}
+.rowlink
+{
+border:0px solid #000000;
+background-color:transparent;
+color:#3598dc;
+cursor:pointer;
+}
+.rowlink:hover
+{
+text-decoration:underline;
+color:#3598dc;
+}
+.rowlink:focus
+{
+outlline:none;
+}
+#submitprofilecont
+{
+margin-bottom:60px;
+}
+label
+{
+font-weight:normal;
+}
+</style>
+
+</head>
+<body>
+
+<div class="underlay" >
+<div class="loadcont">
+<img src="assets/layouts/layout/img/newloading.gif" width="100px"><b>Loading....</b>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+	<!--  ************************************************ SUBMIT PROFILE STARTS HERE ************************************** -->
+	<div ng-controller="submitprofilecontroller" id="submitprofilecont" ng-init="onload()">
+	<form  name="submitprofileform" class="tab-form-demo" novalidate=""  ng-submit="submitprofile()" >
+		<div class="row fade-in-up" id="submitdiv" style="margin-right:0px;">
+        <div class="col-md-12">
+          <div class="pull-right" style="padding:10px 10px 5px 0px;"> 
+            <b>Drop your CV here.</b> We will consider your profile for future Jobs &nbsp;&nbsp;<button type="button" class="btn blue" ng-click="tabs[0].active = true; submitprofilefields();">Submit Profile</button>
+            </div>
+        </div>
+      </div>
+      
+      
+      
+      
+      
+      
+      
+      <div id="success01" class="success" >
+			<h4>Your profile uploaded successfully!<br> 
+Our Recruitment Team will contact you if your profile matches the job requirement.<br> 
+<b>Good Luck!</b> </h4>
+			
+			<button type="button" class="btnlink" ng-click="backtojoborder()">Back to Open Positions at {{candidateDto.createdUser}}</button>
+			
+			</div>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <div id="addcandidatefields" style="display:none;" >
+      
+     <br>
+      <h3 style="padding-left:18px;">Submit Profile</h3>
+      <br>
+      <div ng-show="keyskillsErrorMsg">
+<div style="color: red; text-align: right;">KeySkills should be Minimum three.</div>
+</div>
+
+<div class="fade-in-up" id="res">Please Fill the mandatory fields in all the tabs</div>
+
+
+
+      <uib-tabset active="activeForm">
+
+    <uib-tab index="0" heading="Personal Info" active="tabs[0].active">
+    
+    <input type="text" class="form-control" placeholder="Sratus" name="formField" ng-model="candidate.status" required style="display:none;">
+        <input type="text" class="form-control" placeholder="First Name" name="formField" ng-model="candidate.uploadedBy" required style="display:none;">
+        
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label class="control-label">First Name</label>
+                <input type="text" class="form-control" placeholder="First Name" name="formField" ng-model="candidate.firstname" required>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label class="control-label">Last Name</label>
+                <input type="text" class="form-control" placeholder="Last Name" ng-model="candidate.lastname" required>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label class="control-label">Email</label>
+                <input type="email" class="form-control" placeholder="Email Address" ng-model="candidate.email"  required>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+             <div class="col-md-12"> 
+                <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label>Phone</label>
+                    <input maskphone class="form-control" placeholder="Work" ng-model="candidate.phoneWork" >
+                    
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="control-label">Mobile</label>
+                    <input maskphone class="form-control"  placeholder="Cell" ng-model="candidate.phoneCell" required >
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+              <label>Address</label>
+              <input type="text" class="form-control" placeholder="Street 1" ng-model="candidate.address1"  >
+              </div>
+              </div>                
+                
+              </div> 
+            </div>  
+            <div class="col-md-12"> 
+             <div class="row">
+               
+              <div class="col-md-4">
+              <div class="form-group"> 
+              <label>Address</label>
+              <input type="text" class="form-control" placeholder="Street 2" ng-model="candidate.address2"  > 
+              </div>
+               </div>
+               <div class="col-md-4">
+              <div class="form-group">
+                <label class="control-label">City</label>
+                <input type="text" class="form-control" placeholder="City" ng-model="candidate.city"  required>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label class="control-label">State</label>
+                <select class="form-control" ng-model="candidate.state" ng-options="name for (name, value) in usstates"  required>
+                  <option value="">Select</option>
+                  
+                </select>
+              </div>
+            </div>
+             </div>
+            </div> 
+            
+          </div>  
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="row">
+                
+                <div class="col-md-4">
+              <div class="form-group">
+                <label >Zip</label>
+                <input valid-number class="form-control" maxlength="5" placeholder="Zip" ng-model="candidate.zip" >
+              </div>
+            </div>
+            
+            
+                <div class="col-md-4">
+                  <div class="form-group">
+                <label class="control-label">Visa Type</label>
+                <select class="form-control" ng-model="candidate.visaType" required>
+                  <option value="">Select</option>
+                  <option>Not Available</option>
+                  <option>US Citizen</option>
+                  <option>Green Card</option>
+                  <option>EAD</option>
+                  <option>TN Visa</option>
+                  <option>Canadian</option>
+                  <option>H1B Visa</option>
+                  <option>H4 Visa</option>
+                  <option>L1 Visa</option>
+                  <option>L2 Visa</option>
+                  <option>OPT</option>
+                  <option>CPT</option>
+                  <option>Corp to Corp</option>
+                  <option>Citizen</option>
+                </select>
+              </div>
+                </div>
+              
+              
+              
+              
+              <div class="col-md-4" ng-if="candidate.visaType == 'US Citizen'">
+              <div class="form-group">
+                <label>Security Clearance</label>
+                <select class="form-control" ng-model="candidate.securityClearance" >
+                  <option value="true">Yes</option>
+                  <option value="false">No</option>
+                </select>
+              </div>
+            </div>
+            
+              <div class="clearboth" ng-if="candidate.visaType == 'US Citizen'"></div>
+              
+              
+              <div class="col-md-4">
+                 <div class="form-group">
+                <label>Visa Expiry Date</label>
+                <div class="input-group">
+                  <input type="text" class="form-control" uib-datepicker-popup="{{visaFormat}}" is-open="visaDatePopup.opened" datepicker-options="visaDateOptions" close-text="Close" alt-input-formats="altInputFormats" ng-model="candidate.visaExpiryDate" ng-click="visaDateopen()"  readonly style="background-color:#ffffff;"/>
+                  <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="visaDateopen()"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+                </div>
+								</div>
+              </div> 
+              </div>
+            </div>
+          </div>
+          
+          
+        </div>
+      </div> <hr>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="pull-right"> 
+          <button type="button" class="btnlink" ng-click="backtojoborder()">Back to Open Positions at {{candidateDto.createdUser}}</button>
+            <button type="button" class="btn light-blue" ng-click="#"><i class="fa fa-arrow-circle-left"></i> Previous</button>
+            <button type="button" class="btn blue" ng-click="tabs[1].active = true"">Next <i class="fa fa-arrow-circle-right"></i></button>
+            <button type="reset" id="rreesstt" class="btn grey-cascade" ng-click="resst()">Reset <i class="fa fa-refresh"></i></button>
+          </div>
+        </div>
+      </div>
+    </uib-tab>
+
+    <uib-tab index="1" heading="Professional Info" active="tabs[1].active">
+      <div class="row"> 
+        <div class="col-md-12">
+        <div class="row">
+        <div class="col-md-4">  
+        <div class="form-group">
+        <label class="control-label">Title</label>
+        <input type="text" class="form-control" placeholder="Title"
+        ng-model="candidate.title"
+         required>
+        </div>
+        </div> 
+        <div class="col-md-4">   
+        <div class="form-group">
+        <label class="control-label">Key Skills</label>
+        <input type="text" class="form-control" placeholder="Key Skills"
+        ng-model="candidate.keySkills"
+         required> 
+        </div> 
+        </div>  
+        <div class="col-md-4">
+          <div class="form-group">
+          <label >Skills</label>
+          <select class="form-control" ng-model="candidate.skills"  >
+             <option value="">Select</option>
+             <option>Big Data</option>
+             <option>Mobile App Development</option>
+             <option>SharePoint</option>
+             <option>SalesForce.com</option>
+             <option>Application Development</option>
+             <option>ERP/CRM</option>
+             <option>BI/DW</option>
+             <option>QA/Testing Services</option>
+             <option>Others</option>
+          </select>
+        </div>   
+        </div>
+        </div>
+        
+      <div class="row"> 
+        <div class="col-md-4">
+          <div class="form-group">
+          <label >Job Preference</label>
+          <select class="form-control" ng-model="candidate.jobType" >
+             <option value="">Select</option>
+             <option>PERMANENT</option> 
+             <option>CONTRACT</option> 
+             <option>BOTH</option> 
+             <option>NOTSPECIFIED</option>  
+          </select>
+        </div>   
+        </div>
+         <div class="col-md-4">
+          <div class="form-group">
+            <label >Qualification</label> 
+            <select class="form-control" ng-model="candidate.qualification"  >
+              <option value="">Select</option>
+              <option>High School</option>
+              <option>Associate</option>
+              <option>Pre-Bachelors</option>
+              <option>Bachelors</option>
+              <option>Post-Bachelors, Pre-Masters</option>
+              <option>MBA</option>
+              <option>Masters</option>
+              <option>Post-Masters, Pre-Doctorate</option>
+              <option>Doctorate</option>
+              <option>Military Service</option>
+              <option>Vocational School</option>
+            </select>
+          </div>  
+        </div>
+        <div class="col-md-4">
+           <div class="form-group">
+            <label>Total Experience</label>
+            <input valid-number class="form-control" placeholder="Ex:3.5, 5.5, 6"
+                ng-model="candidate.totalExperience"
+                >
+            </div> 
+        </div>
+      </div>  
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>Last Company</label>
+            <input type="text" class="form-control"
+              ng-model="candidate.lastCompany"
+              >
+          </div> 
+          </div> 
+           <div class="col-md-4">
+          <div class="form-group">
+          <label>Last Position</label>
+          <input type="text" class="form-control"
+              ng-model="candidate.lastPosition"
+              >
+          </div>   
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>Employment Status</label>
+            <input type="text" class="form-control"
+              ng-model="candidate.employmentStatus"
+               >
+          </div>    
+        </div>
+      </div> 
+
+      <div class="row"> 
+        <div class="col-md-4">
+          <div class="form-group">
+          <label>Min Salary Requirement</label>
+          <input data-format="currency" type="text" class="form-control" placeholder="Expected Annual Salary"
+              ng-model="candidate.minSalaryRequirement"
+              >
+          </div>  
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+          <label >Present Rate</label>
+          <input data-format="currency" type="text" class="form-control" placeholder="Number of $ per Hour"
+              ng-model="candidate.presentRate"
+              >
+          </div>  
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>Expected Rate</label>
+            <input data-format="currency" type="text" class="form-control" placeholder="Number of $ per Hour"
+              ng-model="candidate.expectedRate"
+              >
+          </div>   
+        </div>
+      </div> 
+
+
+
+
+
+<div class="row">
+
+
+<div class="col-md-4">
+                       <div class="form-group">
+                        <label class="control-label">Upload Resume</label>
+                        <div class="row upload-control02" data-button="file-upload">
+<div class="col-md-9 txtboxdiv"><input type="text" readonly="true" required="" class="form-control selectedfile" placeholder="*.rtf, *.doc, *.docx, *.pdf"  ng-model="originalResume" ></div>
+<button type="button" style="display:block;" class="btn blue col-md-3 uploadbtn02" >Upload <i class="fa fa-upload" aria-hidden="true"></i></button>
+<input type="file" class="mainuploadbtn" onchange="angular.element(this).scope().originalResumeFile01(this)">
+</div> 
+                      </div> 
+                      </div>
+
+<!-- <div class="col-md-8">
+                       <div class="form-group">
+                        <label class="control-label">Original Resume</label>
+                        <div class="row upload-control" data-button="file-upload">
+<div class="col-md-9 txtboxdiv"><input type="text" readonly="true" required="" class="form-control selectedfile"  ng-model="originalResume" ></div>
+<button id="tony" type="button" class="btn blue col-md-2 uploadbtn" >Upload <i class="fa fa-upload" aria-hidden="true"></i></button>
+<div class=" pull-right col-md-1"><button type="button" class="btn blue" ng-click="originalResumeView()"><i class="fa fa-file-word-o"></i></button></div>
+<div class=" pull-right col-md-1 lockbtn"><button type="button" class="btn blue"><i class="fa fa-lock" aria-hidden="true"></i></button></div>
+<input type="file" class="mainuploadbtn" onchange="angular.element(this).scope().originalResumeFile(this)">
+</div> 
+                      </div> 
+                      </div> -->
+
+</div>
+
+
+
+
+
+
+
+
+      </div>
+      </div> 
+
+      <hr>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="pull-right">
+          <button type="button" class="btnlink" ng-click="backtojoborder()">Back to Open Positions at {{candidateDto.createdUser}}</button> 
+           <button type="button" class="btn blue" ng-click="frstab()"><i class="fa fa-arrow-circle-left"></i> Previous</button>
+            <button type="submit" ng-click="createCandidatevalidate()" class="btn blue" >Submit <i class="fa fa-upload"></i></button>
+            <button type="reset" class="btn grey-cascade" ng-click="resst()" >Reset <i class="fa fa-refresh"></i></button>
+          </div>
+        </div>
+      </div>
+    </uib-tab>
+
+    
+
+    </uib-tabset>  
+      
+      
+      </div>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      </form>
+      </div>
+<!--  ************************************************ SUBMIT PROFILE ENDS HERE ************************************** -->
+
+
+
+
+		<div class="col-md-12" id="openjobordertable">
+		
+		 <div style="float:left;margin-top:-30px;">Total No of Rows: <b>{{ tableParams.total() }}</b></div>
+<table ng-table="tableParams" class="table" show-filter="true">
+    <tr ng-repeat="user in $data">
+        <td title="'Title'" filter="{ title: 'text'}" sortable="'title'"><a class="rowlink" ng-click="jobdetails(user);">{{user.title}}</a></td>
+        <td title="'Positions'" sortable="'numOfPos'">{{user.numOfPos}}</td>
+        <td title="'City'" filter="{ city: 'text'}" sortable="'city'">{{user.city}}</td>
+        <td title="'State'" filter="{ state: 'text'}" sortable="'state'">{{user.state}}</td>
+        <td title="'Posted On'" filter="{ strPostedDate: 'text'}" sortable="'strPostedDate'">{{user.strPostedDate}}</td>
+        <td title="'Apply'" ><a class="rowlink" ng-click="applyjob(user);">Apply</a></td>
+    </tr>
+</table>
+</div>
+
+
+
+
+
+
+
+	<div class="row>
+		<div class="col-md-12">
+			<div>
+
+				
+				<!--  ****************************VIEW DETAILS STARTS HERE************************ -->
+								
+				<div id="viewdtls" style="display:none;">
+				<h3 style="padding-left:18px;">Job Details</h3>
+				
+				
+				<div class="col-md-12">
+    <div class="row">
+    		<div class="col-md-8">
+
+<div class="row">
+    		<div class="col-md-6">
+              	<div class="form-group">
+                <label class="">Job Title</label>
+                <input type="text" class="form-control" placeholder="Job Title"   Readonly="readonly" ng-model="jobtitle" style="background-color:#eef1f5!important;" >
+              </div>
+            </div>
+            
+            <div class="col-md-6">
+              	<div class="form-group">
+                <label class="">Positions</label>
+                <input type="text" class="form-control" placeholder="Positions"   Readonly="readonly" ng-model="jobpositions" style="background-color:#eef1f5!important;" >
+              </div>
+            </div>
+            
+            
+            <div class="col-md-6">
+              	<div class="form-group">
+                <label class="">Location</label>
+                <input type="text" class="form-control" placeholder="Location"   Readonly="readonly" ng-model="joblocation" style="background-color:#eef1f5!important;" >
+              </div>
+            </div>
+            
+            
+            <div class="col-md-6">
+              	<div class="form-group">
+                <label class="">Posted Date</label>
+                <input type="text" class="form-control" placeholder="Posted Date"  Readonly="readonly"   ng-model="jobposteddate" style="background-color:#eef1f5!important;">
+              </div>
+            </div>
+            
+            
+            
+            <div class="col-md-12">
+              	<div class="form-group">
+                <label class="">Description:</label>
+                <div style="background-color:#eef1f5;border:1px solid #c2cad8;padding:10px;min-height:100px;">{{jobdescription}}</div>
+               <!--  <textarea id="reason"  type="text" style="height:150px;background-color:#eef1f5!important;"  class="form-control" placeholder="Description" readonly="true" ng-model = "jobdescription"  ></textarea> -->
+              </div>
+            </div>
+            
+            <br>
+            <hr>
+            
+            <div class="row fade-in-up">
+        <div class="col-md-12">
+          <div class="pull-right"> 
+            <button type="button" class="btnlink" ng-click="backtojoborder()">Back to Open Positions at {{candidateDto.createdUser}}</button>
+            <button type="button" class="btn blue" id="openbtn" ng-click="applytojoborder();">Apply <i class="fa fa-check" aria-hidden="true"></i></button>
+            <button type="button" class="btn blue" id="blockbtn" ng-click="applytojoborderblk();">Apply <i class="fa fa-check" aria-hidden="true"></i></button>
+          </div>
+        </div>
+      </div>
+            
+            </div>              	
+
+            </div>
+            
+    </div>
+
+    </div>
+    
+				</div>
+				
+				<!--  ****************************VIEW DETAILS ENDS HERE************************ -->
+				
+				
+				
+				
+				
+				<!--  ****************************APPLY JOB STARTS HERE************************ -->
+				
+				<div id="applyjob" style="display:none;">
+				<h3 style="padding-left:18px;">Apply for the Job</h3>
+				<br>
+				<form  name="ApplyJobForm" class="tab-form-demo" novalidate=""  ng-submit="applyjobonline()" >
+				<div class="fade-in-up errmsg" id="rrees">{{errmsg}}</div>
+				<div class="col-md-12">
+    <div class="row">
+
+    		<div class="col-md-4">
+              	<div class="form-group">
+                <label class="control-label">First Name</label>
+                <input type="text" class="form-control" placeholder="First Name" required ng-model="candidateDto.firstName">
+              </div>
+            </div>
+            
+            <div class="col-md-4">
+              	<div class="form-group">
+                <label class="control-label">Last Name</label>
+                <input type="text" class="form-control" placeholder="Last Name" required ng-model="candidateDto.lastName">
+              </div>
+            </div>
+            
+            
+            <div class="col-md-4">
+              	<div class="form-group">
+                <label class="control-label">Mobile</label>
+                <input maskphone class="form-control"  placeholder="Mobile" ng-model="candidateDto.phoneNumber" required >
+              </div>
+            </div>
+            
+            
+            
+            <div class="col-md-4">
+              	<div class="form-group">
+                <label class="">Phone</label>
+                <input maskphone class="form-control"  placeholder="Phone" ng-model="candidateDto.altPhoneNumber"  >
+              </div>
+            </div>
+            
+            <div class="col-md-4">
+              <div class="form-group">
+                <label class="control-label">Email</label>
+                <input type="email" class="form-control" placeholder="Email Address" ng-model="candidateDto.email"  required>
+              </div>
+            </div>
+            
+            
+            <div class="col-md-4">
+              	<div class="form-group">
+                <label class="">Work Authorization</label>
+                <select class="form-control" ng-model="candidateDto.visaType" >
+               <option value="">Select</option>
+                  <option>Not Available</option>
+                  <option>US Citizen</option>
+                  <option>Green Card</option>
+                  <option>EAD</option>
+                  <option>TN Visa</option>
+                  <option>Canadian</option>
+                  <option>H1B Visa</option>
+                  <option>H4 Visa</option>
+                  <option>L1 Visa</option>
+                  <option>L2 Visa</option>
+                  <option>OPT</option>
+                  <option>CPT</option>
+                  <option>Corp to Corp</option>
+                  <option>Citizen</option>
+                </select>
+              </div>
+            </div>
+            </div>
+            
+            <div class="row">
+            
+            
+            <div class="col-md-4">
+              	<div class="form-group">
+                <label class="">Present Salary/Pay Rate</label>
+                <input data-format="currency" type="text" class="form-control" id="presentsalary' placeholder="" ng-model="candidateDto.presentRate">
+              </div>
+            </div>
+            
+            <div class="col-md-4">
+              	<div class="form-group">
+                <label class="">Expected Salary/Pay Rate</label>
+                <input data-format="currency" type="text" class="form-control" id="expectedsalary' placeholder="" ng-model="candidateDto.expectedRate">
+              </div>
+            </div>
+            
+                      
+            <div class="col-md-4">
+                       <div class="form-group">
+                        <label class="control-label">Upload Resume</label>
+                        <div class="row upload-control02" data-button="file-upload">
+<div class="col-md-9 txtboxdiv"><input type="text" readonly="true" required="" class="form-control selectedfile" placeholder="*.rtf, *.doc, *.docx, *.pdf"  ng-model="uploadresume" ></div>
+<button type="button" style="display:block;" class="btn blue col-md-3 uploadbtn02" >Upload <i class="fa fa-upload" aria-hidden="true"></i></button>
+<!-- <input type="file" class="mainuploadbtn" onchange="angular.element(this).scope().setFile(this)"> -->
+<input type="file" class="mainuploadbtn" onchange="angular.element(this).scope().originalResumeFile01(this)">
+</div> 
+                      </div> 
+                      </div>
+
+    <div class="col-md-12">
+              	<div class="form-group">
+                <label><input type="checkbox" class="form-checkbox" ng-model="candidateDto.isAuthFlag"  required> * I authorize {{candidateDto.createdUser}} to consider my resume for suitable openings. I do acknowledge that my resume will be used for existing and future opportunities.</label>
+              </div>
+            </div>
+            <br>
+            <hr>
+            
+            <div class="row fade-in-up">
+        <div class="col-md-12">
+          <div class="pull-right"> 
+            <button type="button" class="btnlink" ng-click="backtojoborder()">Back to Open Positions at {{candidateDto.createdUser}}</button>
+            <button type="submit" class="btn blue" ng-click="">Submit <i class="fa fa-check" aria-hidden="true"></i></button>
+            <button type="reset" id="applyreset" class="hide">Reset</button>
+          </div>
+        </div>
+      </div>
+     	
+
+</div>
+
+    </div>
+    
+    </form>
+ 
+				</div>
+				
+				<!--  ****************************APPLY JOB ENDS HERE************************ -->
+				
+				
+				<!--  ****************************RESULT STARTS HERE************************ -->
+			<div id="success"  class="success">
+			<h4>Your profile uploaded successfully!<br> 
+Our Recruitment Team will contact you if your profile matches the job requirement.<br> 
+<b>Good Luck!</b> </h4>
+			
+			<button type="button" class="btnlink" ng-click="backtojoborder()">Back to Open Positions at {{candidateDto.createdUser}}</button>
+			
+			</div>
+			
+			<!--  ****************************RESULT ENDS HERE************************ -->
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<!--  ****************************SEND TO ADDRESS STARTS HERE************************ -->
+			
+			<div id="sendresume"  class="success">
+			<h4><b>Apply by Resume through mail:</b><br> 
+HR, Charter Global, Inc.,<br>
+7000 Central Parkway,<br>
+Suite 1100,<br>
+Atlanta, GA 30328.
+</h4>
+			
+			<button type="button" class="btnlink" ng-click="backtojoborder()">Back to Open Positions at {{candidateDto.createdUser}}</button>
+			
+			</div>
+			
+			<!--  ****************************SEND TO ADDRESS ENDS HERE************************ -->
+			
+			
+			
+			
+			
+			
+				
+				
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

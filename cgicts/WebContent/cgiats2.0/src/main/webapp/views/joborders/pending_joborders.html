@@ -1,0 +1,150 @@
+<div data-ng-controller="pendingJobOrdersController" id="pendingJobOrdersController" ng-init="onload()">
+
+	<script src="assets/global/scripts/alljquery.js"></script>
+	<!-- BEGIN PAGE HEADER-->
+	<div class="sub-page-header">
+		<div class="page-bar">
+			<ul class="page-breadcrumb">
+				<li><a href="#/dashboard">Home</a> <i class="fa fa-circle"></i>
+				</li>
+				<li><span> Job Orders</span> <i class="fa fa-circle"></i></li>
+				<li><span>Pending Job Orders</span></li>
+			</ul>
+
+			<!-- <div class="page-toolbar">
+
+				<div class="col-md-6">
+					<div class="btn-group">
+						<a href="#/joborders/createJobOrder" class="btn btn-primary blue"
+							ng-if="!(rsLoginUser.userRole === 'Recruiter' || rsLoginUser.userRole === 'Manager' || rsLoginUser.userRole === 'DivisionHead' || rsLoginUser.userRole === 'IN_Recruiter' || rsLoginUser.userRole === 'IN_DM')"> Create Job
+							Order &nbsp;<i class="fa fa-file-text-o"></i>
+						</a>
+					</div>
+				</div>
+			</div> -->
+
+
+		</div>
+	</div>
+	<!-- END PAGE HEADER-->
+	<form name="AddCandidateForm" class="tab-form-demo" novalidate=""
+		ng-submit="searchpendingjoborder()">
+		
+		<div class="row ">
+			<div class="col-md-12">
+
+				<div class="row fade-in-up">
+		
+					<div class="col-md-4">
+							<div class="form-group">
+								<label>Created Between</label> <input type="daterange" id="myJobOrderRangesId"
+									ng-model="Created" ranges="ranges" readonly="true" required=""
+									class="form-control">
+							</div>
+						</div>
+						
+					<div class="col-md-4">
+							<div class="form-group">
+								<label>Priority</label>
+								<div class="multi">
+									<span class="blankmsg">Select</span> <input type="text"
+										class="ddbox form-control" readonly="readonly" id="priority"><i
+										class="fa fa-caret-down" aria-hidden="true"></i> <span
+										class="errormsg">This field is required</span>
+									<ul class="ddlist">
+										<li><input type="checkbox" value="High" checked="true">High</li>
+										<li><input type="checkbox" value="Medium" checked="true">Medium</li>
+										<li><input type="checkbox" value="Low" checked="true">Low</li>
+									</ul>
+								</div>
+
+							</div>
+						</div>
+						
+					<div class="col-md-4">
+							<div class="form-group">
+								<label>Job Type</label>
+								<div class="multi">
+									<span class="blankmsg">Select</span> <input type="text"
+										class="ddbox form-control" readonly="readonly" id="jobtype"><i
+										class="fa fa-caret-down" aria-hidden="true"></i> <span
+										class="errormsg">This field is required</span>
+									<ul class="ddlist">
+										<li><input type="checkbox" value="Permanent"
+											checked="true">Permanent</li>
+										<li><input type="checkbox" value="Contract"
+											checked="true">Contract</li>
+										<li><input id="bth" type="checkbox" value="Both" checked="true">Both</li>
+										<li><input type="checkbox" value="Not Specified"
+											checked="true">Not Specified</li>
+									</ul>
+								</div>
+
+							</div>
+						</div>
+						
+						
+				
+				<div class="">
+						<div class="col-md-6">
+						</div>
+						<div class="col-md-6">
+							<div class="pull-right">
+								<button type="submit" ng-click="" id="searchMyJobOrderId"
+									class="btn btn-primary blue" title="Pending Job Orders">
+									Search <i class="fa fa-search"></i>
+								</button>
+								<button type="button" ng-click="pendingJobordersreset()"
+									class="btn btn-primary grey-cascade" title="Reset">
+									Reset <i class="fa fa-refresh"></i>
+								</button>
+								
+							</div>
+						</div>
+					</div>
+		</div>
+		</div>
+		</div>
+		
+		</form>
+		
+		
+							<!-- Table -->
+					<div class="row fade-in-up table-scrollable">
+
+						<table id="table" data-filter-control="true"
+							
+							bs-table-control="pendingJobOrder.pendingJobOrderBsTableControl"
+							ng-show="pendingJobOrderTable">
+							<thead>
+								<tr>
+									<!--  <th data-field="state" data-checkbox="true"></th> -->
+									<th data-field="jobOrderId" data-sortable="true"
+										data-filter-control="input"></th>
+									<th data-field="priority" data-sortable="true"></th>
+									<th data-field="status" data-sortable="true"></th>
+									<th data-field="type" data-sortable="true"></th>
+									<th data-field="title" data-sortable="true"
+										data-filter-control="input"></th>
+									<th data-field="client" data-sortable="true"
+										data-filter-control="input"></th>
+									<th data-field="location" data-sortable="true"
+										data-filter-control="input"></th>
+									<th data-field="dm" data-sortable="true"
+										data-filter-control="input"></th>
+									<th data-field="assignedTo" data-sortable="true"></th>
+									<th data-field="updatedDate" data-sortable="true" data-sort-name="strUpdatedOn"></th>
+									<th data-field="sbm" data-sortable="true"></th>
+									<th data-field="activeDays" data-sortable="true"></th>
+									<th data-field="actions" data-formatter="operatePendingFormatter"
+										data-events="operatePendingEvents"></th>
+								</tr>
+							</thead>
+							<tbody>
+
+							</tbody>
+						</table>
+					</div>
+					<!--  End Table  -->
+
+</div>

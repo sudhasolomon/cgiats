@@ -1,0 +1,59 @@
+
+
+<div ng-controller = "IndiaCandidateController" data-ng-init="onload()" id="indiaCandidateControllerId"> 
+<!-- BEGIN PAGE HEADER--> 
+<div class="sub-page-header">
+  <div class="page-bar">
+    <ul class="page-breadcrumb">
+          	<li><a href="#/dashboard" ng-if="!(rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_Recruiter' || rsLoginUser.userRole === 'ATS_Executive')">Home</a> 
+				<a href="#/india_joborders/my_indiajobOrder" ng-if="(rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_Recruiter')">Home</a>
+				<a href="#/candidates/missingData" ng-if="(rsLoginUser.userRole === 'ATS_Executive')">Home</a>
+				<i class="fa fa-circle"></i>
+				</li>
+      <li>
+        <span>Candidates</span>
+        <i class="fa fa-circle"></i>
+      </li>
+      <li>
+        <span>India Candidates</span>
+      </li>
+    </ul> 
+    
+  </div>
+</div>
+<!-- END PAGE HEADER--> 
+<!-- BEGIN MAIN CONTENT -->
+<div class="pull-left">
+<button type="button"   ng-click="addCandidate()" class="btn blue" ><i class="fa fa-plus-square"></i> Add Candidate</button>
+<button class="btn sbold green send-email" ng-click="sendEmails()">
+                    Send Email <i class="fa fa-send"></i>
+                  </button>
+                  </div><div id="mesgerror" class="fade-in-up msgrooro">Please select atleast one record</div>
+                  
+ <!-- Table --> 
+            <div class="row fade-in-up table-scrollable">
+            
+	            <table id="indiaTable" bs-table-control="candidate.bsTableControl" ng-show="indiaTable"  >
+		        <thead>
+		            <tr>
+		                <th data-field="state" data-checkbox="true"></th>
+		                <th data-field="candidateId" data-sortable="true"></th>
+		                <th data-field="firstName" data-sortable="true"></th>
+		                <th data-field="title" data-sortable="true"></th>
+		                <th data-field="location" data-sortable="true"></th>
+		                <th data-field="createdOn" data-sortable="true"></th>
+		                <th data-field="updatedOn" data-sortable="true"></th>
+		                <th data-field="status" data-sortable="true"></th>
+		                 <th data-field="resume" data-formatter="indiaResumeFormatter" data-events="indiaResumeEvents"></th> 
+		                <th data-field="actions" data-formatter="indiaActionFormatter" data-events="indiaOperateEvents"></th>
+		            </tr>
+		        </thead>
+		        <tbody>
+		           
+		        </tbody>
+	    		</table>  
+            </div>  
+            <!-- End Table -->
+
+    <!-- END MAIN CONTENT -->
+</div>

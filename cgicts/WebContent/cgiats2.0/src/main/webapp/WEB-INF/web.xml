@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="cgiats" version="2.5">
+  <display-name>CGI ATS</display-name>
+
+  <filter>
+    <filter-name>springSecurityFilterChain</filter-name>
+    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+  </filter>
+ 
+  <filter-mapping>
+    <filter-name>springSecurityFilterChain</filter-name>
+    <url-pattern>/*</url-pattern>
+    <dispatcher>FORWARD</dispatcher>
+    <dispatcher>REQUEST</dispatcher>
+  </filter-mapping>
+  
+  
+  <filter>
+		<filter-name>cacheClearFilter</filter-name>
+		<filter-class>com.uralian.cgiats.config.CacheClearFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>cacheClearFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+  
+	 <listener>
+    <listener-class>com.uralian.cgiats.config.HttpSessionCollector</listener-class>
+  </listener>
+	
+  <listener>
+    <listener-class>
+      org.springframework.security.web.session.HttpSessionEventPublisher
+    </listener-class>
+  </listener>
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+  <listener>
+    <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+  </listener>
+ 
+ 
+   <servlet>  
+  <servlet-name>mvc-dispatcher</servlet-name>  
+  <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>  
+  
+  <load-on-startup>1</load-on-startup>  
+ </servlet>  
+  
+ <servlet-mapping>  
+  <servlet-name>mvc-dispatcher</servlet-name>  
+  <url-pattern>/</url-pattern>  
+ </servlet-mapping>  
+  
+  <session-config>
+    <session-timeout>60</session-timeout>
+  </session-config>
+  <welcome-file-list>
+    <welcome-file>login.html</welcome-file>    
+  </welcome-file-list>
+  <error-page>
+    <exception-type>org.springframework.security.access.AccessDeniedException</exception-type>
+    <location>/views/candidates/error_page.html</location>
+  </error-page>
+  <error-page>
+    <exception-type>java.lang.Throwable</exception-type>
+    <location>/views/candidates/error_page.html</location>
+  </error-page>
+  <error-page>
+    <exception-type>javax.faces.application.ViewExpiredException</exception-type>
+    <location>/views/candidates/error_page.html</location>
+  </error-page>
+  <servlet>
+    <servlet-name>jersey-serlvet</servlet-name>
+    <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
+    <init-param>
+      <param-name>com.sun.jersey.config.property.packages</param-name>
+      <param-value>com.uralian.cgiats.rest</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>jersey-serlvet</servlet-name>
+    <url-pattern>/rest/*</url-pattern>
+  </servlet-mapping>
+</web-app>

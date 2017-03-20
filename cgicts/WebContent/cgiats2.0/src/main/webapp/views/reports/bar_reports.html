@@ -1,0 +1,130 @@
+<div ng-controller = "barreportscontroller" ng-init="onload()">
+<script src="assets/global/scripts/alljquery02.js"></script>
+
+
+
+
+<!-- BEGIN PAGE HEADER--> 
+<div class="sub-page-header">
+  <div class="page-bar">
+    <ul class="page-breadcrumb">
+         	<li><a href="#/dashboard" ng-if="!(rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_Recruiter' || rsLoginUser.userRole === 'ATS_Executive')">Home</a> 
+				<a href="#/india_joborders/my_indiajobOrder" ng-if="(rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_Recruiter')">Home</a>
+				<a href="#/candidates/missingData" ng-if="(rsLoginUser.userRole === 'ATS_Executive')">Home</a>
+				<i class="fa fa-circle"></i>
+				</li>
+      <li>
+        <span>Reports</span> 
+        <i class="fa fa-circle"></i>
+      </li>
+      <li>
+        <span>Bar Report</span> 
+      </li> 
+    </ul> 
+  </div>
+</div>
+<!-- END PAGE HEADER-->
+
+<!-- BEGIN MAIN CONTENT -->
+
+<form name="searchsubmitaldm" class="tab-form-demo" ng-submit="getrecdata()" >
+
+<div class="fade-in-up" id="res">Please Fill the mandatory fields</div>
+
+<div class="row">
+
+
+<div class="col-md-2">
+							<div class="form-group">
+								<label class="control-label">Year</label>
+								<div class="multi">
+									<span class="blankmsg">Select</span> <input type="text"
+										class="ddbox form-control" readonly="readonly" id="recselectedyear"><i
+										class="fa fa-caret-down" aria-hidden="true"></i> <span
+										class="errormsg">This field is required</span>
+									<ul class="ddlist" id="yeardd">
+									<input class="selectall" type="checkbox" value="selectall" >Select All
+										<li ng-repeat="values in yearList" ><input type="checkbox"  value="{{values}}" >{{values}}</li>
+									</ul>
+								</div>
+
+							</div>
+						</div>
+						
+						
+						
+						
+						
+						
+						
+						<div class="col-md-2">
+							<div class="form-group">
+								<label class="control-label">Month</label>
+								<div class="multi">
+									<span class="blankmsg">Select</span> <input type="text"
+										class="ddbox form-control" readonly="readonly" id="recselectedmonth"><i
+										class="fa fa-caret-down" aria-hidden="true"></i> <span
+										class="errormsg">This field is required</span>
+									<ul class="ddlist" id="monthdd">
+										<input class="selectall" type="checkbox" value="selectall">Select All
+										<li><input data-month="1"   type="checkbox" value="Jan" >JAN</li>
+										<li><input data-month="2" type="checkbox" value="Feb" >FEB</li>
+										<li><input data-month="3" type="checkbox" value="Mar" >MAR</li>
+										<li><input data-month="4" type="checkbox" value="Apr" >APR</li>
+										<li><input data-month="5" type="checkbox" value="May" >MAY</li>
+										<li><input data-month="6" type="checkbox" value="Jun" >JUN</li>
+										<li><input data-month="7" type="checkbox" value="Jul" >JUL</li>
+										<li><input data-month="8" type="checkbox" value="Aug" >AUG</li>
+										<li><input data-month="9" type="checkbox" value="Sep" >SEP</li>
+										<li><input data-month="10" type="checkbox" value="Oct" >OCT</li>
+										<li><input data-month="11" type="checkbox" value="Nov" >NOV</li>
+										<li><input data-month="12" type="checkbox" value="Dec" >DEC</li>
+									</ul>
+								</div>
+
+							</div>
+						</div>
+						
+						
+						
+						
+						
+						
+						<div class="col-md-3">
+							<div class="form-group">
+								<label class="control-label">Weeks</label>
+								<div class="multi">
+									<span class="blankmsg">Select</span> <input type="text"
+										class="ddbox form-control" readonly="readonly" id="recselectedweek"><i
+										class="fa fa-caret-down" aria-hidden="true"></i> <span
+										class="errormsg">This field is required</span>
+									<ul class="ddlist" id="weekdd">
+									<input id="weeksel" class="selectall" type="checkbox" value="selectall"  checked="true">Select All
+									<li ng-repeat="values in weeksList" ><input type="checkbox"  value="{{values.value}}" checked="true" >{{values.label}}</li>
+									</ul>
+								</div>
+
+							</div>
+						</div>
+						
+
+
+
+</div>
+
+
+<div class="row">
+
+<div class="col-md-2 pull-right"  style="margin-top:15px;margin-bottom:0px;padding-left:0px;padding-right:0px;" >
+            <button type="button" ng-click="checkandgetbardata()" style="margin-left:20px;padding-bottom:3px;"  class="btn blue"><i class="fa fa-search"></i> View</button>
+            </div>				
+</div>         
+</form>
+
+<br>
+	<div class="row">
+		<div class="col-md-12">
+			<div id="container" style="height: 400px"></div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,775 @@
+<div ng-controller="createJobOrdersController" ng-init="onload()">
+
+<!-- BEGIN PAGE HEADER--> 
+<div class="sub-page-header">
+  <div class="page-bar">
+    <ul class="page-breadcrumb">
+      <li>
+        <a href="#/dashboard">Home</a>
+        <i class="fa fa-circle"></i>
+      </li>
+      <li>
+        <span> Job Orders</span>
+        <i class="fa fa-circle"></i>
+      </li>
+      <li>
+        <span>Create Job Order</span>
+      </li>
+    </ul> 
+     
+  </div>
+</div>
+<!-- END PAGE HEADER--> 
+
+<!-- BEGIN MAIN CONTENT --> 
+
+
+
+
+
+
+<div class="fade-in-up successdiv" id="client_success"><i class="fa fa-check" aria-hidden="true"></i> Add / Edit Client Successfully Completed</div>
+
+
+
+
+
+<!-- ***********************************ADD EDIT CLIENT POPUP STARTS HERE*************************************************** -->
+
+<form  name="AddEditClient" class="tab-form-demo" novalidate=""  ng-submit="addEditClientDB()" >
+
+    
+    <div class="undermask" id="addeditclientpop">
+    <div class="popupcont">
+    <div class="popuphead">Add / Edit Client<span class="pull-right" id="popclosebtn"><img width="16" height="16" src="assets/global/img/portlet-remove-icon-white.png" class="ng-scope"></span></div>
+    <div class="col-md-12 popcont">
+    <div class="row">
+    		
+    		
+    		<div class="fade-in-up errorwarning" id="samenameerr">Existing Client Name & New Client Name are same</div>
+    		<div class="fade-in-up errorwarning" id="nameexistserr">The New Client Already Exists in the Records</div>
+    		
+    		
+              	<div class="form-group row">
+                <label class="col-md-4 control-label">Add / Edit</label>
+                <div class="col-md-8">
+                <select class="form-control" required="" ng-change="changepopdd()" ng-model="selectclientstatus">
+                  <option value="">Select</option>
+                  <option>Add a New Client</option>
+                  <option>Edit an Existing Client</option>
+                </select>
+                </div>
+              </div>
+              
+              
+              
+              
+              
+              
+              <div class="form-group row" ng-if="(selectclientstatus=='Edit an Existing Client')">
+                <label class="col-md-4 control-label">Select a Client to Edit</label>
+                <div class="col-md-8">
+                <div class="clientnamepop" style="padding-right:0px;">
+                <div class="multiselect formddlistpop" events="popclientevent" ng-dropdown-multiselect="" options="popclientdata" selected-model="popclient" extra-settings="onesearchsettings"></div>
+                <span class="mustfield">This field is required</span>
+                </div>
+                </div>
+              </div>
+              
+              
+              
+              
+              
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																
+																	
+																	
+              
+              
+              
+              
+              
+              
+              <div class="form-group row" ng-if="(showfield == 'yes')">
+                <label class="col-md-4 control-label">New Client Name</label>
+                <div class="col-md-8">
+							<!-- <input type="text" class="form-control" placeholder="New Client Name"  ng-model="clientData.newclientname" required="" > -->
+							
+							
+							<div angucomplete-alt id="clientId" class="form-control autocomplete editclientauto"
+																	placeholder="New Client Name" pause="100"
+																	disable-input="isDisabled"
+																	selected-object="selectedClientIdAction"
+																	local-data="popclientList"
+																	search-fields="label" title-field="label"
+																	minlength="1" 
+																	input-class="search-control height34 "
+																	match-class="highlight"></div>
+																	
+																	
+																	                
+                </div>
+              </div>
+              
+              
+              
+              
+              <div class="form-group row" ng-if="(selectclientstatus == 'Add a New Client')">
+                <label class="col-md-4 control-label">New Client Name</label>
+                <div class="col-md-8">
+							
+							
+								<div angucomplete-alt id="clientId" class="form-control autocomplete addclientauto"
+																	placeholder="New Client Name" pause="100"
+																	disable-input="isDisabled"
+																	selected-object="selectedClientIdAction"
+																	local-data="popclientList"
+																	search-fields="label" title-field="label"
+																	minlength="1" 
+																	input-class="search-control height34 "
+																	match-class="highlight"></div>
+							
+							                
+                </div>
+              </div>
+            
+            
+            
+    </div>
+    
+    
+    
+    
+    
+    <div class="row">
+    <button type="submit" class="btn blue">Add / Edit Client</button>
+    </div>
+    
+    
+    
+    </div>
+
+
+    </div>
+    </div>
+    </form>
+<!-- ***********************************ADD EDIT CLIENT POPUP ENDS HERE*************************************************** -->
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+    <form  name="AddCandidateForm" class="tab-form-demo" novalidate=""  ng-submit="joborder()" >
+    
+		<div ng-show="isErrorMsg">
+			<div style="color: red; text-align: right;">
+				<b>{{errMsg}}</b>
+			</div>
+		</div>
+		<div ng-show="statusValidationErrMsg">
+<div style="color: red; text-align: right;"><b>Status must be either Open or Assigned</b></div>
+</div>
+
+<div class="fade-in-up" id="res">Please Fill the mandatory fields in all the tabs</div>
+    <uib-tabset active="activeForm">
+
+    <uib-tab index="0" heading="General" active="tabs[0].active">
+
+    <div class="row fade-in-up">
+    <div class="col-md-12">
+    <div class="row">
+    		<div class="col-md-4">
+              	<div class="form-group">
+                <label class="">ID</label>
+                <input type="text" class="form-control" placeholder="Auto Generated ID"   Readonly="readonly" style="background-color:#eef1f5!important;">
+              </div>
+            </div>
+            <div class="col-md-4">
+              	<div class="form-group">
+                <label class="control-label">Show Job Order On Website</label>
+                <select class="form-control" required="" ng-model="createJobOrdersFields.onlineFlag" ng-init="createJobOrdersFields.onlineFlag='Yes'">
+                  <option value="">Select</option>
+                  <option>Yes</option>
+                  <option>No</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-4">
+              	<div class="form-group">
+                <label class="control-label">Job Belongs To</label>
+                <select class="form-control" required="" ng-model="createJobOrdersFields.companyFlag">
+                  <option value="">Select</option>
+                  <option value="CGI">CGI</option>
+                  <option value="SAPEARE">Sapeare</option>
+                  <option value="REDGALAXY">RedGalaxy</option>
+                  </select>
+              </div>
+              </div>
+    </div>
+    
+    <div class="row">
+                <div class="col-md-4">
+              	<div class="form-group">
+                <label class="control-label">Priority</label>
+                <select class="form-control" required="" ng-model="createJobOrdersFields.priority" ng-init="createJobOrdersFields.priority='MEDIUM'">
+                  <option value="">Select</option>
+                  <option value="HIGH">High</option>
+                  <option value="MEDIUM">Medium</option>
+                  <option value="LOW">Low</option>
+                  </select>
+              </div>
+              </div>
+              
+              
+              
+              
+              
+              <!-- <div class="col-md-4">
+              	<div class="form-group">
+                <label class="control-label">Client</label>
+                <input type="text" class="form-control" placeholder="Client"  ng-model="createJobOrdersFields.customer" required="" >
+              </div>
+            </div> -->
+            
+            
+            
+            
+            
+            
+            
+            <div class="col-md-4">
+              	<div class="form-group">
+                <label class="control-label">Client</label>
+                <div class="row">
+                <div class="col-md-10 clientname" style="padding-right:0px;">
+                <div class="multiselect formddlist" events="clientevent" ng-dropdown-multiselect="" options="clientdata" selected-model="client" extra-settings="onesearchsettings"></div>
+                <span class="mustfield">This field is required</span>
+                </div>
+                <div class="col-md-2" style="padding-left:5px;padding-bottom:4px;"><button title="Add / Edit Client" style="padding-bottom:4px;" type="button" class="btn blue" ng-click="addeditclient()"><i class="fa fa-plus" aria-hidden="true"></i></button></div>
+                </div>
+              </div>
+            </div>
+            
+            
+            
+            
+            
+            <div class="col-md-4">
+              	<div class="form-group">
+                <label class="control-label">Hide Client</label>
+               <select class="form-control"  ng-model="createJobOrdersFields.strCustomerHidden" ng-init="createJobOrdersFields.strCustomerHidden='No'">
+                  <option value="" disabled selected>Select</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                </select>
+              </div>
+            </div>
+    </div>
+    
+    <div class="row">
+    
+     <div class="col-md-4">
+              	<div class="form-group">
+                <label class="control-label">Status</label>
+                <select class="form-control" required="" ng-model="createJobOrdersFields.status" ng-init="createJobOrdersFields.status='OPEN'">
+                  <option value="">Select</option>
+                  <option value="OPEN">Open</option>
+                  <option value="ASSIGNED">Assigned</option>
+                  <option value="FILLED">Filled</option>
+                  <option value="CLOSED">Closed</option>
+                  <option value="REOPEN">Reopen</option>
+                  </select>
+              </div>
+              </div>
+                <!-- <div class="col-md-4">
+              	<div class="form-group">
+                <label class="control-label">Status</label>
+                
+                <input type="text" class="form-control" required="" ng-model="createJobOrdersFields.status" ng-init="createJobOrdersFields.status='PENDING'" readonly="readonly">
+                <select class="form-control" required="" ng-model="createJobOrdersFields.status" ng-init="createJobOrdersFields.status='OPEN'">
+                  <option value="">Select</option>
+                  <option value="OPEN">Open</option>
+                  <option value="ASSIGNED">Assigned</option>
+                  <option value="FILLED">Filled</option>
+                  <option value="CLOSED">Closed</option>
+                  <option value="REOPEN">Reopen</option>
+                  </select>
+              </div>
+              </div> -->
+              <div class="col-md-4">
+              	<div class="form-group">
+                <label class="control-label">City</label>
+                <input type="text" class="form-control" placeholder="City"  ng-model="createJobOrdersFields.city" required="">
+              </div>
+            </div>
+            <div class="col-md-4">
+              	<div class="form-group">
+                <label class="control-label">State</label>
+                <select class="form-control"  required="" ng-model="createJobOrdersFields.state" ng-options="name for (name, value) in usstates">
+                <option value="">Select</option>
+                </select>
+              </div>
+            </div>
+    </div>
+    
+
+    
+    <div class="row">
+                <div class="col-md-4">
+              	<div class="form-group">
+                <label class="">Assigned to User Id</label>
+                  <select
+								class="form-control ng-pristine ng-valid ng-valid-required ng-touched"
+								ng-model="createJobOrdersFields.assignedTo"
+								ng-options="obj.userId as obj.fullName for obj in  assignedUserIdlist">
+								<option value="" selected>None</option>
+							</select>
+                  
+              </div>
+              </div>
+              <div class="col-md-4">
+              	<div class="form-group">
+                <label class="control-label"># of Positions</label>
+                <input valid-number class="form-control" ng-model="createJobOrdersFields.numOfPos" required  maxlength="3">
+              </div>
+            </div>
+            
+            
+            <div class="col-md-4">
+              	<div class="form-group">
+                <label class="control-label"># of Resumes Required</label>
+                <input valid-number class="form-control" ng-model="createJobOrdersFields.noOfResumesRequired" required  maxlength="3">
+              </div>
+            </div>
+            
+    </div>
+    
+    
+    
+    <div class="row">
+                
+                <div class="col-md-4">
+              	<div class="form-group">
+                <label>Category</label>
+                <input type="text" class="form-control" placeholder="Category"  ng-model="createJobOrdersFields.category"  >
+              </div>
+            </div>
+            
+                
+              <div class="col-md-4">
+              	<div class="form-group">
+                <label class="control-label">Title</label>
+                <input only-letters-input type="text" class="form-control" placeholder="Title"  ng-model="createJobOrdersFields.title" required="" >
+              </div>
+            </div>
+            <div class="col-md-4">
+              	<div class="form-group">
+                <label class="control-label">Key Skills</label>
+                <input type="text" class="form-control" placeholder="Key Skills"  ng-model="createJobOrdersFields.keySkills" required="" >
+              </div>
+            </div>
+    </div>
+    
+    
+    
+    
+    
+    
+    <div class="row">
+    
+    
+    <div class="col-md-4">
+              	<div class="form-group">
+                <label class="control-label">Job Will Expire in</label>
+                <select class="form-control" required="" ng-model="createJobOrdersFields.jobExpireIn">
+                  <option value="">Select</option>
+                  <option value="12 Hours">12 Hours</option>
+                  <option value="24 Hours">24 Hours</option>
+                  <option value="48 Hours">48 Hours</option>
+                  <option value="1 Week">1 Week</option>
+                  <option value="On Going">On Going</option>
+                  </select>
+              </div>
+              </div>
+              
+              
+    <div class="col-md-4">
+              	<div class="form-group">
+                <label>EM Name</label>
+                   <select
+								class="form-control ng-pristine ng-valid ng-valid-required ng-touched"
+								 ng-model="createJobOrdersFields.emName"
+								ng-options="em.userId as em.fullName for em in  emList">
+								<option value="" selected>Select</option>
+							</select>
+
+						</div>
+              </div>
+              
+    <div class="col-md-4" ng-if="!(rsLoginUser.userRole === 'ADM' || rsLoginUser.userRole === 'DM')" >
+              	<div class="form-group">
+                <label class="control-label">DM Name</label>
+                   <select
+								class="form-control ng-pristine ng-valid ng-valid-required ng-touched"
+								 ng-model="createJobOrdersFields.dmName"
+								ng-options="dm.userId as dm.fullName for dm in  dmList" required>
+								<option value="" selected>Select</option>
+							</select>
+
+						</div>
+              </div>
+              
+              
+              
+              
+              
+              
+              
+           <!--    <div class="col-md-4">
+              	<div class="form-group">
+                <label class="control-label">Client</label>
+                <div class="row">
+                <div class="col-md-9 clientname" style="padding-right:0px;">
+                <div class="multiselect formddlist" events="clientevent" ng-dropdown-multiselect="" options="clientdata" selected-model="client" extra-settings="onesearchsettings"></div>
+                <span class="mustfield">This field is required</span>
+                </div>
+                <div class="col-md-3" style="padding-left:5px;padding-bottom:4px;"><button style="padding-bottom:4px;" type="button" class="btn blue" ng-click="addeditclient()"><i class="fa fa-plus" aria-hidden="true"></i> / <i class="fa fa-pencil" aria-hidden="true"></i></button></div>
+                </div>
+              </div>
+            </div> -->
+            
+            
+            
+            
+              </div>
+              
+              
+              
+              
+              
+    </div>
+    </div>
+    
+      
+      <div class="row">
+      </div> <hr>
+      <div class="row fade-in-up">
+        <div class="col-md-12">
+          <div class="pull-right"> 
+            <button type="button" class="btn light-blue" ng-click="#"><i class="fa fa-arrow-circle-left"></i> Previous</button>
+            <button type="button" class="btn blue" ng-click="firstTab();">Next <i class="fa fa-arrow-circle-right"></i></button>
+            <button type="button" class="btn grey-cascade" ng-click="candidateResettab1()">Reset <i class="fa fa-refresh"></i></button>
+          </div>
+        </div>
+      </div>
+    </uib-tab>
+ 
+
+    <uib-tab index="1" heading="Job Description" active="tabs[1].active">
+    
+      <div class="row fade-in-up"> 
+        <div class="col-md-12">
+        
+        <div class="row">
+                <div class="col-md-12">
+              	<div class="form-group">
+                <label>Description</label>
+                <textarea type="text" rows="3" class="form-control" placeholder="Enter your description" ng-model="createJobOrdersFields.description" ></textarea>
+              </div>
+              </div>
+              
+              <div class="col-md-12">
+              	<div class="form-group">
+                <label>Notes</label>
+                <textarea type="text" rows="3" class="form-control" placeholder="Enter your Notes" ng-model="createJobOrdersFields.note" ></textarea>
+              </div>
+              </div>
+    
+              <div class="col-md-12">
+                       <div class="form-group">
+                        <label class="">Attachments</label>
+                        <div class="row upload-control" data-button="file-upload">
+<div class="col-md-9 txtboxdiv"><input readonly="true" type="text" class="form-control selectedfile"  ng-model="createJobOrdersFields.attachment" ></div>
+<button type="button" title="Upload Files" class="btn blue col-md-2 uploadbtn" >Upload <i class="fa fa-upload" aria-hidden="true"></i></button>
+<div class=" pull-right rtbtn col-md-2"><button type="button" class="btn blue" title="View File" ng-click="originalResumeView()"><i class="fa fa-file-word-o"></i></button></div>
+<div class=" pull-right rtbtn col-md-2 lockbtn"><button type="button" title="Unlock Upload" class="btn blue"><i class="fa fa-lock" aria-hidden="true"></i></button></div>
+<input type="file" class="mainuploadbtn" onchange="angular.element(this).scope().setFile(this)" >
+</div> 
+                      </div> 
+                      </div>
+
+
+              
+    </div>
+        
+        
+      </div>
+      </div> 
+
+      <hr>
+      <div class="row fade-in-up">
+        <div class="col-md-12">
+          <div class="pull-right"> 
+            <button type="button" class="btn blue" ng-click="tabs[0].active = true"><i class="fa fa-arrow-circle-left"></i> Previous</button>
+            <button type="button" class="btn blue" ng-click="tabs[2].active = true">Next <i class="fa fa-arrow-circle-right"></i></button>
+            <button type="button" class="btn grey-cascade" ng-click="candidateResettab2()" >Reset <i class="fa fa-refresh"></i></button>
+          </div>
+        </div>
+      </div>
+    </uib-tab>
+
+    <uib-tab index="2" heading="Compensation" active="tabs[2].active">
+      <div class="row fade-in-up">
+                <div class="col-md-12">
+                
+                
+                
+                
+                <div class="row">
+                <div class="col-md-4">
+              	<div class="form-group">
+                <label class="control-label">Job Type</label>
+                <select id="jobtyp" class="form-control" ng-model="createJobOrdersFields.jobType" ng-change="clrval()" required="" ng-init="createJobOrdersFields.jobType='PERMANENT'">
+                  <option value="">Select</option>
+                  <option value="PERMANENT">Permanent</option>
+                  <option value="CONTRACT">Contract</option>
+                  <option value="BOTH">Both</option>
+                  <option value="NOTSPECIFIED">Not Specified</option>
+                  </select>
+              </div>
+              </div>
+              
+    </div>
+    
+  
+  <div class="row" id="permanentoptions" ng-if="createJobOrdersFields.jobType == 'PERMANENT'">
+  
+  
+  <script src="assets/global/scripts/alljquery.js"></script>
+  <div class="col-md-4">
+              	<div class="form-group">
+                <label>Salary</label>
+                <input data-format="currency" type="text" class="form-control"  maxlength="8"  ng-model="createJobOrdersFields.salary"  >
+              </div>
+              </div>
+              
+              <div class="col-md-4">
+              	<div class="form-group">
+                <label>Perm Fee</label>
+                <input data-format="percentage" type="text" class="form-control" maxlength="8"   ng-model="createJobOrdersFields.permFee"  >
+              </div>
+              </div>
+              
+         
+                <div class="col-md-4">
+              	<div class="form-group">
+                <label class="">Start Date</label>
+  <div class="input-group">
+                  <input type="text"  id="perstartdate"  class="form-control" uib-datepicker-popup="{{DateFormat}}" is-open="visaDatePopup.opened" datepicker-options="visaDateOptions" close-text="Close" alt-input-formats="altInputFormats" ng-model="createJobOrdersFields.startDate" ng-keyup="" readonly="true" />
+                  <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="visaDateopen()"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+                </div>
+
+              </div>
+              </div>
+              
+              
+    </div>
+
+    
+    <div id="contractoptions" ng-if="createJobOrdersFields.jobType == 'CONTRACT'">
+    
+    <script src="assets/global/scripts/alljquery.js"></script>
+    <div class="row" >
+    
+  <div class="col-md-4">
+              	<div class="form-group">
+                <input type="checkbox" id="contw2" class="form-checkbox"  ng-model="createJobOrdersFields.acceptW2" > W-2
+              </div>
+              </div>
+      
+              <div class="col-md-4">
+              	<div class="form-group">
+              	<div class="row" >
+                <div class="col-xs-6">
+                <label class="">Min Hourly Rate:</label>
+                <input data-format="currency" type="text" id="w2hour" maxlength="8" ng-disabled="!createJobOrdersFields.acceptW2" class="form-control"   ng-model="createJobOrdersFields.hourlyRateW2"  >
+                </div>
+                
+                
+                <div class="col-xs-6">
+                <label class="">Max Hourly Rate:</label>
+                <input data-format="currency" type="text" id="w2hourmax"  maxlength="8" class="form-control" ng-disabled="!createJobOrdersFields.acceptW2"  ng-model="createJobOrdersFields.hourlyRateW2max"  >
+                </div>
+                
+              </div>
+              </div>
+              </div>
+              
+              
+              
+              
+              <div class="col-md-4">
+              	<div class="form-group">
+              	<div class="row" >
+                <div class="col-xs-6">
+                <label class="">Annual Rate</label>
+                <input data-format="currency" type="text" id="w2annual" maxlength="8" class="form-control" ng-disabled="!createJobOrdersFields.acceptW2"  ng-model="createJobOrdersFields.annualRateW2"  >
+                </div>
+              </div>
+              </div>
+              </div>
+
+              
+              
+    </div>
+ 
+    
+    
+
+    <div class="row" >
+    
+  <div class="col-md-4">
+              	<div class="form-group">
+                <input type="checkbox" id="contcorp" class="form-checkbox"   ng-model="createJobOrdersFields.acceptC2c"  > Corp-to-corp
+              </div>
+              </div>
+       
+              <div class="col-md-4">
+              	<div class="form-group">
+              	<div class="row" >
+                <div class="col-xs-6">
+                <label class="">Min Hourly Rate:</label>
+                <input data-format="currency" type="text" id="corphour"  maxlength="8" class="form-control" ng-disabled="!createJobOrdersFields.acceptC2c"   ng-model="createJobOrdersFields.hourlyRateC2c"  >
+                </div>
+                
+                
+                
+                <div class="col-xs-6">
+                <label class="">Max Hourly Rate:</label>
+                <input data-format="currency" type="text" id="corphourmax" maxlength="8"  class="form-control" ng-disabled="!createJobOrdersFields.acceptC2c"  ng-model="createJobOrdersFields.hourlyRateC2cmax"  >
+                </div>
+
+              </div>
+              </div>
+              </div>
+    
+    </div>
+   
+     <div class="row" >
+    
+  <div class="col-md-4">
+              	<div class="form-group">
+                <label class="">Start Date:</label>
+                <div class="input-group">
+                  <input type="text" class="form-control" uib-datepicker-popup="{{DateFormat}}" is-open="ConStartDatePopup.opened" datepicker-options="ConStartDateOptions" close-text="Close" alt-input-formats="altInputFormats" ng-model="createJobOrdersFields.startDate" ng-keyup="candidateStorage(candidate)" readonly="true"/>
+                  <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="ConStartDateopen()"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+                </div>
+              </div>
+              </div>
+              
+              
+              <div class="col-md-4">
+              	<div class="form-group">
+                <label class="">End Date:</label>
+                <div class="input-group">
+                  <input type="text" class="form-control" uib-datepicker-popup="{{DateFormat}}" is-open="ConEndDatePopup.opened" datepicker-options="ConEndDateOptions" close-text="Close" alt-input-formats="altInputFormats" ng-model="createJobOrdersFields.endDate" ng-keyup="candidateStorage(candidate)" readonly="true"/>
+                  <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="ConEndDateopen()"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+                </div>
+              </div>
+              </div>
+       
+    </div>
+    
+    
+    </div>
+
+ <div class="row">
+    <div class="col-md-12">
+      <b>Additional Information</b>
+    <br><br>
+						<table class="table bt-table" >
+						<thead class="tablehead">
+							<tr>
+								<th width="20%">Show</th>
+								<th width="30%">Name</th>
+								<th width="30%">Value</th>
+								<th width="20%">Actions</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr ng-repeat="obj in jobOrderFieldList"> 
+						      <!--  <td width="30%"><label ng-show="!obj.isCollapse">{{obj.show}}</label><input type="text" ng-model="obj.show" ng-show="obj.isCollapse"> </td> -->
+							   <td width="20%"><span class="fa fa-check" ng-if="(obj.visible && !obj.isCollapse)" style="color: green;"></span>
+							   				   <span class="fa fa-times" ng-if="(!obj.visible && !obj.isCollapse)" style="color: red;"></span>
+							   <input type="checkbox" ng-model="obj.visible" ng-if="obj.isCollapse"></td>
+								<td width="30%"><label ng-show="!obj.isCollapse">{{obj.fieldName}}</label><input type="text" ng-model="obj.fieldName" ng-show="obj.isCollapse"><label style="color: red;">{{obj.message}}</label> </td>
+								<td width="30%"><label ng-show="!obj.isCollapse">{{obj.fieldValue}}</label><input type="text" ng-model="obj.fieldValue" ng-show="obj.isCollapse"> </td>
+								<td width="20%"> 
+											<span class="fa fa-pencil-square-o" ng-click="editField(obj)" ng-if="!obj.isCollapse"></span>
+											<span class="fa fa-check" ng-click="addFieldValue(obj)" ng-if="obj.isCollapse"></span>
+											<span class="fa fa-times" ng-click="undoChange(obj)" ng-if="obj.isCollapse"></span>
+											<span class="fa fa-trash" ng-click="deleteField(obj)"></span>
+										</td>
+							</tr>
+							 <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td><i class="fa fa-plus" aria-hidden="true" ng-click="addField()" style="cursor: pointer;"></i></td>
+    </tr>
+							</tbody>
+						</table>
+
+
+
+					</div>
+    </div>
+    
+               
+                </div>
+              </div>
+
+      <hr>
+      <div class="row fade-in-up">
+        <div class="col-md-12">
+          <div class="pull-right"> 
+            <button type="button" class="btn blue" ng-click="tabs[1].active = true"><i class="fa fa-arrow-circle-left"></i> Previous</button>
+            <button type="submit" class="btn blue"  ng-click="createjobordervalidate()">Submit <i class="fa fa-upload"></i></button>
+            <button type="button" class="btn grey-cascade" ng-click="candidateResettab3()" >Reset <i class="fa fa-refresh"></i></button>
+            
+          </div>
+        </div>
+      </div>
+    </uib-tab>
+
+    </uib-tabset>  
+
+    </form>
+ 
+
+<!-- END MAIN CONTENT --> 
+
+
+
+</div>

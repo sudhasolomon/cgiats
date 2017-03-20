@@ -1,0 +1,323 @@
+/* general */
+* {
+	margin: 0px;
+	padding: 0px;
+}
+
+/* page layout */
+body {
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	background-color: #0080C1;
+	background-repeat: repeat-x;
+	background-position: center top;
+}
+
+.outputText {
+	background-image: url("#{resource['img:app2.jpg']}");
+	background-repeat: no-repeat;
+	background-position: center top;
+	background-size: cover;
+	width: 100%;
+	height: 100%;
+}
+
+.ui-carousel .ui-carousel-header {
+	background: white;
+	height: 0px;
+	width: 0px;
+	visibility: collapse
+}
+
+.mouseOver {
+	-webkit-transform: rotate(-15deg);
+	-moz-transform: rotate(-15deg);
+	-o-transform: rotate(-15deg);
+	-ms-transform: rotate(-15deg);
+	transform: rotate(-15deg);
+}
+
+.tabmenubutton {
+	background: url("#{resource['img:pinnew1.gif']}") no-repeat !important;
+	width: 35px;
+	height: 23px;
+}
+
+.mouseOut {
+	width: 50px;
+}
+/* header row */
+.header {
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	padding-top: 10px;
+	padding-bottom: 5px;
+	color: #FFFFFF;
+	font-size: 13px;
+	margin-right: 20px;
+}
+
+.header a.btn {
+	font-size: 12px;
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	color: #000033;
+	text-decoration: none;
+	padding-top: 3px;
+	padding-right: 10px;
+	padding-bottom: 3px;
+	padding-left: 10px;
+	margin-bottom: 3px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	border: solid 1px #DFD9C3;
+}
+
+.header a:hover.btn {
+	color: #FFF;
+}
+
+/* logo */
+.logo {
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	float: left;
+	color: white;
+	font-size: 24px;
+	text-shadow: #333 .05em .05em .1em;
+	margin-right: 20px;
+	margin-top: 20px;
+	padding-top: 14px;
+	padding-left: 300px;
+	background-image: url("#{resource['img:cg-logo.png']}");
+	background-repeat: no-repeat;
+	height: 50px;
+	width: 800px;
+}
+
+/* content pane */
+.contentWrap {
+	width: 100%;
+	margin: 0 auto;
+}
+
+.someClass {
+	word-wrap: break-word;
+}
+
+.content {
+	background-color: #FFFFFF;
+	border-right: solid 1px #9E4500;
+	border-left: solid 1px #9E4500;
+	border-top: solid 1px #9E4500;
+	border-bottom: solid 1px #9E4500;
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+	float: left;
+	padding: 16px 16px;
+	margin-top: 10px;
+}
+
+/* common */
+.normal {
+	
+}
+
+.alignTop {
+	vertical-align: top;
+}
+
+.alignMiddle {
+	vertical-align: middle;
+}
+
+.alignRight {
+	float: right;
+}
+
+.redBorder {
+	border-color: red;
+}
+
+.label100 {
+	width: 100px;
+}
+
+.label150 {
+	width: 150px;
+}
+
+/* primefaces */
+.ui-layout-unit-content {
+	background: transparent;
+}
+
+.ui-layout-unit {
+	border: none;
+	background: transparent;
+}
+
+.ui-fieldset .ui-fieldset-legend {
+	padding: 0.3em 0.5em;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+}
+
+.animated .ui-progressbar-value {
+	background-image: url("#{resource['img:pbar-ani.gif']}");
+}
+
+/* menu layout unit */
+#headerUnit {
+	z-index: 2 !important;
+}
+
+#headerUnit div {
+	overflow: visible;
+}
+
+/* menu icons */
+.menu-dashboard {
+	background-image: url("#{resource['img:dashboard.png']}") !important;
+	background-size: 20px 20px;
+	width: 20px;
+	height: 20px;
+	margin-right: 8px;
+}
+
+.menu-candidates {
+	background-image: url("#{resource['img:candidates.png']}") !important;
+	background-size: 20px 20px;
+	width: 20px;
+	height: 20px;
+	margin-right: 8px;
+}
+
+.menu-orders {
+	background-image: url("#{resource['img:jobOrders.png']}") !important;
+	background-size: 20px 20px;
+	width: 20px;
+	height: 20px;
+	margin-right: 8px;
+}
+
+.menu-dletedOrders {
+	background-image: url("#{resource['img:delete.png']}") !important;
+	background-size: 20px 20px;
+	width: 20px;
+	height: 20px;
+	margin-right: 8px;
+}
+
+.menu-sites {
+	background-image: url("#{resource['img:sites.png']}") !important;
+	background-size: 20px 20px;
+	width: 20px;
+	height: 20px;
+	margin-right: 8px;
+}
+
+.menu-monster {
+	background-image: url("#{resource['img:monster.gif']}") !important;
+	background-size: 100px 25px;
+	width: 100px;
+	height: 20px;
+	margin-right: 8px;
+}
+
+.menu-dice {
+	background-image: url("#{resource['img:dice.png']}") !important;
+	background-size: 80px 25px;
+	width: 100px;
+	height: 20px;
+	margin-right: 8px;
+}
+
+.menu-careerbuilder {
+	background-image: url("#{resource['img:careerbuilder.gif']}") !important;
+	background-size: 100px 25px;
+	width: 100px;
+	height: 30px;
+	margin-right: 8px;
+}
+
+.menu-reports {
+	background-image: url("#{resource['img:reports.png']}") !important;
+	background-size: 20px 20px;
+	width: 20px;
+	height: 20px;
+	margin-right: 8px;
+}
+
+.menu-settings {
+	background-image: url("#{resource['img:settings.png']}") !important;
+	background-size: 20px 20px;
+	width: 20px;
+	height: 20px;
+	margin-right: 8px;
+}
+
+.menu-account {
+	background-image: url("#{resource['img:my_account.png']}") !important;
+	background-size: 20px 20px;
+	width: 20px;
+	height: 20px;
+	margin-right: 8px;
+}
+
+.menu-users {
+	background-image: url("#{resource['img:users.png']}") !important;
+	background-size: 20px 20px;
+	width: 20px;
+	height: 20px;
+	margin-right: 8px;
+}
+
+.menu-config {
+	background-image: url("#{resource['img:config.png']}") !important;
+	background-size: 20px 20px;
+	width: 20px;
+	height: 20px;
+	margin-right: 8px;
+}
+
+.menu-awards {
+	background-image: url("#{resource['img:award.png']}") !important;
+	background-size: 20px 20px;
+	width: 20px;
+	height: 20px;
+	margin-right: 8px;
+}
+
+.menu-login {
+	background-image: url("#{resource['img:loginAttempts.png']}") !important;
+	background-size: 20px 20px;
+	width: 20px;
+	height: 20px;
+	margin-right: 8px;
+}
+
+.logingrid {
+	background-image: url("#{resource['img:login1.PNG']}") !important;
+	background-size: 443px 287px;
+	width: 406px;
+	height: 261px;
+	margin-left: 500px;
+	margin-top: 100px;
+	margin-bottom: 100px;
+	background-repeat: no-repeat;
+	border-top-right-radius: 5em;
+	border-top-left-radius: 5em;
+	border-bottom-right-radius:5em;
+	border-bottom-left-radius: 5em;
+	background-position: center;
+}
+
+.menu-reume-history {
+	background-image: url("#{resource['img:history.png']}") !important;
+	background-size: 15px 15px;
+	width: 15px;
+	height: 15px;
+	margin-right: 8px;
+}

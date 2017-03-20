@@ -1,0 +1,154 @@
+[{
+	"name": "AL",
+	"value": "Alabama, AL"
+}, {
+	"name": "AK",
+	"value": "Alaska, AK"
+}, {
+	"name": "AZ",
+	"value": "Arizona, AZ"
+}, {
+	"name": "AR",
+	"value": "Arkansas, AR"
+}, {
+	"name": "CA",
+	"value": "California, CA"
+}, {
+	"name": "CO",
+	"value": "Colorado, CO"
+}, {
+	"name": "CT",
+	"value": "Connecticut, CT"
+}, {
+	"name": "DE",
+	"value": "Delaware, DE"
+}, {
+	"name": "FL",
+	"value": "Florida, FL"
+}, {
+	"name": "GA",
+	"value": "Georgia, GA"
+}, {
+	"name": "HI",
+	"value": "Hawaii, HI"
+}, {
+	"name": "ID",
+	"value": "Idaho, ID"
+}, {
+	"name": "IL",
+	"value": "Illinois, IL"
+}, {
+	"name": "IN",
+	"value": "Indiana, IN"
+}, {
+	"name": "IA",
+	"value": "Iowa, IA"
+}, {
+	"name": "KS",
+	"value": "Kansas, KS"
+}, {
+	"name": "KY",
+	"value": "Kentucky, KY"
+}, {
+	"name": "LA",
+	"value": "Louisiana, LA"
+}, {
+	"name": "MA",
+	"value": "Massachusetts, MA"
+}, {
+	"name": "MD",
+	"value": "Maryland, MD"
+}, {
+	"name": "ME",
+	"value": "Maine, ME"
+}, {
+	"name": "MI",
+	"value": "Michigan, MI"
+}, {
+	"name": "MN",
+	"value": "Minnesota, MN"
+}, {
+	"name": "MO",
+	"value": "Missouri, MO"
+}, {
+	"name": "MS",
+	"value": "Mississippi, MS"
+}, {
+	"name": "MT",
+	"value": "Montana, MT"
+}, {
+	"name": "NC",
+	"value": "North Carolina, NC"
+}, {
+	"name": "ND",
+	"value": "North Dakota, ND"
+}, {
+	"name": "NE",
+	"value": "Nebraska, NE"
+}, {
+	"name": "NH",
+	"value": "New Hampshire, NH"
+}, {
+	"name": "NJ",
+	"value": "New Jersey, NJ"
+}, {
+	"name": "NM",
+	"value": "New Mexico, NM"
+}, {
+	"name": "NV",
+	"value": "Nevada, NV"
+}, {
+	"name": "NY",
+	"value": "New York, NY"
+}, {
+	"name": "OH",
+	"value": "Ohio, OH"
+}, {
+	"name": "OK",
+	"value": "Oklahoma, OK"
+}, {
+	"name": "OR",
+	"value": "Oregon, OR"
+}, {
+	"name": "PA",
+	"value": "Pennsylvania, PA"
+}, {
+	"name": "RI",
+	"value": "Rhode Island, RI"
+}, {
+	"name": "SC",
+	"value": "South Carolina, SC"
+}, {
+	"name": "SD",
+	"value": "South Dakota, SD"
+}, {
+	"name": "TN",
+	"value": "Tennessee, TN"
+}, {
+	"name": "TX",
+	"value": "Texas, TX"
+}, {
+	"name": "UT",
+	"value": "Utah, UT"
+}, {
+	"name": "VA",
+	"value": "Virginia, VA"
+}, {
+	"name": "VT",
+	"value": "Vermont, VT"
+}, {
+	"name": "WA",
+	"value": "Washington, WA"
+}, {
+	"name": "WI",
+	"value": "Wisconsin, WI"
+}, {
+	"name": "WV",
+	"value": "West Virginia, WV"
+}, {
+	"name": "WY",
+	"value": "Wyoming, WY"
+}, {
+	"name": "Others",
+	"value": "Others"
+}]

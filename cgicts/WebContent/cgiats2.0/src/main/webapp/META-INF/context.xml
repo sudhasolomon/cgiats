@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- replace {db.password} with the real password for cgiats user -->
+<Context path="/cgiats" docBase="cgiats" crossContext="true" reloadable="true">
+		<!--	Production 	-->	
+		
+		<!-- <Resource name="jdbc/cgiatsDS" auth="Container" type="javax.sql.DataSource"
+		maxActive="30" maxIdle="10" maxWait="-1" username="cgiats" password="cgiats"
+		driverClassName="org.postgresql.Driver" url="jdbc:postgresql://182.18.151.47:5432/cgiats" /> 
+		
+		<Resource name="jdbc/indiaCgiatsDS" auth="Container" type="javax.sql.DataSource"
+		maxActive="30" maxIdle="10" maxWait="-1" username="cgiats" password="cgiats"
+		driverClassName="org.postgresql.Driver" url="jdbc:postgresql://182.18.151.47:5432/ats_domestic" /> -->
+		
+		<!-- 	QA 	-->	
+		<Resource name="jdbc/cgiatsDS" auth="Container" type="javax.sql.DataSource"
+		maxActive="30" maxIdle="10" maxWait="-1" username="cgiats" password="cgiats"
+		driverClassName="org.postgresql.Driver" url="jdbc:postgresql://192.168.2.145:5432/cgiats" />
+		
+		<Resource name="jdbc/indiaCgiatsDS" auth="Container" type="javax.sql.DataSource"
+		maxActive="30" maxIdle="10" maxWait="-1" username="cgiats" password="cgiats"
+		driverClassName="org.postgresql.Driver" url="jdbc:postgresql://192.168.2.145:5432/ats_domestic" />
+			
+</Context>

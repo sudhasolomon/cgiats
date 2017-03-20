@@ -1,0 +1,77 @@
+<md-dialog style="width:600px;"> <md-toolbar style="background-color:#00CED1">
+<div class="md-toolbar-tools" >
+	<h2>Job Order Details</h2>
+	<span flex></span>
+	<md-button class="md-icon-button" ng-click="cancel()"> <img
+		width="16" height="16"
+		src="assets/global/img/portlet-remove-icon-white.png" /> </md-button>
+</div>
+</md-toolbar> <md-dialog-content>
+<div class="md-dialog-content">
+	<table width="100%" class="tony">
+		<tr class="tbtspace">
+			<td>JobOrder Id :</td>
+			<td><span style="font-weight: bold">{{row.jobOrderId}}</span></td>
+		</tr>
+		<tr class="tbtspace">
+			<td>Priority :</td>
+			<td><span style="font-weight: bold">{{row.priority}}</span></td>
+		</tr>
+		<tr class="tbtspace">
+			<td>Client :</td>
+			<td><span style="font-weight: bold">{{row.client}}</span></td>
+		</tr>
+		<tr class="tbtspace">
+			<td>Location :</td>
+			<td><span style="font-weight: bold">{{row.location}}</span></td>
+		</tr>
+		<tr class="tbtspace">
+			<td>Job Type :</td>
+			<td><span style="font-weight: bold">{{row.type}}</span></td>
+		</tr>
+		<tr class="tbtspace">
+			<td># of Positions :</td>
+			<td><span style="font-weight: bold">{{row.noOfPositions}}</span></td>
+		</tr>
+		<tr class="tbtspace">
+			<td># of Resumes Required :</td>
+			<td><span style="font-weight: bold">{{row.noOfResumesRequired}}</span></td>
+		</tr>
+		
+		<tr class="tbtspace">
+			<td>Job Will expire In:</td>
+			<td><span style="font-weight: bold">{{row.jobExpireIn}}</span></td>
+		</tr>
+		
+		<tr>
+			<td colspan="5">
+				<table style="width: 100%; margin-top:10px;" border="0" class="table table-bordered">
+					<tr class="pptblhd">
+						<th colspan="2">Properties</th>
+					</tr>
+					<tr ng-repeat="property in row.jobOrderFieldDtoList"
+						ng-class-odd="'odd'" ng-class-even="'even'" style="height: 30px">
+						<td>{{property.fieldName}}</td>
+						<td>{{property.fieldValue}}</td>
+					</tr>
+				</table>
+				<table style="width: 100%; margin-top:10px;" border="0" class="table table-bordered"
+					ng-if='hot'>
+					<tr class="pptblhd">
+						<th colspan="2">Hot Job Reason</th>
+					</tr>
+					<tr ng-class-odd="'odd'" ng-class-even="'even'"
+						style="height: 30px">
+						<td><div style="white-space: pre-wrap; white-space: -moz-pre-wrap; white-space: -pre-wrap; white-space: -o-pre-wrap; word-wrap: break-word;width:530px;">{{row.reason!=null?row.reason:"NA"}}</div></td>
+					</tr>
+				</table>
+
+
+			</td>
+		</tr>
+
+
+		</tr>
+	</table>
+</div>
+</md-dialog-content> </md-dialog>

@@ -1,0 +1,254 @@
+<div ng-controller="clientsreportcontroller" ng-init="onload()">
+<div class="sub-page-header">
+  <div class="page-bar">
+    <ul class="page-breadcrumb">
+         	<li><a href="#/dashboard" ng-if="!(rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_Recruiter' || rsLoginUser.userRole === 'ATS_Executive')">Home</a> 
+				<a href="#/india_joborders/my_indiajobOrder" ng-if="(rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_Recruiter')">Home</a>
+				<a href="#/candidates/missingData" ng-if="(rsLoginUser.userRole === 'ATS_Executive')">Home</a>
+				<i class="fa fa-circle"></i>
+				</li>
+      <li>
+        <span>Reports</span>
+        <i class="fa fa-circle"></i>
+      </li>
+      <li>
+        <span>Client Report ({{sitename}})</span>
+      </li>
+    </ul>
+    
+    
+    <div class="tabsmain pull-right">
+<div data-tabname="onsite" data-click="tabitem" class="" ng-class="(!(rsLoginUser.userRole == 'IN_DM' || rsLoginUser.userRole == 'IN_Recruiter'))?'pull-left tabitem activetab':'pull-left tabitem'">On Site</div>
+<div data-tabname="ofshore" data-click="tabitem" class="" ng-class="((rsLoginUser.userRole == 'IN_DM' || rsLoginUser.userRole == 'IN_Recruiter'))?'pull-left tabitem activetab':'pull-left tabitem'">Off Shore</div>
+<button id="usfilter" class="btn btn-primary blue" style="margin-left:15px;margin-right:-50px;" ng-click="showfilters()">Filters &nbsp;<i class="fa fa-filter" aria-hidden="true"></i></button>
+<button id="infilter" class="btn btn-primary blue" style="margin-left:15px;margin-right:-50px;" ng-click="showfiltersIN()">Filters &nbsp;<i class="fa fa-filter" aria-hidden="true"></i></button>
+<div class="clearboth"></div>
+</div>
+
+ 
+  </div>
+</div>
+
+
+<form role="form" novalidate="" ng-submit="getJobOrders()" >
+<div id="onsite">
+
+<div class="row col-md-12 filters animated fadeIn delay-three" id="filterfields">
+
+
+<div ng-show="errMsg" style="text-align: right; color: red;"><b>Please select valid dates</b></div>
+<div class="row">
+ <div class="col-md-2">
+              	<div class="form-group">
+                <label class="">Start Date</label>
+  				<div class="input-group datepick">
+                  <input type="text" class="form-control whitereadonly" uib-datepicker-popup="{{DateFormat}}" is-open="startDatePopup.opened" datepicker-options="startDateOptions" close-text="Close" alt-input-formats="altInputFormats" ng-model="startDate" ng-keyup="" readonly="true" />
+                  <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="startDateopen()"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+                </div>
+				</div>
+
+
+</div>
+
+   <div class="col-md-2">
+              	<div class="form-group">
+                <label class="">End Date</label>
+  					<div class="input-group">
+                  <input type="text"  class="form-control whitereadonly" uib-datepicker-popup="{{DateFormat}}" is-open="endDatePopup.opened" datepicker-options="endDateOptions" close-text="Close" alt-input-formats="altInputFormats" ng-model="endDate" ng-keyup="" readonly="true" />
+                  <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="endDateopen()"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+                </div>
+				</div>
+              </div>
+              
+   <div class="col-md-1" style="margin-top: 25px;">
+	<button type="submit" class="btn blue"><i class="fa fa-search"></i> View </button>
+   </div>
+<!-- 	<div class="col-md-1" style="margin-top: 25px;">
+	<button type="button" ng-disabled="(clientWiseSbmList && clientWiseSbmList.length == 0)" class="btn blue" ng-csv="exportClientWiseSbmList" ng-if="!(rsLoginUser.userRole === 'Recruiter')"
+									filename="clientWiseSubmittals_{{currentDateWithTime | date:'MM-dd-yyyy hh:mm:ss a'}}.csv" ng-click="getTimeFnc();"
+									csv-header="['JobOrder Id','Created Date','Client Name','Title','DM Name','Assigned To','Positions','Sbm','Confirmed','Started','Net Positions']"
+									charset="utf-8">
+									Export <i class="fa fa-upload" aria-hidden="true"></i>
+								</button>
+</div> -->
+</div>
+
+</div>
+<div class="row" style="margin:0;" ng-if="(rsLoginUser.userRole == 'IN_DM' || rsLoginUser.userRole == 'IN_Recruiter')">
+
+
+<div class="row">
+<div class="col-md-12 textWithRed_Bold">
+You are not authorised to view the On Site Client Report
+</div>
+</div>
+
+</div>
+
+<div class="col-md-12 bigdata" ng-if="!(rsLoginUser.userRole == 'IN_DM' || rsLoginUser.userRole == 'IN_Recruiter')">
+<div class="col-md-2 animated bounceIn"><div class="rounddiv">Clients<span class="totalcountbig">{{noOfClients}}</span></div></div>
+<div class="col-md-2 animated bounceIn"><div class="rounddiv">Job Orders<span class="totalcountbig">{{noOfJobs}}</span></div></div>
+<div class="col-md-2 animated bounceIn"><div class="rounddiv">Positions<span class="totalcountbig">{{noOfPos}}</span></div></div>
+<div class="col-md-2 animated bounceIn"><div class="rounddiv">Submittals<span class="totalcountbig">{{noOfSub}}</span></div></div>
+<div class="col-md-2 animated bounceIn delay-one"><div class="rounddiv">Confirmed<span class="totalcountbig">{{noOfConfirmed}}</span></div></div>
+<div class="col-md-2 animated bounceIn delay-two"><div class="rounddiv startedcolor">Started<span class="totalcountbig">{{noOfStarts}}</span></div></div>
+<!-- <div class="col-md-2 animated bounceIn delay-three"><div class="rounddiv" style="padding-top:35px;">Net Open Positions<span class="totalcountbig">{{netPositions}}</span></div></div> -->
+<div class="clearboth"></div>
+
+</div>
+
+		<div class="row fade-in-up table-scrollable" ng-if="!(rsLoginUser.userRole == 'IN_DM' || rsLoginUser.userRole == 'IN_Recruiter')">
+            
+	            <table class="customtable" id="customJobOrderTable"  bs-table-control="jobOrderInfo.jobOrderTableControl" ng-show="customJobOrderTable"  >
+		        <thead>
+		            <tr>
+		         		<th data-field="Client Name" data-formatter="USclientFormatter" data-events="USclientEvent" data-sortable="true" ></th>
+		                <th data-field="# JobOrders" data-sortable="true"></th>
+		                <th data-field="# Positions" data-sortable="true"></th>
+		                <th data-field="SBM" data-sortable="true"></th>
+		                <th data-field="Confirmed" data-sortable="true"></th>
+		                <th data-field="Started" data-sortable="true"></th>
+		                <th data-field="Remaining Positions" data-sortable="true"></th>
+		                <!-- <th data-field="Started Date" data-sortable="true"></th> -->
+		            </tr>
+		        </thead>
+		        <tbody>
+		           
+		        </tbody>
+	    		</table> 
+	    		</div>
+</div>
+</form>
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div ng-controller="INclientsreportcontroller" ng-init="onload()">
+<form role="form" novalidate="" ng-submit="getJobOrders()" >
+<div id="ofshore">
+
+<div class="row col-md-12 filters animated fadeIn delay-three" id="filterfields">
+
+
+<div ng-show="errMsg" style="text-align: right; color: red;"><b>Please select valid dates</b></div>
+<div class="row">
+ <div class="col-md-2">
+              	<div class="form-group">
+                <label class="">Start Date</label>
+  				<div class="input-group datepick">
+                  <input type="text" class="form-control whitereadonly" uib-datepicker-popup="{{DateFormat}}" is-open="startDatePopup.opened" datepicker-options="startDateOptions" close-text="Close" alt-input-formats="altInputFormats" ng-model="startDate" ng-keyup="" readonly="true" />
+                  <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="startDateopen()"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+                </div>
+				</div>
+
+
+</div>
+
+   <div class="col-md-2">
+              	<div class="form-group">
+                <label class="">End Date</label>
+  					<div class="input-group">
+                  <input type="text"  class="form-control whitereadonly" uib-datepicker-popup="{{DateFormat}}" is-open="endDatePopup.opened" datepicker-options="endDateOptions" close-text="Close" alt-input-formats="altInputFormats" ng-model="endDate" ng-keyup="" readonly="true" />
+                  <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="endDateopen()"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+                </div>
+				</div>
+              </div>
+              
+   <div class="col-md-1" style="margin-top: 25px;">
+	<button type="submit" class="btn blue"><i class="fa fa-search"></i> View </button>
+   </div>
+<!-- 	<div class="col-md-1" style="margin-top: 25px;">
+	<button type="button" ng-disabled="(clientWiseSbmList && clientWiseSbmList.length == 0)" class="btn blue" ng-csv="exportClientWiseSbmList" ng-if="!(rsLoginUser.userRole === 'Recruiter')"
+									filename="clientWiseSubmittals_{{currentDateWithTime | date:'MM-dd-yyyy hh:mm:ss a'}}.csv" ng-click="getTimeFnc();"
+									csv-header="['JobOrder Id','Created Date','Client Name','Title','DM Name','Assigned To','Positions','Sbm','Confirmed','Started','Net Positions']"
+									charset="utf-8">
+									Export <i class="fa fa-upload" aria-hidden="true"></i>
+								</button>
+</div> -->
+</div>
+
+</div>
+<div class="row" style="margin:0;" ng-if="(rsLoginUser.userRole === 'DM' || rsLoginUser.userRole === 'Recruiter' 
+          				|| rsLoginUser.userRole === 'ADM' 
+          				|| rsLoginUser.userRole === 'DivisionHead' || rsLoginUser.userRole === 'AccountManager')">
+
+
+<div class="row">
+<div class="col-md-12 textWithRed_Bold">
+You are not authorised to view the Off Shore Client Report
+</div>
+</div>
+
+</div>
+
+<div class="col-md-12 bigdata" ng-if="!(rsLoginUser.userRole === 'DM' || rsLoginUser.userRole === 'Recruiter' 
+          				|| rsLoginUser.userRole === 'ADM' 
+          				|| rsLoginUser.userRole === 'DivisionHead' || rsLoginUser.userRole === 'AccountManager')">
+<div class="col-md-2 animated bounceIn"><div class="rounddiv">Clients<span class="totalcountbig">{{noOfClients}}</span></div></div>
+<div class="col-md-2 animated bounceIn"><div class="rounddiv">Job Orders<span class="totalcountbig">{{noOfJobs}}</span></div></div>
+<div class="col-md-2 animated bounceIn"><div class="rounddiv">Positions<span class="totalcountbig">{{noOfPos}}</span></div></div>
+<div class="col-md-2 animated bounceIn"><div class="rounddiv">Submittals<span class="totalcountbig">{{noOfSub}}</span></div></div>
+<div class="col-md-2 animated bounceIn delay-one"><div class="rounddiv">Confirmed<span class="totalcountbig">{{noOfConfirmed}}</span></div></div>
+<div class="col-md-2 animated bounceIn delay-two"><div class="rounddiv startedcolor">Started<span class="totalcountbig">{{noOfStarts}}</span></div></div>
+<!-- <div class="col-md-2 animated bounceIn delay-three"><div class="rounddiv" style="padding-top:35px;">Net Open Positions<span class="totalcountbig">{{netPositions}}</span></div></div> -->
+<div class="clearboth"></div>
+</div>
+
+		<div class="row fade-in-up table-scrollable" ng-if="!(rsLoginUser.userRole === 'DM' || rsLoginUser.userRole === 'Recruiter' 
+          				|| rsLoginUser.userRole === 'ADM' 
+          				|| rsLoginUser.userRole === 'DivisionHead' || rsLoginUser.userRole === 'AccountManager')">
+            
+	            <table class="customtable" id="customJobOrderTable"  bs-table-control="jobOrderInfo.jobOrderTableControl" ng-show="customJobOrderTable"  >
+		        <thead>
+		            <tr>
+		         		<th data-field="Client Name" data-formatter="clientFormatter" data-events="clientEvent" data-sortable="true" ></th>
+		                <th data-field="# JobOrders" data-sortable="true"></th>
+		                <th data-field="# Positions" data-sortable="true"></th>
+		                <th data-field="SBM" data-sortable="true"></th>
+		                <th data-field="Confirmed" data-sortable="true"></th>
+		                <th data-field="Started" data-sortable="true"></th>
+		                <th data-field="Remaining Positions" data-sortable="true"></th>
+		                <!-- <th data-field="Started Date" data-sortable="true"></th> -->
+		            </tr>
+		        </thead>
+		        <tbody>
+		           
+		        </tbody>
+	    		</table> 
+	    		</div>
+</div>
+</form>
+
+</div>
+
+
+
+</div>
+
+
+

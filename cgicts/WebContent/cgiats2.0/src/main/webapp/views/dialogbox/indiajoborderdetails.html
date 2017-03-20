@@ -1,0 +1,45 @@
+<md-dialog style="width:400px;">
+<md-toolbar style="background-color:#00CED1">
+<div class="md-toolbar-tools" >
+	<h2>Job Order Details</h2>
+	<span flex></span>
+	<md-button class="md-icon-button" ng-click="cancel()"> <img
+		width="16" height="16"
+		src="assets/global/img/portlet-remove-icon-white.png" /> </md-button>
+</div>
+</md-toolbar> 
+<md-dialog-content>
+<div class="md-dialog-content">
+	<table width="100%" class="tony">
+		<tr class="tbtspace">
+			<td>JobOrder Id :</td>
+			<td><span style="font-weight: bold">{{row.jobOrderId}}</span></td>
+		</tr>
+		<tr class="tbtspace">
+			<td>Priority :</td>
+			<td><span style="font-weight: bold">{{row.priority}}</span></td>
+		</tr>
+		<tr class="tbtspace">
+			<td>Client :</td>
+			<td><span style="font-weight: bold">{{row.client}}</span></td>
+		</tr>
+		<tr class="tbtspace">
+			<td>Location :</td>
+			<td><span style="font-weight: bold">{{row.location}}</span></td>
+		</tr>
+		<tr class="tbtspace">
+			<td>Job Type :</td>
+			<td><span style="font-weight: bold">{{row.type}}</span></td>
+		</tr>
+		<tr class="tbtspace">
+			<td># Of Positions :</td>
+			<td><span style="font-weight: bold">{{row.noOfPositions != null ? row.noOfPositions : 0}}</span></td>
+		</tr>
+		<tr class="tbtspace">
+			<td># Of Resumes :</td>
+			<td><span style="font-weight: bold">{{row.noOfResumesRequired}}</span></td>
+		</tr>
+	</table>
+</div>
+</md-dialog-content>
+</md-dialog>

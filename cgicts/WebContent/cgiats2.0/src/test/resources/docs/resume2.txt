@@ -1,0 +1,4 @@
+Java Oracle
+Postgresql Java C#
+J2EE JDBC Hibernate MySQL
+Java Socket

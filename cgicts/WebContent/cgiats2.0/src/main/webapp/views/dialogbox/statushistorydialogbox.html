@@ -1,0 +1,30 @@
+<md-dialog width = "100%">
+<md-toolbar style="background-color:#00CED1">
+<div class="md-toolbar-tools">
+<h2>Status History</h2>
+ <span flex></span>
+ <md-button class="md-icon-button" ng-click="cancel()">
+ <img width="16" height="16" src="assets/global/img/portlet-remove-icon-white.png" />
+ </md-button>
+ </div>
+ </md-toolbar>
+ <md-dialog-content>
+ <div class="md-dialog-content">
+ 
+ <table style="width: 100%" border="0" class="table table-bordered">
+					<tr class="pptblhd">
+					
+						 <th colspan="1"> <b>Status</b></th><th colspan="1"><b>Created On</b></th><th colspan="1"><b>Reason</b></th></tr>
+					</tr>
+					<tr ng-repeat="data in history"
+						ng-class-odd="'odd'" ng-class-even="'even'" style="height: 30px">
+						 <td>{{data.status!="" ? data.status : "NA"}}</td>
+ 						 <td>{{data.createdOn!="" ? data.createdOn :"NA"}}</td>
+						 <td>{{data.reason!="" ? data.reason : "NA"}}</td>
+ 					</tr>
+				</table>
+ 
+ 
+ </div>
+ </md-dialog-content>
+ </md-dialog>

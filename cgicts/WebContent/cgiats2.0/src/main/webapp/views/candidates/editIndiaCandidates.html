@@ -1,0 +1,571 @@
+<div ng-controller="AddEditIndiaController" data-ng-init="onload()"> 
+<!-- BEGIN PAGE HEADER--> 
+<div class="sub-page-header">
+  <div class="page-bar">
+    <ul class="page-breadcrumb">
+          	<li><a href="#/dashboard" ng-if="!(rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_Recruiter' || rsLoginUser.userRole === 'ATS_Executive')">Home</a> 
+				<a href="#/india_joborders/my_indiajobOrder" ng-if="(rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_Recruiter')">Home</a>
+				<a href="#/candidates/missingData" ng-if="(rsLoginUser.userRole === 'ATS_Executive')">Home</a>
+				<i class="fa fa-circle"></i>
+				</li>
+      <li>
+        <span>Candidates</span>
+        <i class="fa fa-circle"></i>
+      </li>
+      <li>
+        <span>Edit India Candidate</span>
+      </li>
+    </ul> 
+     <!-- <div class="page-toolbar">
+      <div class="btn-group"> 
+        <a ng-click="searchToggle()" class="btn btn-primary blue">Search Candidate <i class="fa fa-search"></i></a> 
+      </div>
+    </div> -->
+  </div>
+</div>
+<!-- END PAGE HEADER--> 
+
+<!-- BEGIN MAIN CONTENT -->
+
+ <form name="indiaCandidateForm" novalidate="" ng-submit="save(indiaCandidate)" >
+ 
+ <div class="fade-in-up" id="res">Please Fill the mandatory fields in all the tabs</div>
+ 
+    <uib-tabset active="activeForm">
+
+    <uib-tab index="0" heading="Personal Info" active="tabs[0].active">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label class="control-label">First Name</label>
+                <input type="hidden" class="form-control" placeholder="First Name" ng-model="indiaCandidate.candidateId">
+                <input type="text" class="form-control" placeholder="First Name" ng-model="indiaCandidate.firstname" required>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label class="control-label">Last Name</label>
+                <input type="text" class="form-control" placeholder="Last Name" ng-model="indiaCandidate.lastname" required>
+              </div>
+            </div>
+            <div class="col-md-4">	
+              <div class="form-group">
+                <label class="control-label">Email</label>
+                <input type="email" class="form-control" placeholder="Email Address" ng-model="indiaCandidate.email" required>
+              </div>
+            </div>
+          </div>
+          
+          
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label class="control-label">Status</label>
+                 <input type="text" class="form-control" ng-if="(indiaCandidate.status == 'OnAssignment')" ng-model = "indiaCandidate.status" readonly="readonly">
+                <select class="form-control"  ng-model="indiaCandidate.status" ng-change="updateStatus()" ng-if="(indiaCandidate.status != 'OnAssignment')" required="">
+               <!--  <select class="form-control"  ng-model="indiaCandidate.status" ng-change="updateStatus()" required=""> -->
+                  <!-- <option value="">Select</option> -->
+                  <option value="Available">Available</option>
+                  <option value="LMVM">LM/VM</option>
+                  <option value="NotInterested">Not Interested</option>
+                  <option value="NotQualified">Not Qualified</option>
+                  <option value="ResumeSent">Resume Sent</option>
+                  <option value="SpokeTo">Spoke To</option>
+                  <option value="SentEmail">Sent Email</option>
+                  <option value="PhoneScreen">Phone Screen</option>
+                  <option value="RejectedByRecruiter">Rejected By Recruiter</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Status Reason</label> 
+                <textarea class="status-reson form-control" placeholder="Write reason.." ng-model="indiaCandidate.reason"></textarea>
+              </div> 
+                     </div>
+                
+                
+                       <div class="col-md-8"> 
+                <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                   <label>Phone</label>
+                    <input valid-number  minlength="10" maxlength="10" class="form-control" placeholder="Work" ng-model="indiaCandidate.phoneWork" >
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                  <label class="control-label">Mobile</label>
+                    <input valid-number  minlength="10" maxlength="10" class="form-control" placeholder="Mobile" ng-model="indiaCandidate.phoneCell" required>
+                  </div>
+                </div>
+              </div> 
+            </div>  
+                <div class="col-md-8"> 
+             <div class="row">
+               <div class="col-md-6">
+                  <div class="form-group">
+             <label>Address</label>
+              <input type="text" class="form-control" placeholder="Street 1" ng-model="indiaCandidate.address1" >
+              </div>
+              </div>
+              <div class="col-md-6">
+              <div class="form-group"> 
+               <label>Address</label>
+              <input type="text" class="form-control" placeholder="Street 2" ng-model="indiaCandidate.address2"> 
+              </div>
+               </div>
+             </div>
+            </div>  
+                  <div class="col-md-8">
+                <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+              <label class="control-label">City</label>
+                <input type="text" class="form-control" placeholder="City" ng-model="indiaCandidate.city" required>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+               <label class="control-label">State</label>
+                <select class="form-control" ng-model="indiaCandidate.state" required>
+                  <option value="">Select</option>
+                  <option ng-repeat="state in states" value="{{state}}">{{state}}</option>
+                </select>
+              </div>
+            </div>
+            
+          </div>
+          </div>
+                </div>
+            
+            <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>PIN</label>
+                <input valid-number class="form-control" placeholder="PIN" maxlength="6" ng-model="indiaCandidate.zip">
+              </div>
+            </div>
+          </div>  
+
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="pull-right">
+            <button type="button" class="btn light-blue" ng-click="#"><i class="fa fa-arrow-circle-left"></i> Previous</button> 
+            <button type="button" class="btn blue" ng-click="editFirstTab();">Next <i class="fa fa-arrow-circle-right"></i></button>
+            <input type="submit" ng-click="createCandidatevalidate()" value = "Save" class="btn blue"> 
+          </div>
+        </div>
+      </div>
+    </uib-tab>
+
+    <uib-tab index="1" heading="Professional Info" active="tabs[1].active">
+      <div class="row"> 
+        <div class="col-md-12">
+        <div class="row">
+        <div class="col-md-4">  
+        <div class="form-group">
+        <label class="control-label">Title</label>
+        <input type="text" class="form-control" placeholder="Title"
+        ng-model="indiaCandidate.title" required>
+        </div>
+        </div> 
+        <!-- <div class="col-md-4">   
+        <div class="form-group">
+        <label class="control-label">Key Skills</label>
+        <input type="text" class="form-control" placeholder="Key Skills"
+        ng-model="indiaCandidate.keySkills" required> 
+        </div> 
+        </div>  
+        <div class="col-md-4">
+          <div class="form-group">
+          <label class="control-label">Skills</label>
+          <select class="form-control" ng-model="indiaCandidate.skills" required>
+             <option value="">Select</option>
+             <option>Big Data</option>
+             <option>Mobile App Development</option>
+             <option>SharePoint</option>
+             <option>SalesForce.com</option>
+             <option>Application Development</option>
+             <option>ERP/CRM</option>
+             <option>BI/DW</option>
+             <option>QA/Testing Services</option>
+             <option>Others</option>
+          </select>
+        </div>   
+        </div> -->
+         <div class="col-md-4">
+          <div class="form-group">
+          <label class="control-label">Job Preferences</label>
+          <select class="form-control" ng-model="indiaCandidate.jobType" required>
+             <option value="">Select</option>
+             <option>PERMANENT</option> 
+             <option>CONTRACT</option> 
+             <option>BOTH</option> 
+             <option>NOTSPECIFIED</option>  
+          </select>
+        </div>   
+        </div>
+        
+        
+        
+        <div class="col-md-4">   
+        <div class="form-group">
+        <label class="control-label">Key Skills</label>
+        <input type="text" class="form-control" placeholder="Key Skills"
+        ng-model="indiaCandidate.keySkills"
+         required> 
+        </div> 
+        </div>
+        
+         
+        </div>
+        
+      <!-- <div class="row"> 
+        <div class="col-md-4">
+          <div class="form-group">
+          <label class="control-label">Job Type</label>
+          <select class="form-control" ng-model="indiaCandidate.jobType" required>
+             <option value="">Select</option>
+             <option>PERMANENT</option> 
+             <option>CONTRACT</option> 
+             <option>BOTH</option> 
+             <option>NOTSPECIFIED</option>  
+          </select>
+        </div>   
+        </div>
+         <div class="col-md-4">
+          <div class="form-group">
+            <label class="control-label">Qualification</label> 
+            <select class="form-control" ng-model="indiaCandidate.qualification" required>
+              <option value="">Select</option>
+              <option>All</option>
+              <option>High School</option>
+              <option>Associate</option>
+              <option>Pre-Bachelors</option>
+              <option>Bachelors</option>
+              <option>Post-Bachelors, Pre-Masters</option>
+              <option>MBA</option>
+              <option>Masters</option>
+              <option>Post-Masters, Pre-Doctorate</option>
+              <option>Doctorate</option>
+              <option>Military Service</option>
+              <option>Vocational School</option>
+            </select>
+          </div>  
+        </div>
+        <div class="col-md-4">
+           <div class="form-group">
+            <label>Total Experience</label>
+            <input type="text" class="form-control" placeholder="Ex:3.5, 5.5, 6"
+                ng-model="indiaCandidate.totalExperience">
+            </div> 
+        </div>
+      </div>   -->
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>Last Company</label>
+            <input type="text" class="form-control"
+              ng-model="indiaCandidate.lastCompany">
+          </div> 
+          </div> 
+           <div class="col-md-4">
+          <div class="form-group">
+          <label>Last Position</label>
+          <input type="text" class="form-control"
+              ng-model="indiaCandidate.lastPosition">
+          </div>   
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>Employment Status</label>
+            <input type="text" class="form-control"
+              ng-model="indiaCandidate.employmentStatus" >
+          </div>    
+        </div>
+      </div> 
+
+      <div class="row"> 
+       
+        <div class="col-md-4">
+          <div class="form-group">
+          <label>Present Salary</label>
+          <input data-format="indiacurrency" type="text" class="form-control" placeholder="Annual Salary in lacks"
+              ng-model="indiaCandidate.presentRate" >
+          </div>  
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>Expected Salary</label>
+            <input data-format="indiacurrency" type="text" class="form-control" placeholder="Annual Salary in lacks"
+              ng-model="indiaCandidate.expectedRate" >
+          </div>   
+        </div>
+        
+        
+        
+        
+        
+        <div class="col-md-4">
+              	<div class="form-group">
+                <label class="control-label">Education</label>
+                <select class="form-control" ng-model="indiaCandidate.qualification" required >
+                  <option value="">Select</option>
+                  <option value="B.A">B.A</option>
+<option value="B.Com">B.Com</option>
+<option value="B.Sc">B.Sc</option>
+<option value="B.Tech / B.E">B.Tech / B.E</option>
+<option value="M.A">M.A</option>
+<option value="M.Com">M.Com</option>
+<option value="M.Sc">M.Sc</option>
+<option value="MCA">MCA</option>
+<option value="M.Tech / M.E">M.Tech / M.E</option>
+<option value="Others">Others</option>
+                  </select>
+              </div>
+              </div>
+              
+              
+        </div>
+        
+        
+        
+        <div class="row">
+        
+        <div class="col-md-4">
+           <div class="form-group">
+            <label>Total Experience</label>
+            <input valid-number class="form-control" placeholder="Ex:3.5, 5.5, 6"
+                ng-model="indiaCandidate.totalExperience">
+            </div> 
+        </div>
+        
+           <div class="col-md-4">
+           <div class="form-group">
+            <label>Relevant Experience</label>
+            <input valid-number class="form-control" placeholder="Ex:3.5, 5.5, 6"
+                ng-model="indiaCandidate.relevantExperience">
+            </div> 
+        </div>
+        
+        
+      </div> 
+
+      </div>
+      </div> 
+
+      <hr>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="pull-right"> 
+            <button type="button" class="btn blue" ng-click="tabs[0].active = true"><i class="fa fa-arrow-circle-left"></i> Previous</button>
+            <button type="button" class="btn blue" ng-click="tabs[2].active = true">Next <i class="fa fa-arrow-circle-right"></i></button> 
+            <input type="submit" ng-click="createCandidatevalidate()" value = "Save" class="btn blue">
+          </div>
+        </div>
+      </div>
+    </uib-tab>
+
+    <uib-tab index="2" heading="Resume" active="tabs[2].active">
+     
+
+              <div class="row">
+                  <div class="col-md-12"> 
+                   <div class="row">
+                   <!--  <div class="col-md-4">
+                       <div class="form-group">
+                        <label class="control-label">Uploaded By</label>
+                        <select class="form-control" ng-model="indiaCandidate.uploadedBy" required>
+                        <option value="">Select</option>
+                        <option ng-repeat="user in uploaded" value="{{user}}">{{user}}</option>
+                        </select>
+                      </div> 
+                      </div> -->
+                      
+                          <div class="col-md-4">
+                       <div class="form-group">
+                        <label class="control-label">Resume Source</label>
+                        <select class="form-control" ng-model="indiaCandidate.uploadedBy"      required>
+                        <option value="">Select</option>
+                        <option value="Naukri">Naukri</option>
+                        <option value="Monster India">Monster India</option>
+                        <option value="Linkedin">Linkedin</option>
+                        <option value="Employee Referral">Employee Referral</option>
+                        <option value="Other">Other</option>
+                          <!-- <option ng-repeat="user in uploaded" value="{{user}}">{{user}}</option> -->
+                        </select>
+                      </div> 
+                      </div>
+                    
+                    
+                              
+                       <div class="col-md-2" ng-if="indiaCandidate.uploadedBy === 'Other'">
+                         <div class="form-group">
+                        <label class="control-label">Other Source</label>
+                        <div class="row upload-control" data-button="file-upload">
+<input type="text" class="form-control" placeholder="Other Resume Source" name="formField" ng-model="indiaCandidate.otherResumeSource" required>
+</div> 
+                      </div> 
+                       </div>
+                    
+                    
+                    
+                    
+                     <div ng-class="(indiaCandidate.uploadedBy != 'Other')?'col-md-8':'col-md-6'">
+                       <div class="form-group">
+                        <label class="control-label">Original Resume</label>
+                        <div class="row upload-control" data-button="file-upload">
+<div ng-class="(indiaCandidate.uploadedBy != 'Other')?'col-md-9':'col-md-8'"  class="txtboxdiv"><input type="text" readonly="true" required="" class="form-control selectedfile"  ng-model="originalResume" ></div>
+<button ng-show="origuploadbtn" style="display:block;" type="button" title="Upload Resume" ng-class="(indiaCandidate.uploadedBy != 'Other')?'col-md-3':'col-md-2'" class="btn blue uploadbtn" >Upload <i class="fa fa-upload" aria-hidden="true"></i></button>
+<div ng-class="(indiaCandidate.uploadedBy != 'Other')?'col-md-1':'col-md-2'"  class=" pull-right "><button type="button" class="btn blue" title="View Resume" ng-click="originalResumeView()"><i class="fa fa-file-word-o"></i></button></div>
+<div ng-class="(indiaCandidate.uploadedBy != 'Other')1'col-md-1':'col-md-2'" ng-show="originlockbtn" style="display:block;" class=" pull-right pdrt  rtbtn lockbtn"><button ng-click="originlck()" type="button" title="Unlock Upload" class="btn blue"><i class="fa fa-lock" aria-hidden="true"></i></button></div>
+<div ng-class="(indiaCandidate.uploadedBy != 'Other')1'col-md-1':'col-md-2"  ng-show="origindownloadbtn" style="display:block; margin-right:10px;" class=" pull-right rtbtn downloadbtn" ng-show="ttnn"><button type="button" title="Download resume"  ng-click = "downloadOriginalResume()" class="btn blue"><i class="fa fa-download" aria-hidden="true"></i></button></div>
+<input type="file" class="mainuploadbtn" onchange="angular.element(this).scope().originalResumeFile(this)">
+</div> 
+                      </div> 
+                      </div>
+<script src="assets/global/scripts/alljquery.js"></script>
+
+
+                  </div> 
+                   <div class="row">
+                     <div class="col-md-4">
+                      <div class="form-group">
+                        <label>Portal Email</label>
+                        <select class="form-control" ng-model="indiaCandidate.portalEmail">
+                        <option value="">Select</option>
+                       <option ng-repeat="email in portalEmailIds" value="{{email}}">{{email}}</option>
+                        </select>
+                      </div> 
+                    </div>  
+                    
+                    
+                    
+                    
+                    
+                    
+                    <div class="col-md-8">
+                       <div class="form-group">
+                        <label class="">CGI Resume</label>
+                        <div class="row upload-control" data-button="file-upload">
+<div class="col-md-9 txtboxdiv"><input type="text" readonly="true" required="" class="form-control selectedfile"  ng-model="cgiResume" ></div>
+<button ng-show="cgiuploadbtn" style="display:block;" type="button" title="Upload Resume" class="btn blue col-md-2 uploadbtn" >Upload <i class="fa fa-upload" aria-hidden="true"></i></button>
+<div class=" pull-right col-md-1"><button type="button" title="View Resume" class="btn blue" ng-click="viewCgiResume()"><i class="fa fa-file-word-o"></i></button></div>
+<div ng-show="cgilockbtn" style="display:block;" class=" pull-right pdrt rtbtn col-md-2 lockbtn"><button ng-click="cgilck()" title="Unlock Upload" type="button" class="btn blue"><i class="fa fa-lock" aria-hidden="true"></i></button></div>
+<div ng-show="cgidownloadbtn" style="display:block;" class=" pull-right rtbtn col-md-2 downloadbtn" ng-show="ttnn"><button type="button" title="Download Resume" ng-click = "downloadCgiResume()" class="btn blue"><i class="fa fa-download" aria-hidden="true"></i></button></div>
+<input type="file" class="mainuploadbtn" onchange="angular.element(this).scope().cgiResumeFile(this)">
+</div> 
+                      </div> 
+                      </div>
+                      
+                      
+                      
+                      
+                   
+                    
+                    
+                  </div> 
+
+                  <div class="row">
+                    <!--  <div class="col-md-4">
+                        <div class="form-group">
+                        <label>ATS UserId</label>
+                        <select class="form-control" ng-model="indiaCandidate.atsUserId">
+                            <option value="">Select</option>
+                            <option ng-repeat="atsId in atsUserIds" value="{{atsId}}">{{atsId}}</option>
+                        </select>
+                      </div>   
+                      </div> -->
+                      
+                         <div class="col-md-4">
+                        <div class="form-group">
+                        <label>Uploaded By</label>
+                        <select class="form-control" ng-model="indiaCandidate.atsUserId"  >
+                            <option value="">Select</option>
+                              <option ng-repeat="atsId in atsUserIds" value="{{atsId}}">{{atsId}}</option>
+                        </select>
+                      </div>   
+                      </div>
+                    
+                    
+                    
+                    <div class="col-md-8">
+                       <div class="form-group">
+                        <label class="">RTR Resume</label>
+                        <div class="row upload-control" data-button="file-upload">
+<div class="col-md-9 txtboxdiv"><input type="text" readonly="true" required="" class="form-control selectedfile"  ng-model="rtrResume" ></div>
+<button ng-show="rtruploadbtn" style="display:block;" type="button" title="Upload Resume" class="btn blue col-md-2 uploadbtn" >Upload <i class="fa fa-upload" aria-hidden="true"></i></button>
+<div class=" pull-right col-md-1"><button type="button" title="View Resume" class="btn blue" ng-click="viewRtrDocument()"><i class="fa fa-file-word-o"></i></button></div>
+<div ng-show="rtrlockbtn" style="display:block;" class=" pull-right pdrt rtbtn col-md-2 lockbtn"><button ng-click="rtrlck()" type="button" title="Unlock Upload" class="btn blue"><i class="fa fa-lock" aria-hidden="true"></i></button></div>
+<div ng-show="rtrdownloadbtn" style="display:block;" class=" pull-right rtbtn col-md-2 downloadbtn" ng-show="ttnn"><button type="button" title="Download Resume" ng-click = "downloadRtrDocument()" class="btn blue"><i class="fa fa-download" aria-hidden="true"></i></button></div>
+<input type="file" class="mainuploadbtn" onchange="angular.element(this).scope().rtrDocumentFile(this)">
+</div> 
+                      </div> 
+                      </div>
+ 
+                  </div>  
+                   
+                  </div>
+              </div>
+
+
+<button type="button" id="statushistorybtn" ng-click="statushist()" class="btn blue" ><i class="fa fa-plus-square"></i> Status History</button>
+
+<br><br>
+
+
+<div class="row" id="statushistorytbl" style="display:none;">
+    <div class="col-md-12">
+    
+    <table class="table bt-table" >
+  <thead class="tablehead">
+    <tr>
+      <th>Status</th>
+      <th>Created Date</th>
+      <th>Created By</th>
+      <th>Reason</th>
+    </tr>
+  </thead>
+  <tbody>
+  
+    <tr ng-repeat="statuses in candidateStatus">
+      <td width="15%">{{statuses.status}}</td>
+      <td width="20%">{{statuses.createdDate}}</td>
+      <td width="20%">{{statuses.createdBy}}</td>
+      <td width="45%">{{statuses.reason}}</td>
+    </tr>
+   
+  </tbody>
+</table>
+</div></div>
+
+ 
+      <hr>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="col-md-8">
+          <div class="alert alert-success" role="alert" style="text-align: center;" ng-show="newCandidateMessage">
+            <strong>Candidate has been saved.</strong></div>
+          </div >
+          <div class="col-md-4">
+              <div class="pull-right">
+                <button type="button" class="btn blue" ng-click="tabs[1].active = true"><i class="fa fa-arrow-circle-left"></i> Previous</button>
+                <button type="button" class="btn light-blue" ng-click="#"><i class="fa fa-arrow-circle-right"></i> Next</button> 
+                  <input type="submit" ng-click="createCandidatevalidate()" value = "Save" class="btn blue">
+              </div>
+          </div>
+        </div>
+    </div> 
+     
+    </uib-tab>
+
+
+    </uib-tabset>  
+
+    </form>
+
+</div>
+<!-- END MAIN CONTENT -->

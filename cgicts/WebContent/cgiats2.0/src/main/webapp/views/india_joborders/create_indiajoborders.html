@@ -1,0 +1,516 @@
+<div ng-controller="createIndiaJobOrdersController" ng-init="onload()">
+<script src="assets/global/scripts/alljquery.js"></script>
+<style>
+.has-feedback .form-control
+{
+padding-right:12px;
+}
+</style>
+
+<!-- BEGIN PAGE HEADER--> 
+<div class="sub-page-header">
+  <div class="page-bar">
+    <ul class="page-breadcrumb">
+    <li><a href="#/dashboard" ng-if="!(rsLoginUser.userRole.startsWith('IN_') || rsLoginUser.userRole === 'ATS_Executive')">Home</a> 
+				<a href="#/india_joborders/my_indiajobOrder" ng-if="(rsLoginUser.userRole.startsWith('IN_'))">Home</a>
+				<a href="#/candidates/missingData" ng-if="(rsLoginUser.userRole === 'ATS_Executive')">Home</a>
+				<i class="fa fa-circle"></i>
+				</li>
+      <li>
+        <span>India Job Orders</span>
+        <i class="fa fa-circle"></i>
+      </li>
+      <li>
+        <span>Create Job Order</span>
+      </li>
+    </ul> 
+     
+  </div>
+</div>
+<!-- END PAGE HEADER--> 
+
+<!-- BEGIN MAIN CONTENT --> 
+ 
+ 
+ 
+ <div class="fade-in-up successdiv" id="client_success"><i class="fa fa-check" aria-hidden="true"></i> Add / Edit Client Successfully Completed</div>
+
+
+
+
+
+<!-- ***********************************ADD EDIT CLIENT POPUP STARTS HERE*************************************************** -->
+
+<form  name="AddEditClient" class="tab-form-demo" novalidate=""  ng-submit="addEditClientDB()" >
+
+    
+    <div class="undermask" id="addeditclientpop">
+    <div class="popupcont">
+    <div class="popuphead">Add / Edit Client<span class="pull-right" id="popclosebtn"><img width="16" height="16" src="assets/global/img/portlet-remove-icon-white.png" class="ng-scope"></span></div>
+    <div class="col-md-12 popcont">
+    <div class="row">
+    		
+    		
+    		<div class="fade-in-up errorwarning" id="samenameerr">Existing Client Name & New Client Name are same</div>
+    		<div class="fade-in-up errorwarning" id="nameexistserr">The New Client Already Exists in the Records</div>
+    		
+    		
+              	<div class="form-group row">
+                <label class="col-md-4 control-label">Add / Edit</label>
+                <div class="col-md-8">
+                <select class="form-control" required="" ng-change="changepopdd()" ng-model="selectclientstatus">
+                  <option value="">Select</option>
+                  <option>Add a New Client</option>
+                  <option>Edit an Existing Client</option>
+                </select>
+                </div>
+              </div>
+              
+              
+              
+              
+              
+              
+              <div class="form-group row" ng-if="(selectclientstatus=='Edit an Existing Client')">
+                <label class="col-md-4 control-label">Select a Client to Edit</label>
+                <div class="col-md-8">
+                <div class="clientnamepop" style="padding-right:0px;">
+                <div class="multiselect formddlistpop" events="popclientevent" ng-dropdown-multiselect="" options="popclientdata" selected-model="popclient" extra-settings="onesearchsettings"></div>
+                <span class="mustfield">This field is required</span>
+                </div>
+                </div>
+              </div>
+              
+              
+              
+              
+              
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																
+																	
+																	
+              
+              
+              
+              
+              
+              
+              <div class="form-group row" ng-if="(showfield == 'yes')">
+                <label class="col-md-4 control-label">New Client Name</label>
+                <div class="col-md-8">
+							<!-- <input type="text" class="form-control" placeholder="New Client Name"  ng-model="clientData.newclientname" required="" > -->
+							
+							
+							<div angucomplete-alt id="clientId" class="form-control autocomplete editclientauto"
+																	placeholder="New Client Name" pause="100"
+																	disable-input="isDisabled"
+																	selected-object="selectedClientIdAction"
+																	local-data="popclientList"
+																	search-fields="label" title-field="label"
+																	minlength="1" 
+																	input-class="search-control height34 "
+																	match-class="highlight"></div>
+																	
+																	
+																	                
+                </div>
+              </div>
+              
+              
+              
+              
+              <div class="form-group row" ng-if="(selectclientstatus == 'Add a New Client')">
+                <label class="col-md-4 control-label">New Client Name</label>
+                <div class="col-md-8">
+							
+							
+								<div angucomplete-alt id="clientId" class="form-control autocomplete addclientauto"
+																	placeholder="New Client Name" pause="100"
+																	disable-input="isDisabled"
+																	selected-object="selectedClientIdAction"
+																	local-data="popclientList"
+																	search-fields="label" title-field="label"
+																	minlength="1" 
+																	input-class="search-control height34 "
+																	match-class="highlight"></div>
+							
+							                
+                </div>
+              </div>
+            
+            
+            
+    </div>
+    
+    
+    
+    
+    
+    <div class="row">
+    <button type="submit" class="btn blue">Add / Edit Client</button>
+    </div>
+    
+    
+    
+    </div>
+
+
+    </div>
+    </div>
+    </form>
+<!-- ***********************************ADD EDIT CLIENT POPUP ENDS HERE*************************************************** -->
+
+ 
+ 
+ 
+ 
+ 
+ 
+    <form  name="createIndiaJobOrderForm" class="tab-form-demo" novalidate=""  ng-submit="createIndiaJobOrder()" >
+		<div ng-show="isErrorMsg">
+			<div style="color: red; text-align: right;">
+				<b>{{errMsg}}</b>
+			</div>
+		</div>
+			<div ng-show="statusValidationErrMsg">
+<div style="color: red; text-align: right;"><b>Status must be either Open or Assigned or Hold</b></div>
+</div>
+
+<div class="fade-in-up" id="res">Please Fill the mandatory fields in all the tabs</div>
+    <uib-tabset active="activeForm">
+
+    <uib-tab index="0" heading="General" active="tabs[0].active">
+
+    <div class="row fade-in-up">
+    <div class="col-md-12">
+    <div class="row">
+    		<div class="col-md-4">
+              	<div class="form-group">
+                <label >ID</label>
+                <input type="text" class="form-control" placeholder="Auto Generated ID"   readonly="readonly" style="background-color:#eef1f5!important;">
+              </div>
+            </div>
+            
+            <div class="col-md-4">
+              	<div class="form-group">
+                <label class="control-label">Title</label>
+                <input type="text" class="form-control" placeholder="Title"  ng-model="createIndiaJobOrdersFields.title" required="" >
+              </div>
+            </div>
+            <div class="col-md-4">
+              	<div class="form-group">
+                <label class="control-label">Key Skills</label>
+                <input type="text" class="form-control" placeholder="Key Skills"  ng-model="createIndiaJobOrdersFields.keySkills" required="" >
+              </div>
+            </div>
+    </div>
+    
+    <div class="row">
+                <div class="col-md-4">
+              	<div class="form-group">
+                <label class="control-label">Priority</label>
+                <select class="form-control" required="" ng-model="createIndiaJobOrdersFields.priority" ng-init="createIndiaJobOrdersFields.priority='MEDIUM'">
+                  <option value="">Select</option>
+                  <option value="HIGH">High</option>
+                  <option value="MEDIUM">Medium</option>
+                  <option value="LOW">Low</option>
+                  </select>
+              </div>
+              </div>
+              <div class="col-md-4">
+              	<div class="form-group">
+                <label class="control-label">Client</label>
+					<div class="row">
+                <div class="col-md-10 clientname" style="padding-right:0px;">
+                <div class="multiselect formddlist" events="clientevent" ng-dropdown-multiselect="" options="clientdata" selected-model="client" extra-settings="onesearchsettings"></div>
+                <span class="mustfield">This field is required</span>
+                </div>
+                <div class="col-md-2" style="padding-left:5px;padding-bottom:4px;"><button title="Add / Edit Client" style="padding-bottom:4px;" type="button" class="btn blue" ng-click="addeditclient()"><i class="fa fa-plus" aria-hidden="true"></i></button></div>
+                </div>                
+              </div>
+            </div>
+            <div class="col-md-4">
+              	<div class="form-group">
+                <label class="control-label">Hide Client</label>
+               <select class="form-control"  ng-model="createIndiaJobOrdersFields.strCustomerHidden" ng-init="createIndiaJobOrdersFields.strCustomerHidden='No'">
+                  <option value="" disabled selected>Select</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                </select>
+              </div>
+            </div>
+    </div>
+    
+    <div class="row">
+                <div class="col-md-4">
+              	<div class="form-group">
+                <label class="control-label">Status</label>
+                <select class="form-control" required="" ng-model="createIndiaJobOrdersFields.status" ng-init="createIndiaJobOrdersFields.status='OPEN'">
+                  <option value="">Select</option>
+                  <option value="OPEN">Open</option>
+                  <option value="ASSIGNED">Assigned</option>
+                  <option value="FILLED">Filled</option>
+				  <option value="HOLD">Hold</option>                  
+                  <option value="CLOSED">Closed</option>
+                  <option value="REOPEN">Reopen</option>
+                  </select>
+              </div>
+              </div>
+              
+              <div class="col-md-4">
+              
+              	<div class="form-group">
+                <label>Location</label>
+                <div class="multi">
+                <span class="blankmsg">Select</span>
+			<input type="text" class="ddbox form-control"   readonly="readonly" id="myjoblocation" ><i class="fa fa-caret-down" aria-hidden="true"></i>
+			<span class="errormsg">This field is required</span>
+		<ul class="ddlist">
+		<li><input type="checkbox" value="Hyderabad" checked="true">HYDERABAD</li>
+		<li><input type="checkbox" value="Noida" checked="true">NOIDA</li>
+		<li><input type="checkbox" value="Pune" checked="true">PUNE</li>
+		</ul>
+	</div>   
+	
+              </div>
+               
+            </div>
+              
+          
+             <div class="col-md-4">
+              	<div class="form-group">
+                <label>Category</label>
+                <input type="text" class="form-control" placeholder="Category"  ng-model="createIndiaJobOrdersFields.category"  >
+              </div>
+            </div>
+    </div>
+    
+
+    
+    <div class="row">
+                <div class="col-md-4">
+              	<div class="form-group">
+                <label class="">Assigned to User Id</label>
+                  <select
+								class="form-control ng-pristine ng-valid ng-valid-required ng-touched"
+								ng-model="createIndiaJobOrdersFields.assignedTo"
+								ng-options="obj.userId as obj.fullName for obj in  assignedUserIdlist">
+								<option value="" selected>None</option>
+							</select>
+                  
+              </div>
+              </div>
+              <div class="col-md-4">
+              	<div class="form-group">
+                <label class="control-label"># of Positions</label>
+                <input valid-number class="form-control" ng-model="createIndiaJobOrdersFields.numOfPos" required  maxlength="3">
+              </div>
+            </div>
+            
+            <div class="col-md-4">
+              	<div class="form-group">
+               <label># of Resumes Required</label>
+                <input valid-number class="form-control" ng-model="createIndiaJobOrdersFields.noOfResumesRequired"  maxlength="3">
+              </div>
+              </div>
+           
+    </div>
+    
+    <div class="row">
+            <div class="col-md-4">
+              	<div class="form-group">
+                <label>Education</label>
+                
+                <select class="form-control" ng-model="createIndiaJobOrdersFields.education" >
+                  <option value="">Select</option>
+                  <option value="B.A">B.A</option>
+<option value="B.Com">B.Com</option>
+<option value="B.Sc">B.Sc</option>
+<option value="B.Tech / B.E">B.Tech / B.E</option>
+<option value="M.A">M.A</option>
+<option value="M.Com">M.Com</option>
+<option value="M.Sc">M.Sc</option>
+<option value="MCA">MCA</option>
+<option value="M.Tech / M.E">M.Tech / M.E</option>
+<option value="Others">Others</option>
+                  </select>
+              </div>
+              </div>
+              
+              
+               <div class="col-md-4" ng-if="!(rsLoginUser.userRole === 'IN_DM')" >
+              	<div class="form-group">
+                <label class="control-label">DM Name</label>
+                   <select
+								class="form-control ng-pristine ng-valid ng-valid-required ng-touched"
+								 ng-model="createIndiaJobOrdersFields.dmName"
+								ng-options="dm.userId as dm.fullName for dm in  dmList" required>
+								<option value="" selected>Select</option>
+							</select>
+
+						</div>
+              </div>
+           
+    </div>
+    
+    
+  
+    
+    </div>
+    </div>
+    
+      
+      <div class="row">
+      </div> <hr>
+      <div class="row fade-in-up">
+        <div class="col-md-12">
+          <div class="pull-right"> 
+            <button type="button" class="btn light-blue" ng-click="#"><i class="fa fa-arrow-circle-left"></i> Previous</button>
+            <button type="button" class="btn blue" ng-click="firstTab();">Next <i class="fa fa-arrow-circle-right"></i></button>
+            <button type="button" class="btn grey-cascade" ng-click="candidateResettab1()">Reset <i class="fa fa-refresh"></i></button>
+          </div>
+        </div>
+      </div>
+    </uib-tab>
+ 
+
+   
+
+    <uib-tab index="1" heading="Compensation" active="tabs[1].active">
+    
+      <div class="row fade-in-up">
+                <div class="col-md-12">
+                
+                <div class="row">
+                <div class="col-md-4">
+              	<div class="form-group">
+                <label class="control-label">Job Type</label>
+                <select id="jobtyp" class="form-control" ng-model="createIndiaJobOrdersFields.jobType" ng-change="clrval()" required="" ng-init="createIndiaJobOrdersFields.jobType='PERMANENT'">
+                  <option value="">Select</option>
+                  <option value="PERMANENT">Permanent</option>
+                  <option value="CONTRACT">Contract</option>
+                  </select>
+              </div>
+              </div>
+              <div class="col-md-4">
+              	<div class="form-group">
+                <label>Start Date</label>
+  				<div class="input-group">
+                  <input type="text"  id="perstartdate"  class="form-control" uib-datepicker-popup="{{DateFormat}}" placeholder="Start Date" is-open="visaDatePopup.opened" datepicker-options="visaDateOptions" close-text="Close" alt-input-formats="altInputFormats" ng-model="createIndiaJobOrdersFields.startDate" ng-keyup="" readonly="true" />
+                  <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="visaDateopen()"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+                </div>
+
+              </div>
+              </div>
+              
+              <div class="col-md-4" id="contractoptions" ng-if="createIndiaJobOrdersFields.jobType == 'CONTRACT'">
+             
+              	<div class="form-group">
+                <label class="">End Date:</label>
+                <div class="input-group">
+                  <input type="text" class="form-control" uib-datepicker-popup="{{DateFormat}}" is-open="ConEndDatePopup.opened" placeholder="End Date" datepicker-options="ConEndDateOptions" close-text="Close" alt-input-formats="altInputFormats" ng-model="createIndiaJobOrdersFields.endDate" ng-keyup="candidateStorage(candidate)" readonly="true" />
+                  <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="ConEndDateopen()"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+                </div>
+              </div>
+              </div>
+              
+    </div>
+    
+  
+  <div class="row">
+  <div class="col-md-4">
+              
+              <div class="form-group">
+                <label>Salary Range</label>
+                <div class="row">
+                  <div class="col-md-6">
+                    <input data-format="indiacurrency" type="text" class="form-control" placeholder="MIN" maxlength="9" ng-model="createIndiaJobOrdersFields.salary"  >
+                  </div>
+                  <div class="col-md-6">
+                    <input data-format="indiacurrency" type="text" class="form-control" placeholder="MAX" maxlength="9" ng-model="createIndiaJobOrdersFields.maxSal"  >
+                  </div>
+                </div>
+              </div>
+              </div>
+          
+          <div class="col-md-4">
+              	<div class="form-group">
+                <label>Experience Range</label>
+                <div class="row">
+                  <div class="col-md-6">
+                    <input data-format="indiacurrency" type="text" class="form-control" placeholder="MIN" maxlength="2" ng-model="createIndiaJobOrdersFields.minExp"  >
+                  </div>
+                  <div class="col-md-6">
+                    <input data-format="indiacurrency" type="text" class="form-control" placeholder="MAX" maxlength="2" ng-model="createIndiaJobOrdersFields.maxExp"  >
+                  </div>
+                </div>
+              </div>
+              </div>    
+    </div>
+
+                
+         <div class="row">
+         		
+                <div class="col-md-8">
+              	<div class="form-group">
+                <label>Description</label>
+                <textarea type="text" rows="2" class="form-control" placeholder="Enter your description" ng-model="createIndiaJobOrdersFields.description" ></textarea>
+              </div>
+              </div>
+             </div> 
+     <div class="row">
+     
+     
+              <div class="col-md-8">
+              
+                       <div class="form-group">
+                        <label class="">Attachments</label>
+                        <div class="row upload-control" data-button="file-upload">
+<div class="col-md-9 txtboxdiv"><input readonly="true" type="text" class="form-control selectedfile"  ng-model="createIndiaJobOrdersFields.attachment" ></div>
+<button type="button" title="Upload Files" class="btn blue col-md-2 uploadbtn" >Upload <i class="fa fa-upload" aria-hidden="true"></i></button>
+<div class=" pull-right rtbtn col-md-2"><button type="button" class="btn blue" title="View File" ng-click="originalResumeView()"><i class="fa fa-file-word-o"></i></button></div>
+<div class=" pull-right rtbtn col-md-2 lockbtn"><button type="button" title="Unlock Upload" class="btn blue"><i class="fa fa-lock" aria-hidden="true"></i></button></div>
+<input type="file" class="mainuploadbtn" onchange="angular.element(this).scope().setFile(this)" >
+</div> 
+<script src="assets/global/scripts/alljquery.js"></script>
+                      </div> 
+                      </div>
+
+
+              
+    </div>
+              </div></div>
+
+      <hr>
+      <div class="row fade-in-up">
+        <div class="col-md-12">
+          <div class="pull-right"> 
+            <button type="button" class="btn blue" ng-click="tabs[0].active = true"><i class="fa fa-arrow-circle-left"></i> Previous</button>
+            <button type="submit" class="btn blue"  ng-click="createjobordervalidate()">Submit <i class="fa fa-upload"></i></button>
+            <button type="button" class="btn grey-cascade" ng-click="candidateResettab3()" >Reset <i class="fa fa-refresh"></i></button>
+            
+          </div>
+        </div>
+      </div>
+    </uib-tab>
+
+    </uib-tabset>  
+
+    </form>
+
+<!-- END MAIN CONTENT --> 
+
+
+
+</div>

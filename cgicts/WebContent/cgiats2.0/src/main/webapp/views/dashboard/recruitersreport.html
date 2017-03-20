@@ -1,0 +1,311 @@
+<div ng-controller="DBrecruitersreportcontroller" ng-init="onload()">
+<script src="assets/global/scripts/alljquery01.js"></script>
+
+<!-- BEGIN PAGE HEADER--> 
+<div class="sub-page-header">
+  <div class="page-bar">
+    <ul class="page-breadcrumb">
+      <li>
+        <a href="#/dashboard">Home</a>
+        <i class="fa fa-circle"></i>
+      </li>
+      <li>
+        <span>Dashboard</span> 
+        <i class="fa fa-circle"></i>
+      </li>
+      <li>
+        <span>Recruiter's Summary Report</span> 
+      </li> 
+    </ul> 
+    
+    
+    
+    
+    
+    
+			
+			
+			
+			
+  </div>
+</div>
+<!-- END PAGE HEADER-->
+
+
+
+
+<!-- BEGIN MAIN CONTENT -->
+
+
+<form name="searchsubmitaldm" class="tab-form-demo" ng-submit="" >
+<div class="row">
+<div class="col-md-3">
+            <div class="form-group">
+                <label>Date Range</label>
+                <input type="daterange" ng-model="created" ranges="ranges" id="dmSubmittalRangesId" required=""  readonly="true" class="form-control" ng-change="onChangeDateValue()">
+                </div>
+          </div>
+          
+          
+          <div class="col-md-3">
+							<div class="form-group">
+								<label>Location</label>
+								<div class="multi">
+									<span class="blankmsg" id="citySelect">Select</span> <input type="text"
+										class="ddbox form-control" readonly="readonly" id="dmcity"><i
+										class="fa fa-caret-down" aria-hidden="true"></i> <span
+										class="errormsg">This field is required</span>
+									<ul class="ddlist">
+										<li ng-repeat="record in cityList"><input type="checkbox" value="{{record.officeLocation}}" checked="true" class="cityChildChk">{{record.officeLocation}}</li>
+									</ul>
+								</div>
+
+							</div>
+						</div>
+						
+					<!-- 	<div class="col-md-1">
+            <button type="button" ng-click="searchrecruitersreport(true)" style="margin-top: 24px;padding-bottom:3px;"  class="btn blue" ><i class="fa fa-search"></i> View</button>
+            </div> -->
+						
+						<div class="col-md-2">
+							<div class="form-group">
+								<label>DM / ADM</label>
+								<div class="multi01">
+									<span class="blankmsg" id="selct">Select</span>
+									<input type="text" class="ddbox01 form-control" readonly="readonly" id="dmname">
+									<i class="fa fa-caret-down" aria-hidden="true"></i>
+									<span class="errormsg">This field is required</span>
+									<ul class="ddlist01" id="udrnme">
+										<li ng-repeat="values in userRecords"><input type="checkbox"  value="{{values.userId}}" >{{values.fullName}}</li>
+									</ul>
+								</div>
+
+							</div>
+						</div>
+              <div class="col-md-2">
+              <div class="form-group">
+               <label >Status</label>
+                <select class="dropDown" required ng-model="userStatus">
+                  <option>ACTIVE</option>
+                  <option>INACTIVE</option>
+                  <option>ALL</option>
+                  
+                </select>
+              
+              </div>
+              
+              </div>
+          
+          
+          <div class="col-md-2" style="padding-left:0px;padding-right:0px;">
+            <button type="button" style="margin-top: 24px;margin-right:15px;padding-bottom:3px;"  class="btn blue" ng-click="searchrecruitersreport(true,false)"><i class="fa fa-search"></i> View</button>
+            <button type="submit" style="margin-top: 24px;padding-bottom:3px;" class="btn blue"  ng-click="exportData()">Export <i class="fa fa-upload" aria-hidden="true"></i></button>
+            </div>
+            
+            </div>
+            
+            
+
+
+<div class="row tablpdng">
+<table class="table bt-table summaryreport"  ng-repeat="record in records" ng-if="!(records.length === 0)">
+<thead class="">
+<tr>
+<th colspan="13">
+
+	<div class="pull-right" >
+	
+					<ul class="pagination">
+						<li ng-repeat="page in record.pages" ng-class="{'active':(page.recordOffset==record.pageNo)}"><a style="cursor: pointer;" ng-click="nextPageRecords(record,page.recordOffset)">{{page.number}}</a></li>
+					</ul>
+				</div>
+				<div class="shngrcds01">{{record.lblCurrentPageRecords}}</div>
+				</th>
+</tr>
+
+
+<tr>
+<th colspan="13" style="font-size:18px;font-weight:bold;color:#000000; text-align:center;background-color:#36c6d3;">
+<label ng-if="record.city === 'HYD'">HYDERABAD</label>
+<label ng-if="record.city === 'ATL'">ATLANTA</label>
+<label ng-if="!(record.city === 'HYD' || record.city === 'ATL')">{{record.city}}</label>
+</th>
+</tr>
+
+
+
+
+
+
+	<tr class="tablehead headsmltxt">
+		<th>NAME</th>
+		<th>DM / ADM</th>
+		<th>LOCATION</th>
+		<th>SUBMITTED</th>
+		<th>DMREJ</th>
+		<th>ACCEPTED</th>
+		<th>INTERVIEWING</th>
+		<th>CONFIRMED</th>
+		<th>REJECTED</th>
+		<th>STARTED</th>
+		<th>BACKOUT</th>
+		<th>OUTOFPROJ</th>
+		<th>NU</th>
+	</tr>
+</thead>
+<tbody>
+	<tr ng-repeat="values in record.displayRecords"  style="text-align:center;" ng-class-odd="'oddcolor'" ng-class-even="'evencolor'">
+		<td class="ltxt" style="cursor: pointer;color: blue;" ng-click="getSubmittalList(values.userId)" title="View Details">{{values.Name}}</td>
+		<td title="DM">{{values.DM}}</td>
+		<td title="Location">{{values.Location}}</td>
+		<td title="SUBMITTED">{{values.SUBMITTED}}</td>
+		<td title="DMREJ">{{values.DMREJ}}</td>
+		<td title="ACCEPTED">{{values.ACCEPTED}}</td>
+		<td title="INTERVIEWING" ng-if="(values.INTERVIEWING === 0)" style="color:#000000">{{values.INTERVIEWING}}</td>
+		<td title="INTERVIEWING" ng-if="!(values.INTERVIEWING === 0)"><label  ng-click="getUserSubmittalsById(values.userId,'INTERVIEWING')" style="cursor: pointer;text-decoration: underline;color:#0000ff ">{{values.INTERVIEWING}}</label></td>
+		<td title="CONFIRMED" ng-if="(values.CONFIRMED === 0)" style="color:#000000">{{values.CONFIRMED}}</td>
+		<td title="CONFIRMED" ng-if="!(values.CONFIRMED === 0)"><label  ng-click="getUserSubmittalsById(values.userId,'CONFIRMED')" style="cursor: pointer;text-decoration: underline;color:#0000ff; ">{{values.CONFIRMED}}</label></td>
+		<td title="REJECTED">{{values.REJECTED}}</td>
+		<td style="color:#000000;" title="STARTED" ng-if="(values.STARTED === 0)">{{values.STARTED}}</td>
+		<td style="color:#16b050;" title="STARTED" ng-if="!(values.STARTED === 0)"><label  ng-click="getUserSubmittalsById(values.userId,'STARTED')" style="cursor: pointer;text-decoration: underline;color:#16b050;font-weight:bold;">{{values.STARTED}}</label></td>
+		<td title="BACKOUT">{{values.BACKOUT}}</td>
+		<td title="OUTOFPROJ">{{values.OUTOFPROJ}}</td>
+		<td title="NotUpdated">{{values.NotUpdated}}</td>
+	</tr>
+	
+
+	<tr class="totl" style="color:#0000ff;font-weight:bold;text-align:center;">
+		<td colspan="3">Total</td>
+		<td>{{record.totalRecordsCount.SUBMITTED}}</td>
+		<td>{{record.totalRecordsCount.DMREJ}}</td>
+		<td>{{record.totalRecordsCount.ACCEPTED}}</td>
+		<td>{{record.totalRecordsCount.INTERVIEWING}}</td>
+		<td>{{record.totalRecordsCount.CONFIRMED}}</td>
+		<td>{{record.totalRecordsCount.REJECTED}}</td>
+		<td style="background-color:#ffff99;color:#ff0000;"><span style="color:#068703;">{{record.totalRecordsCount.STARTED}}</span></td>
+		<td>{{record.totalRecordsCount.BACKOUT}}</td>
+		<td>{{record.totalRecordsCount.OUTOFPROJ}}</td>
+		<td>{{record.totalRecordsCount.NOT_UPDATED}}</td>
+	</tr>
+</tbody>
+</table>
+
+
+
+
+<table class="table bt-table summaryreport" ng-if="(records.length === 0)">
+<thead class="">
+	<tr class="tablehead headsmltxt">
+		<th>NAME</th>
+		<th>DM / ADM</th>
+		<th>LOCATION</th>
+		<th>SUBMITTED</th>
+		<th>DMREJ</th>
+		<th>ACCEPTED</th>
+		<th>INTERVIEWING</th>
+		<th>CONFIRMED</th>
+		<th>REJECTED</th>
+		<th>STARTED</th>
+		<th>BACKOUT</th>
+		<th>OUTOFPROJ</th>
+		<th>NU</th>
+	</tr>
+</thead>
+<tbody>
+	<tr ng-class-odd="'oddcolor'" ng-class-even="'evencolor'">
+	<td colspan="13" ><label style="color:#ff0000;font-size: 14px;font-weight: bold;">No Records Found.</label></td>
+	</tr>
+	
+
+</tbody>
+</table>
+
+<strong style="color:#ff0000;">*NU: Status Not Updated.</strong>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ************************* EXPORT TABLE **************************** -->
+<div class="row tablpdng" id="exporttable"  style="display:none;">
+<table border="1" class="table bt-table"  ng-repeat="record in records">
+<thead class="">
+
+<tr>
+<th colspan="13" style="font-size:18px;font-weight:bold;color:#ff0000; text-align:center;background-color:#c5be97;">{{record.city}}</th>
+</tr>
+
+
+
+
+
+
+	<tr class="bdr" style="color:#0000ff;">
+		<th width="45%" >NAME</th>
+		<th>DM / ADM</th>
+		<th>LOCATION</th>
+		<th>SUBMITTED</th>
+		<th>DMREJ</th>
+		<th>ACCEPTED</th>
+		<th>INTERVIEWING</th>
+		<th>CONFIRMED</th>
+		<th>REJECTED</th>
+		<th>STARTED</th>
+		<th>BACKOUT</th>
+		<th>OUTOFPROJ</th>
+		<th>STATUS NOT UPDATED</th>
+	</tr>
+</thead>
+<tbody>
+	<tr class="bdr" ng-repeat="values in record.records"  style="text-align:center;">
+		<td style="text-align:left;cursor: pointer;color: blue;" ng-click="getSubmittalList(values.userId)">{{values.Name}}</td>
+		<td >{{values.DM}}</td>
+		<td >{{values.Location}}</td>
+		<td>{{values.SUBMITTED}}</td>
+		<td>{{values.DMREJ}}</td>
+		<td>{{values.ACCEPTED}}</td>
+		<td><label  ng-click="getUserSubmittalsById(values.userId,'INTERVIEWING')" style="cursor: pointer;text-decoration: underline;color:#4963a7 ">{{values.INTERVIEWING}}</label></td>
+		<td><label  ng-click="getUserSubmittalsById(values.userId,'CONFIRMED')" style="cursor: pointer;text-decoration: underline;color:#4963a7 ">{{values.CONFIRMED}}</label></td>
+		<td>{{values.REJECTED}}</td>
+		<td style="color:#16b050;"><label  ng-click="getUserSubmittalsById(values.userId,'STARTED')" style="cursor: pointer;text-decoration: underline;color:#16b050 ">{{values.STARTED}}</label></td>
+		<td>{{values.BACKOUT}}</td>
+		<td>{{values.OUTOFPROJ}}</td>
+		<td>{{values.NotUpdated}}</td>
+	</tr>
+	
+	
+	<tr class="bdr" style="color:#0000ff;font-weight:bold;text-align:center;">
+		<td colspan="3">Total</td>
+		<td>{{record.totalRecordsCount.SUBMITTED}}</td>
+		<td>{{record.totalRecordsCount.DMREJ}}</td>
+		<td>{{record.totalRecordsCount.ACCEPTED}}</td>
+		<td>{{record.totalRecordsCount.INTERVIEWING}}</td>
+		<td>{{record.totalRecordsCount.CONFIRMED}}</td>
+		<td>{{record.totalRecordsCount.REJECTED}}</td>
+		<td style="background-color:#ffff00;color:#ff0000;"><span style="color:#ff0000;">{{record.totalRecordsCount.STARTED}}</span></td>
+		<td>{{record.totalRecordsCount.BACKOUT}}</td>
+		<td>{{record.totalRecordsCount.OUTOFPROJ}}</td>
+		<td>{{record.totalRecordsCount.NOT_UPDATED}}</td>
+	</tr>
+	
+</tbody>
+</table>
+
+</div>
+
+<!-- ************************* EXPORT TABLE **************************** -->
+
+
+</form>
+<!-- END MAIN CONTENT -->
+
+</div>

@@ -1,0 +1,100 @@
+<div ng-controller = "turnAroundController" ng-init= "onload()">
+
+<!-- BEGIN PAGE HEADER--> 
+<div class="sub-page-header">
+  <div class="page-bar" style="margin-bottom:0px;">
+    <ul class="page-breadcrumb">
+         	<li><a href="#/dashboard" ng-if="!(rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_Recruiter' || rsLoginUser.userRole === 'ATS_Executive')">Home</a> 
+				<a href="#/india_joborders/my_indiajobOrder" ng-if="(rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_Recruiter')">Home</a>
+				<a href="#/candidates/missingData" ng-if="(rsLoginUser.userRole === 'ATS_Executive')">Home</a>
+				<i class="fa fa-circle"></i>
+				</li>
+      <li>
+        <span>Reports</span> 
+        <i class="fa fa-circle"></i>
+      </li>
+      <li>
+        <span>TAT Report</span> 
+      </li> 
+    </ul> 
+    
+    <div class="page-toolbar">
+		<button class="btn btn-primary blue" style="margin-right:-10px;" ng-click="showfilters()">Filters &nbsp;<i class="fa fa-filter" aria-hidden="true"></i></button>
+			</div>
+  </div>
+</div>
+<!-- END PAGE HEADER-->
+
+<!-- BEGIN MAIN CONTENT -->
+<br>
+	<div class="row col-md-12 filters animated slideInRight delay-three" id="filterfields">
+	
+	  <div class="col-md-2">
+              	<div class="form-group">
+                <label class="">Start Date</label>
+  				<div class="input-group datepick">
+                  <input type="text" class="form-control whitereadonly" uib-datepicker-popup="{{DateFormat}}" is-open="startDatePopup.opened" datepicker-options="startDateOptions" close-text="Close" alt-input-formats="altInputFormats" ng-model="startDate" ng-keyup="" readonly="true" />
+                  <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="startDateopen()"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+                </div>
+				</div>
+
+
+</div>
+
+   <div class="col-md-2">
+              	<div class="form-group">
+                <label class="">End Date</label>
+  					<div class="input-group">
+                  <input type="text"  class="form-control whitereadonly" uib-datepicker-popup="{{DateFormat}}" is-open="endDatePopup.opened" datepicker-options="endDateOptions" close-text="Close" alt-input-formats="altInputFormats" ng-model="endDate" ng-keyup="" readonly="true" />
+                  <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="endDateopen()"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+                </div>
+				</div>
+              </div>
+         
+          <div class="col-md-2">
+              	<div class="form-group">
+                <label class="control-label">DM Name</label>
+                   <select
+								class="form-control ng-pristine ng-valid ng-valid-required ng-touched"
+								 ng-model="dmName"
+								ng-options="dm.userId as dm.fullName for dm in  dmList" required>
+								<option value="" selected>Select</option>
+							</select>
+
+						</div>
+              </div>        
+   <div class="col-md-1" style="margin-top: 25px;">
+	<button type="button" ng-click="getTurnAroundData()" class="btn blue"><i class="fa fa-search"></i> View </button>
+   </div>
+   
+	</div>
+<!-- END MAIN CONTENT -->
+
+<br>
+
+	<div class="row fade-in-up table-scrollable">
+            
+	            <table class="customtable" id="turnAroundTable"  bs-table-control="turnAroundTimeInfo.turnAroundTableControl" ng-show="turnAroundTimeTable"  >
+		        <thead>
+		            <tr>
+		                <th data-field="jobOrderId" data-sortable="true"></th>
+		                <th data-field="client" data-sortable="true"></th>
+		                <th data-field="title" data-sortable="true"></th>
+		                <th data-field="dmName" data-sortable="true"></th>
+		                <th data-field="createdOn" data-sortable="true"></th>
+		                <th data-field="resumesRequired" data-sortable="true"></th>
+		                <th data-field="submitted" data-sortable="true"></th>
+		                <th data-field="turnAroundTime" data-sortable="true"></th>
+		                
+		            </tr>
+		        </thead>
+		        <tbody>
+		           
+		        </tbody>
+	    		</table> 
+	    		</div>
+</div>

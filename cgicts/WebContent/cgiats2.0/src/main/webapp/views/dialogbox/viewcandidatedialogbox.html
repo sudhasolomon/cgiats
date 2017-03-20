@@ -1,0 +1,105 @@
+<md-dialog style="width:70%">
+<md-toolbar style="background-color:#00CED1">
+<div class="md-toolbar-tools">
+<h2>Resume Details</h2>
+ <span flex></span>
+ <md-button class="md-icon-button" ng-click="cancel()">
+ <img width="16" height="16" src="assets/global/img/portlet-remove-icon-white.png" />
+ </md-button>
+ </div>
+ </md-toolbar>
+ <md-dialog-content>
+ <div class="md-dialog-content">
+ <table width="100%" class="cand_dtls">
+ <tr><td width="22%">Candidate Id :</td><td width="28%"><span style="font-weight:bold">{{row.id}}</span></td><td width="22%">Name :</td><td width="28%"><span style="font-weight:bold">{{row.fullName}}</span></td></tr>
+  <tr><td>Email :</td><td><span style="font-weight:bold">{{row.email}}</span></td><td>Mobile :</td><td><span style="font-weight:bold">{{row.phoneNumber!=null ? row.phoneNumber : "NA"}}</span></td></tr>
+  <tr><td>Work Phone :</td><td><span style="font-weight:bold">{{row.altPhoneNumber!=null ? row.altPhoneNumber : "NA"}}</span></td><td>Security Clearance :</td><td><span style="font-weight:bold">{{row.strSecurityClearance!=null ? row.strSecurityClearance : "NA"}}</span></td></tr>
+  <tr><td>Key Skills :</td><td colspan="3"><span style="font-weight:bold; text-align:left;">{{row.keySkill!=null ? row.keySkill : "NA"}}</span></td></tr>
+  
+ <!-- <tr><td>Name :</td><td><span style="font-weight:bold">{{row.firstName}}</span></td></tr>
+ <tr><td>Location :</td><td><span style="font-weight:bold">{{row.location}}</span></td></tr>
+ <tr><td>Email :</td><td><span style="font-weight:bold">{{row.email}}</span></td></tr>
+ <tr><td>Phone Number :</td><td><span style="font-weight:bold">{{row.phoneNumber!=null ? row.phoneNumber : "NA"}}</span></td></tr>
+ <tr><td>Visa Type :</td><td><span style="font-weight:bold">{{row.visaType!=null ? row.visaType : "NA"}}</span></td></tr>
+ <tr><td>Created On :</td><td><span style="font-weight:bold">{{row.createdOn}}</span></td></tr>
+ <tr><td>Resume :</td><td><span style="font-weight:bold">{{row.resume!=null ? row.resume : "NA"}}</span></td>
+ <tr><td>Key Skills :</td><td><span style="font-weight:bold">{{row.keySkill!="" ? row.keySkill : "NA"}}</span></td>
+ <tr><td>Status:</td><td><span style="font-weight:bold">{{row.status!="" ? row.status : "NA"}}</span></td>
+ <tr><td>Status Reason :</td><td><span style="font-weight:bold">{{row.reason!="" ? row.reason : "NA"}}</span></td> -->
+ </tr>
+ </table>
+ 
+ 
+ 
+ 
+ 
+ 
+
+<style type="text/css">
+			.angular-highlight {
+				background-color:	rgba(255,255,0,0.8);
+				font-weight:		bold;
+			}
+			.highlight {
+    	background-color: yellow;
+	}
+		</style>
+
+
+
+
+<div class="row popuphrline" >
+<div class="col-md-12">
+<b class="popuphrlinehead">Candidate Resume</b>
+<div class="md-dialog-content viewresumepop">
+      <pre style="height: 300px;">
+      <div highlight="viewCandidateText" keywords="viewCandidateKeywords"></div>
+      </pre>
+      
+      </div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="row popuphrline" >
+    <div class="col-md-12">
+    <b class="popuphrlinehead">Status History</b>
+    <table class="table bt-table poptable" >
+  <thead class="tablehead">
+    <tr>
+      <th>Status</th>
+      <th>Created Date</th>
+      <th>Created By</th>
+      <th>Reason</th>
+    </tr>
+  </thead>
+  <tbody>
+  
+    <tr ng-repeat="statuses in row.statusHistory">
+      <td width="15%">{{statuses.status}}</td>
+      <td width="22%">{{statuses.createdDate}}</td>
+      <td width="23%">{{statuses.createdBy}}</td>
+      <td width="40%">{{statuses.reason}}</td>
+      
+    </tr>
+   
+  </tbody>
+</table>
+</div></div>
+
+
+
+
+
+
+ </div>
+ </md-dialog-content>
+ </md-dialog>
+ 

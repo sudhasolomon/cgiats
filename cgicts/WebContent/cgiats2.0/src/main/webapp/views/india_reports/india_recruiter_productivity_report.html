@@ -1,0 +1,267 @@
+<div ng-controller = "recruitersreportcontroller", ng-init = "onload()">
+
+<script src="assets/global/scripts/alljquery.js"></script>
+<!-- BEGIN PAGE HEADER--> 
+<div class="sub-page-header">
+  <div class="page-bar">
+    <ul class="page-breadcrumb">
+          	<li><a href="#/dashboard" ng-if="!(rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_Recruiter' || rsLoginUser.userRole === 'ATS_Executive')">Home</a> 
+				<a href="#/india_joborders/my_indiajobOrder" ng-if="(rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_Recruiter')">Home</a>
+				<a href="#/candidates/missingData" ng-if="(rsLoginUser.userRole === 'ATS_Executive')">Home</a>
+				<i class="fa fa-circle"></i>
+				</li>
+      <li>
+        <span> Job Orders</span>
+        <i class="fa fa-circle"></i>
+      </li>
+      <li>
+        <span>Deleted Job Orders</span>
+      </li>
+    </ul> 
+     
+  </div>
+</div>
+<!-- END PAGE HEADER--> 
+
+
+
+<!-- BEGIN MAIN CONTENT --> 
+ 
+<div class="fade-in-up" id="res">Please Fill the mandatory fields in all the tabs</div>
+    <uib-tabset active="activeForm">
+    
+
+    <uib-tab index="0" heading="India Recruiters" active="tabs[0].active" ng-if="!(rsLoginUser.userRole === 'HR' || rsLoginUser.userRole === 'Manager' || rsLoginUser.userRole === 'DivisionHead')">
+
+    <form name="IndiaRecruitersReport" class="tab-form-demo" ng-submit="indiaRecruiterReports()" >
+    
+ <div class="row">
+    <div class="col-md-12">
+   <div class="row fade-in-up">
+    		
+<script src="assets/global/scripts/alljquery.js"></script>
+    		
+    		<div class="col-md-3">
+              	<div class="form-group">
+                <label>Year</label>
+                <div class="multi">
+                <span class="blankmsg">Select</span>
+<input type="text" class="ddbox form-control"   readonly="readonly" id="indiaYear" ><i class="fa fa-caret-down" aria-hidden="true"></i>
+<span class="errormsg">This field is required</span>
+<ul class="ddlist">
+	<li ng-repeat = "years in indiayearList"><input type="checkbox" value="{{years}}" checked="true">{{years}}</li>
+	
+</ul>
+</div>   
+              </div>
+            </div>
+            
+            <div class="col-md-3">
+              	<div class="form-group">
+                <label>Month</label>
+                <div class="multi">
+                <span class="blankmsg">Select</span>
+<input type="text" class="ddbox form-control"   readonly="readonly" id="indiaMonth" ><i class="fa fa-caret-down" aria-hidden="true"></i>
+<span class="errormsg">This field is required</span>
+<ul class="ddlist">
+	<li><input type="checkbox" value="Jan" checked="true">Jan</li>
+	<li><input type="checkbox" value="Feb" checked="true">Feb</li>
+	<li><input type="checkbox" value="Mar" checked="true">Mar</li>
+	<li><input type="checkbox" value="Aprl" checked="true">Aprl</li>
+	<li><input type="checkbox" value="May" checked="true">May</li>
+	<li><input type="checkbox" value="Jun" checked="true">Jun</li>
+	<li><input type="checkbox" value="Jul" checked="true">July</li>
+	<li><input type="checkbox" value="Aug" checked="true">Aug</li>
+	<li><input type="checkbox" value="Sep" checked="true">Sep</li>
+	<li><input type="checkbox" value="Oct" checked="true">Oct</li>
+	<li><input type="checkbox" value="Nov" checked="true">Nov</li>
+	<li><input type="checkbox" value="Dec" checked="true">Dec</li>
+</ul>
+</div>
+             
+              </div>
+            </div>
+            
+            <div class="col-md-3">
+              	<div class="form-group">
+                <label>DM Names</label>
+                <div class="multi">
+                <span class="blankmsg">Select</span>
+<input type="text" class="ddbox form-control"   readonly="readonly" id="indiaDm" ><i class="fa fa-caret-down" aria-hidden="true"></i>
+<span class="errormsg">This field is required</span>
+<ul class="ddlist">
+	<li ng-repeat="values in indiauserRecords" ><input type="checkbox" value="{{values.userId}}"  checked="true">{{values.fullName}}</li>
+	<!-- <li><input type="checkbox" value="Contract" checked="true">Contract</li>
+	<li><input type="checkbox" value="Both" checked="true">Both</li>
+	<li><input type="checkbox" value="Not Specified" checked="true">Not Specified</li> -->
+</ul>
+</div>
+              </div>
+            </div>
+            
+             <div class="col-md-3">
+              	<div class="form-group">
+                <label>Status</label>
+                <div class="multi">
+                <span class="blankmsg">Select</span>
+<input type="text" class="ddbox form-control"   readonly="readonly" id="indiaStatus" ><i class="fa fa-caret-down" aria-hidden="true"></i>
+<span class="errormsg">This field is required</span>
+<ul class="ddlist">
+	<li><input type="checkbox" value="ACTIVE" checked="true">Active</li>
+	<li><input type="checkbox" value="INACTIVE" checked="true">In Active</li>
+	
+</ul>
+</div>
+              </div>
+            </div>
+         
+<div class="">
+          <div class="col-md-12">
+          <div class="pull-right"> 
+            <button type="submit" class="btn btn-primary blue">Search <i class="fa fa-search"></i></button>
+            <button type="button" ng-click="indiaRecruiterReportsReset()" class="btn btn-primary grey-cascade" >Reset <i class="fa fa-refresh"></i></button>
+          </div>
+        </div>
+          </div>
+
+    </div>
+    <br>
+ <!-- Table --> 
+            <div class="row fade-in-up table-scrollable">
+            
+	            <table id="indiaReportId" bs-table-control="indiaReport.indiaBsTableControl" ng-show="indiaReportTable"  >
+		        <thead>
+		            <tr>
+		                <th data-field="recruiterName" data-sortable="true" data-filter-control="input"></th>
+		                <th data-field="noOfStats" data-sortable="true"></th>
+		                <th data-field="avgPerMonth" data-sortable="true"></th>
+		                <th data-field="avgTimeTaken" data-sortable="true"></th>
+		            </tr>
+		        </thead>
+		        <tbody>
+		           
+		        </tbody>
+	    		</table>  
+            </div>  
+             <!-- End Table --> 
+
+   </div>
+    </div>
+    </form>
+    </uib-tab>
+ 
+    <uib-tab index="1" heading="US Recruiters" active="tabs[2].active">
+    <form  name="USRecruitersReport" class="tab-form-demo" novalidate=""  ng-submit="usRecruiterReports()" >
+      <div class="row fade-in-up">
+                <div class="col-md-12">
+        
+<div class="col-md-3">
+              	<div class="form-group">
+                <label>Year</label>
+                <div class="multi">
+                <span class="blankmsg">Select</span>
+<input type="text" class="ddbox form-control"   readonly="readonly" id="usYear" ><i class="fa fa-caret-down" aria-hidden="true"></i>
+<span class="errormsg">This field is required</span>
+<ul class="ddlist">
+	<li ng-repeat = "usyears in usyearList"><input type="checkbox" value="{{usyears}}" checked="true">{{usyears}}</li>
+</ul>
+</div>
+              </div>
+            </div>
+            
+            <div class="col-md-3">
+              	<div class="form-group">
+                <label>Month</label>
+                <div class="multi">
+                <span class="blankmsg">Select</span>
+<input type="text" class="ddbox form-control"   readonly="readonly" id="usMonth" ><i class="fa fa-caret-down" aria-hidden="true"></i>
+<span class="errormsg">This field is required</span>
+<ul class="ddlist">
+	<li><input type="checkbox" value="Jan" checked="true">Jan</li>
+	<li><input type="checkbox" value="Feb" checked="true">Feb</li>
+	<li><input type="checkbox" value="Mar" checked="true">Mar</li>
+	<li><input type="checkbox" value="Aprl" checked="true">Aprl</li>
+	<li><input type="checkbox" value="May" checked="true">May</li>
+	<li><input type="checkbox" value="Jun" checked="true">Jun</li>
+	<li><input type="checkbox" value="Jul" checked="true">July</li>
+	<li><input type="checkbox" value="Aug" checked="true">Aug</li>
+	<li><input type="checkbox" value="Sep" checked="true">Sep</li>
+	<li><input type="checkbox" value="Oct" checked="true">Oct</li>
+	<li><input type="checkbox" value="Nov" checked="true">Nov</li>
+	<li><input type="checkbox" value="Dec" checked="true">Dec</li>
+</ul>
+</div> 
+              </div>
+            </div>
+            
+            <div class="col-md-3">
+              	<div class="form-group">
+                <label>DM Name</label>
+                <div class="multi">
+                <span class="blankmsg">Select</span>
+<input type="text" class="ddbox form-control"   readonly="readonly" id="usDm" ><i class="fa fa-caret-down" aria-hidden="true"></i>
+<span class="errormsg">This field is required</span>
+<ul class="ddlist">
+	<li ng-repeat="values in ususerRecords" ><input type="checkbox" value="{{values.userId}}"  checked="true">{{values.fullName}}</li>
+	
+</ul>
+</div>
+              </div>
+            </div>
+            
+            <div class="col-md-3">
+              	<div class="form-group">
+                <label>Status</label>
+                <div class="multi">
+                <span class="blankmsg">Select</span>
+<input type="text" class="ddbox form-control"   readonly="readonly" id="usStatus" ><i class="fa fa-caret-down" aria-hidden="true"></i>
+<span class="errormsg">This field is required</span>
+<ul class="ddlist">
+	<li><input type="checkbox" value="ACTIVE" checked="true">Active</li>
+	<li><input type="checkbox" value="INACTIVE" checked="true">In active</li>
+</ul>
+</div>
+              </div>
+            </div>
+        
+<div class="">
+          <div class="col-md-12">
+          <div class="pull-right"> 
+            <button type="submit"  class="btn btn-primary blue">Search <i class="fa fa-search"></i></button>
+            <button type="button" ng-click="usRecruiterReportsReset()" class="btn btn-primary grey-cascade" >Reset <i class="fa fa-refresh"></i></button>
+          </div>
+        </div>
+          </div>
+   
+                </div>
+              </div>
+              
+               <!-- Table --> 
+            <div class="row fade-in-up table-scrollable">
+            
+	            <table id="usReportId" bs-table-control="usReport.usBsTableControl" ng-show="usReportTable"  >
+		        <thead>
+		            <tr style="background-color:#ff0000;">
+		                <th data-field="recruiterName" data-sortable="true" style="background-color: red"></th>
+		                <th data-field="noOfStarts" data-sortable="true"></th>
+		                <th data-field="avgPerMonth" data-sortable="true"></th>
+		                <th data-field="avgTimeTaken" data-sortable="true"></th>
+		            </tr>
+		        </thead>
+		        <tbody>
+		            
+		        </tbody>
+	    		</table>  
+            </div>  
+             <!-- End Table --> 
+
+      </form>
+      
+    </uib-tab>
+
+    </uib-tabset>  
+
+<!-- END MAIN CONTENT --> 
+
+
+</div>

@@ -1,0 +1,32 @@
+<md-dialog ng-cloak>
+<form>
+<div>
+    <md-toolbar style="background-color:#00CED1">
+      <div class="md-toolbar-tools">
+        <h2>Delete</h2>
+         <span flex></span> 
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <img width="16" height="16" src="assets/global/img/portlet-remove-icon-white.png" />
+        </md-button>
+      </div>
+    </md-toolbar></div>
+    
+     <md-dialog-content>
+      <div class="md-dialog-content">
+      Are you sure you want to delete?
+      </div>
+     
+    </md-dialog-content>
+    
+      <md-dialog-actions layout="row">
+      <span flex></span>
+      <md-button style="background-color:#3399FF; color:white" ng-click="cancel()" md-autofocus>
+       Cancel
+      </md-button>
+      <md-button style="background-color:#3399FF; color:white" ng-click="deleteQuery()" style="margin-right:20px;" md-autofocus>
+        Delete
+      </md-button>
+    </md-dialog-actions>
+ 
+</form>
+</md-dialog>

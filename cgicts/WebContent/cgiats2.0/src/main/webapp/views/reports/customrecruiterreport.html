@@ -1,0 +1,616 @@
+<div ng-controller="customrecruiterreportcontroller" ng-init="onload()">
+<script src="https://code.highcharts.com/modules/drilldown.js"></script>
+<script src="https://code.highcharts.com/modules/data.js"></script>
+<link href="assets/layouts/layout/css/flip.css" rel="stylesheet" />
+<script src="assets/global/scripts/flip.js"></script>
+<style>
+.pagination li.active a
+{
+background-color:#bec9d2;
+border-color:#bec9d2;
+color:#000000;
+}
+.pagination li.active a:hover, .pagination li a:hover
+{
+background-color:#bec9d2;
+border-color:#bec9d2;
+color:#000000;
+}
+.totalcountbig
+{
+font-size:20px!important;
+}
+</style>
+
+
+<div class="sub-page-header">
+  <div class="page-bar" style="margin-bottom:0;">
+    <ul class="page-breadcrumb">
+         	<li><a href="#/dashboard" ng-if="!(rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_Recruiter' || rsLoginUser.userRole === 'ATS_Executive')">Home</a> 
+				<a href="#/india_joborders/my_indiajobOrder" ng-if="(rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_Recruiter')">Home</a>
+				<a href="#/candidates/missingData" ng-if="(rsLoginUser.userRole === 'ATS_Executive')">Home</a>
+				<i class="fa fa-circle"></i>
+				</li>
+      
+      <li>
+        <span>Reports</span>
+        <i class="fa fa-circle"></i>
+      </li>
+      <li>
+        <a href="#/customReports/dmsRankReport">DMs Rank Reports ({{siteName}})</a> 
+        <i class="fa fa-circle"></i>
+      </li>
+      <li>
+        <span>Recruiters Rank Report</span>
+      </li>
+    </ul> 
+  </div>
+</div>
+
+<form role="form" novalidate="" ng-submit="getRecruiterInfo()" >
+<button type="button" ng-click="backToDms()" class="btn btn-default pull-right" ><i class="fa fa-arrow-left" aria-hidden="true"></i> Back To DMs Rank Report ({{siteName}})</button>
+
+
+<div class="row" >
+       <div class="form-group">
+      <!--  <div class="row">
+             <div class="col-md-2">
+            <label>Created Between :</label>
+             <input type="daterange" ng-model="Created" class="dropDown" ranges="ranges" readonly="true" placeholder="Custom Dates" ng-change = "getDMsOnCahnge()" required>
+             </div>  
+             </div> -->
+              <div class="col-md-3">
+             <div class="row">
+             <div class="col-md-12">
+              	<div class="form-group">
+                <label class="">Start Date</label>
+  				<div class="input-group datepick">
+                  <input type="text" class="form-control whitereadonly" uib-datepicker-popup="{{DateFormat}}" is-open="startDatePopup.opened" datepicker-options="startDateOptions" close-text="Close" alt-input-formats="altInputFormats" ng-model="usdms.startDate" ng-keyup="" readonly="true" />
+                  <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="startDateopen()"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+                </div>
+				</div>
+              </div>
+              </div>
+              <div class="row">
+              <div class="col-md-12">
+              	<div class="form-group">
+                <label class="">End Date</label>
+  					<div class="input-group">
+                  <input type="text"  class="form-control whitereadonly" uib-datepicker-popup="{{DateFormat}}" is-open="endDatePopup.opened" datepicker-options="endDateOptions" close-text="Close" alt-input-formats="altInputFormats" ng-model="usdms.endDate" ng-keyup="" readonly="true" />
+                  <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="endDateopen()"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+                </div>
+				</div>
+              </div>
+              </div>
+              <div class="row">
+              <div class="col-md-12">
+              <div class="form-group">
+               <label >Status</label>
+                <select class="dropDown" required ng-model="usdms.status">
+                  <option value="">Select</option>
+                  <option>ACTIVE</option>
+                  <option>INACTIVE</option>
+                  <option>ALL</option>
+                  
+                </select>
+              
+              </div>
+              </div>
+              
+              </div>
+              <!--  <div class="col-md-3">
+               <label >DM Name</label>
+                <select class="dropDown" required ng-model="usdms.dmName">
+                  <option value="">Select</option>
+                  <option ng-repeat="dm in dms" value="{{dm.userId}}">{{dm.fullName}}</option>
+                  
+                </select>
+              </div> -->
+					<div class="row" style="float: right;">
+						<div class="col-md-12">
+							<div class="row">
+								<div class="col-md-2" >
+									<button type="submit" class="btn blue">
+										<i class="fa fa-search"></i> View
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+      
+      	</div>
+      	<!-- <div class="row"  > -->
+      	 <div class="col-md-9 fade-in-up" >
+      	 <div class="row" >
+      	 <div class="col-md-12"  >
+		<div id="containersidebar"  style="width: 800px; height: 250px; margin: 0 auto"  >
+		</div>
+		</div>
+      	 </div>
+      	 </div>
+      	 	<!-- </div> -->
+      	 	</div>
+
+
+
+<!--  <div class="row" >
+       <div class="form-group">
+       
+            <div class="col-md-4">
+            <label>Created Between :</label>
+             <input type="daterange" ng-model="Created" class="dropDown" ranges="ranges" readonly="true" placeholder="Custom Dates" ng-change = "getDMsOnCahnge()" required>
+             </div>
+              <div class="col-md-2">
+             <div class="row">
+             <div class="col-md-2">
+              	<div class="form-group">
+                <label class="">Start Date</label>
+  				<div class="input-group">
+                  <input type="text" class="form-control whitereadonly" uib-datepicker-popup="{{DateFormat}}" is-open="startDatePopup.opened" datepicker-options="startDateOptions" close-text="Close" alt-input-formats="altInputFormats" ng-model="usdms.startDate" ng-keyup="" readonly="true" />
+                  <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="startDateopen()"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+                </div>
+				</div>
+              </div>
+              </div>
+              <div class="row">
+              <div class="col-md-2">
+              	<div class="form-group">
+                <label class="">End Date</label>
+  					<div class="input-group">
+                  <input type="text"  class="form-control whitereadonly" uib-datepicker-popup="{{DateFormat}}" is-open="endDatePopup.opened" datepicker-options="endDateOptions" close-text="Close" alt-input-formats="altInputFormats" ng-model="usdms.endDate" ng-keyup="" readonly="true" />
+                  <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="endDateopen()"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+                </div>
+				</div>
+              </div>
+              </div>
+               <div class="col-md-2">
+               <label >Status</label>
+                <select class="dropDown" required ng-model="usdms.status">
+                  <option value="">Select</option>
+                  <option>ACTIVE</option>
+                  <option>INACTIVE</option>
+                  <option>ALL</option>
+                  
+                </select>
+              </div>
+             <div class="row">
+			<div class="col-md-2">
+			<br>
+            <button type="submit" class="btn blue" ><i class="fa fa-search"></i> View</button>
+             </div>
+            </div>
+             
+      	</div>
+      	</div>
+      	</div>
+      	<div class="row"  >
+      	 <div class="col-md-12"  >
+      	 <div class="row" >
+      	 <div class="col-md-12"  >
+		<div id="containersidebar"  style="min-width: 310px; height: 400px; margin: 0 auto"  >
+		</div>
+		</div>
+      	 </div>
+      	 </div>
+  </div> -->
+</form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="col-md-12 bigdata">
+
+
+
+<div class="col-md-2 animated bounceIn top06">
+<div class="rounddiv tooltipon">
+Recruiters
+<span class="totalcountbig">{{dmsCount}}</span>
+<span class="tooltipdata">
+<ul>
+<li><span class="tlbl">Active Recruiters:</span> {{noOfActiveInActiveRec.ACTIVE}}</li>
+<li><span class="tlbl">InActive Recruiters:</span> {{noOfActiveInActiveRec.INACTIVE}}</li>
+</ul>
+</span>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="col-md-2 animated bounceIn delay-one top05" >
+<div class="rounddiv tooltipon">
+Job Orders
+<span class="totalcountbig">{{jobOrdersCount}}</span>
+<span class="tooltipdata">
+<ul>
+<li><span class="tlbl">Open Job Orders:</span> {{jobOrderOpenClosedCount.OPEN}}</li>
+<li><span class="tlbl">Closed job Orders:</span> {{jobOrderOpenClosedCount.CLOSED}}</li>
+</ul>
+<strong>Open Job Order Details</strong>
+<ul>
+<li><span class="tlbl">Within 30 Days:</span> {{jobOrderService.less_than_30}}</li>
+<li><span class="tlbl">31 - 90 Days:</span> {{jobOrderService.less_than_90}}</li>
+<li><span class="tlbl">90+ Days:</span> {{jobOrderService.more_than_90}}</li>
+</ul>
+</span>
+</div>
+</div>
+
+
+
+
+
+<div class="col-md-2 animated bounceIn delay-two top04">
+<div class="rounddiv tooltipon">
+Positions
+<span class="totalcountbig">{{positionsCount}}</span>
+<span class="tooltipdata">
+<ul>
+<li><span class="tlbl">Open Job Order Positions:</span> {{jobOrderPositionsOpenClosedCount.OPEN}}</li>
+<li><span class="tlbl">Closed job Order Positions:</span> {{jobOrderPositionsOpenClosedCount.CLOSED}}</li>
+</ul>
+<strong>Open Job Order Positions Details</strong>
+<ul>
+<li><span class="tlbl">Within 30 Days:</span> {{jobOrderPositionsService.less_than_30}}</li>
+<li><span class="tlbl">31 - 90 Days:</span> {{jobOrderPositionsService.less_than_90}}</li>
+<li><span class="tlbl">90+ Days:</span> {{jobOrderPositionsService.more_than_90}}</li>
+</ul>
+</span>
+</div>
+</div>
+
+
+
+
+
+<div class="col-md-2 animated bounceIn delay-three top03">
+<div class="rounddiv tooltipon">
+Submittals
+<span class="totalcountbig">{{submittalsCount}}</span>
+<span class="tooltipdata">
+<ul>
+<li><span class="tlbl">Open Job Order Submittals:</span> {{submittalOpenClosedCount.OPEN}}</li>
+<li><span class="tlbl">Closed job Order Submittals:</span> {{submittalOpenClosedCount.CLOSED}}</li>
+</ul>
+<strong>Open Job Order Submittals Details</strong>
+<ul>
+<li><span class="tlbl">Within 30 Days:</span> {{submittalService.less_than_30}}</li>
+<li><span class="tlbl">31 - 90 Days:</span> {{submittalService.less_than_90}}</li>
+<li><span class="tlbl">90+ Days:</span> {{submittalService.more_than_90}}</li>
+</ul>
+</span>
+</div>
+</div>
+
+
+
+<div class="col-md-2 animated bounceIn delay-four top02">
+<div class="rounddiv tooltipon">
+Confirmed
+<span class="totalcountbig">{{confirmedCount}}</span>
+<span class="tooltipdata">
+<ul>
+<li><span class="tlbl">Open Job Order Confirmed:</span> {{submittalConfirmedOpenClosedCount.OPEN}}</li>
+<li><span class="tlbl">Closed job Order Confirmed:</span> {{submittalConfirmedOpenClosedCount.CLOSED}}</li>
+</ul>
+<strong>Open Job Order Confirmed Details</strong>
+<ul>
+<li><span class="tlbl">Within 30 Days:</span> {{submittalCnfService.less_than_30}}</li>
+<li><span class="tlbl">31 - 90 Days:</span> {{submittalCnfService.less_than_90}}</li>
+<li><span class="tlbl">90+ Days:</span> {{submittalCnfService.more_than_90}}</li>
+</ul>
+</span>
+</div>
+</div>
+
+
+
+
+<!-- <div class="col-md-2 animated bounceIn delay-five top01">
+<div class="rounddiv startedcolor tooltipon">
+Started
+<span class="totalcountbig">{{startedCount}}</span>
+<span class="tooltipdata" style="margin-left:-60px;">
+<ul>
+<li><span class="tlbl">Open Job Order Starts:</span> {{submittalStarteddOpenClosedCount.OPEN}}</li>
+<li><span class="tlbl">Closed job Order Starts:</span> {{submittalStarteddOpenClosedCount.CLOSED}}</li>
+</ul>
+<strong>Open Job Order Starts Details</strong>
+<ul>
+<li><span class="tlbl">Within 30 Days:</span> {{submittalStartedService.less_than_30}}</li>
+<li><span class="tlbl">31 - 90 Days:</span> {{submittalStartedService.less_than_90}}</li>
+<li><span class="tlbl">90+ Days:</span> {{submittalStartedService.more_than_90}}</li>
+</ul>
+</span>
+</div>
+</div> -->
+
+<div class="rdiv animated bounceIn delay-six marginspace relpostn top01">
+<div class="rounddiv startedcolor tooltipon">
+Started
+<span class="totalcountbig">{{startedCount}}</span>
+<span class="tooltipdata" style="margin-left:-55px;">
+<ul>
+<li><span class="tlbl">Active Starts:</span> {{submittalStarteddActiveCount}}</li>
+<li><span class="tlbl">InActive Starts:</span> {{submittalStarteddInActiveCount}}</li>
+</ul>
+</span>
+</div>
+</div>
+
+
+
+<div class="clearboth"></div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div class="col-md-12 bigdata">
+<div class="col-md-2 animated bounceIn delay"><div class="rounddiv">Recruiters<span class="totalcountbig">{{dmsCount}}</span><span title="Active Recruiters" class="greentext">{{noOfActiveInActiveRec.ACTIVE}}</span> | <span title="InActive Recruiters" class="redtext">{{noOfActiveInActiveRec.INACTIVE}}</span></div></div>
+
+
+<div class="col-md-2 animated bounceIn delay-one">
+  <div class="card effect__click">
+            <div class="card__front rounddiv">
+              Job Orders
+              <span class="totalcountbig">{{jobOrdersCount}}</span>
+              <span title="Open Job Orders" class="greentext">{{jobOrderOpenClosedCount.OPEN}}</span> | 
+              <span title="Closed Job Orders" class="redtext">{{jobOrderOpenClosedCount.CLOSED}}</span>
+            </div>
+            <div class="card__back rounddiv">
+              Open  JO<br><br>
+			<span title="Within 30 days" class="greentext smalltxt">{{jobOrderService.less_than_30}}</span> | 
+			<span title="30 - 90 days" class="orangetext smalltxt">{{jobOrderService.less_than_90}}</span> | 
+			<span title="90+ days" class="redtext smalltxt">{{jobOrderService.more_than_90}}</span>
+            </div>
+          </div>
+</div>
+
+
+
+
+<div class="col-md-2 animated bounceIn delay-two">
+  <div class="card effect__click">
+            <div class="card__front rounddiv">
+              Positions
+              <span class="totalcountbig">{{positionsCount}}</span>
+              <span title="Open Job Order Positions" class="greentext">{{jobOrderPositionsOpenClosedCount.OPEN}}</span> | 
+              <span title="Closed Job Order Positions" class="redtext">{{jobOrderPositionsOpenClosedCount.CLOSED}}</span>
+            </div>
+            <div class="card__back rounddiv">
+              Open  JO Positions<br>
+			<span title="Within 30 days" class="greentext smalltxt">{{jobOrderPositionsService.less_than_30}}</span> | 
+			<span title="30 - 90 days" class="orangetext smalltxt">{{jobOrderPositionsService.less_than_90}}</span> | 
+			<span title="90+ days" class="redtext smalltxt">{{jobOrderPositionsService.more_than_90}}</span>
+            </div>
+          </div>
+</div>
+
+
+
+
+
+
+
+<div class="col-md-2 animated bounceIn delay-three">
+  <div class="card effect__click">
+            <div class="card__front rounddiv">
+              Submittals
+              <span class="totalcountbig">{{submittalsCount}}</span>
+              <span title="Open Job Order Submittals" class="greentext">{{submittalOpenClosedCount.OPEN}}</span> | 
+              <span title="Closed Job Order Submittals" class="redtext">{{submittalOpenClosedCount.CLOSED}}</span>
+            </div>
+            <div class="card__back rounddiv">
+              Open  JO Submittals<br>
+			<span title="Within 30 days" class="greentext smalltxt">{{submittalService.less_than_30}}</span> | 
+			<span title="30 - 90 days" class="orangetext smalltxt">{{submittalService.less_than_90}}</span> | 
+			<span title="90+ days" class="redtext smalltxt">{{submittalService.more_than_90}}</span>
+            </div>
+          </div>
+</div>
+
+
+
+
+
+
+<div class="col-md-2 animated bounceIn delay-four">
+  <div class="card effect__click">
+            <div class="card__front rounddiv">
+              Confirmed
+              <span class="totalcountbig">{{confirmedCount}}</span>
+              <span title="Open Job Order Confirmed" class="greentext">{{submittalConfirmedOpenClosedCount.OPEN}}</span> | 
+              <span title="Closed Job Order Confirmed" class="redtext">{{submittalConfirmedOpenClosedCount.CLOSED}}</span>
+            </div>
+            <div class="card__back rounddiv">
+              Open  JO Confirmed<br>
+			<span title="Within 30 days" class="greentext smalltxt">{{submittalCnfService.less_than_30}}</span> | 
+			<span title="Within 90 days" class="orangetext smalltxt">{{submittalCnfService.less_than_90}}</span> | 
+			<span title="After 90 days" class="redtext smalltxt">{{submittalCnfService.more_than_90}}</span>
+            </div>
+          </div>
+</div>
+
+
+
+
+
+
+<div class="col-md-2 animated bounceIn delay-five">
+  <div class="card effect__click">
+            <div class="card__front rounddiv startedcolor">
+              Started
+              <span class="totalcountbig">{{startedCount}}</span>
+              <span title="Open Job Order Starts" class="greentext">{{submittalStarteddOpenClosedCount.OPEN}}</span> | 
+              <span title="Closed Job Order Starts" class="redtext">{{submittalStarteddOpenClosedCount.CLOSED}}</span>
+            </div>
+            <div class="card__back rounddiv">
+              Open  JO <br> Starts<br>
+			<span title="Within 30 days" class="greentext smalltxt">{{submittalStartedService.less_than_30}}</span> | 
+			<span title="Within 90 days" class="orangetext smalltxt">{{submittalStartedService.less_than_90}}</span> | 
+			<span title="After 90 days" class="redtext smalltxt">{{submittalStartedService.more_than_90}}</span>
+            </div>
+          </div>
+</div>
+
+<div class="clearboth"></div>
+</div>
+ -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div class="col-md-12 bigdata">
+<div class="col-md-2 animated bounceIn delay"><div class="rounddiv">Recruiters<span class="totalcountbig">{{dmsCount}}</span><span title="Active Recruiters" class="greentext">10</span> | <span title="InActive Recruiters" class="redtext">09</span></div></div>
+<div class="col-md-2 animated bounceIn delay-one"><div class="rounddiv">Job Orders<span class="totalcountbig">{{jobOrdersCount}}</span><span title="Open Job Orders" class="greentext">2205</span> | <span title="Closed Job Orders" class="redtext">2025</span></div></div>
+<div class="col-md-2 animated bounceIn delay-two"><div class="rounddiv">Positions<span class="totalcountbig">{{positionsCount}}</span><span title="Open Job Order Positions" class="greentext">2205</span> | <span title="Closed Job Order Positions" class="redtext">2205</span></div></div>
+<div class="col-md-2 animated bounceIn delay-three"><div class="rounddiv">Submittals<span class="totalcountbig">{{submittalsCount}}</span><span title="Open Job Order Submittals" class="greentext">205</span> | <span title="Closed Job Order Submittals" class="redtext">205</span></div></div>
+<div class="col-md-2 animated bounceIn delay-four"><div class="rounddiv"><br>Confirmed<span class="totalcountbig">{{confirmedCount}}</span></div></div>
+<div class="col-md-2 animated bounceIn delay-five"><div class="rounddiv startedcolor"><br>Started<span class="totalcountbig">{{startedCount}}</span></div></div>
+<div class="clearboth"></div>
+</div> -->
+
+
+
+
+
+
+<!-- <div class="col-md-12 bigdata">
+<div class="col-md-2 animated bounceIn"></div>
+
+<div class="col-md-2 animated bounceIn delay-one">
+	<div class="rounddiv">
+	Open  JO<br><br>
+			<span title="Within 30 days" class="greentext smalltxt">205</span> | 
+			<span title="Within 90 days" class="orangetext smalltxt">205</span> | 
+			<span title="After 90 days" class="redtext smalltxt">205</span>
+			
+	</div>
+</div>
+
+<div class="col-md-2 animated bounceIn delay-one">
+	<div class="rounddiv">
+	Open  JO Positions<br>
+			<span title="Within 30 days" class="greentext smalltxt">205</span> | 
+			<span title="Within 90 days" class="orangetext smalltxt">205</span> | 
+			<span title="After 90 days" class="redtext smalltxt">205</span>
+			
+	</div>
+</div>
+
+<div class="col-md-2 animated bounceIn delay-one">
+	<div class="rounddiv">
+	Open  JO Submittals<br>
+			<span title="Within 30 days" class="greentext smalltxt">205</span> | 
+			<span title="Within 90 days" class="orangetext smalltxt">205</span> | 
+			<span title="After 90 days" class="redtext smalltxt">205</span>
+			
+	</div>
+</div>
+
+<div class="col-md-2 animated bounceIn delay-five"></div>
+<div class="col-md-2 animated bounceIn delay-five"></div>
+<div class="clearboth"></div>
+</div>
+ -->
+
+
+
+
+
+
+
+
+
+
+
+	    		
+	    		<div class="row fade-in-up table-scrollable">
+            
+	            <table class="customtable" id="recTable"  bs-table-control="recInfo.recTableControl" ng-show="recInfoTable"  >
+		        <thead>
+		            <tr>
+		                <th data-field="recName" data-sortable="true"></th>
+		                <th data-field="level" data-sortable="true"></th>
+		                <!-- <th data-field="rank" data-sortable="true"></th> -->
+		                <th data-field="noOfjobOrders" data-sortable="true"  ></th>
+		                <th data-field="noOfPositions" data-sortable="true"  ></th>
+		                <th data-field="noOfSbm" data-sortable="true"  ></th>
+		                <th data-field="confirmed" data-sortable="true"></th>
+		                <th data-field="started" data-sortable="true"></th>
+		                <th data-field="avgHires" data-sortable="true"></th>
+		                <th data-field="status" data-sortable="true"></th>
+		            </tr>
+		        </thead>
+		        <tbody>
+		           
+		        </tbody>
+	    		</table> 
+	    		</div>
+
+</div>

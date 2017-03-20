@@ -1,0 +1,67 @@
+<div ng-controller="mailConfigController" ng-init="onload()">
+
+<!-- BEGIN PAGE HEADER--> 
+<div class="sub-page-header">
+  <div class="page-bar">
+    <ul class="page-breadcrumb">
+      <li>
+        <a href="#/dashboard">Home</a>
+        <i class="fa fa-circle"></i>
+      </li>
+      <li>
+        <span>Settings</span>
+        <i class="fa fa-circle"></i>
+      </li>
+      <li>
+        <span>Email Configuration</span>
+      </li>
+    </ul> 
+  </div>
+</div>
+<!-- END PAGE HEADER--> 
+
+  <form role="form" novalidate="" ng-submit="mailConfiguration()" >
+    <!-- BEGIN Search Forms -->
+    <br>
+       <div class="row">
+       <div class="form-group">
+              
+              <div class="col-md-4">
+              <label>Reports Name:</label>
+              <select class="dropDown" ng-model="reportName" required="required">
+              <option value="">Select</option>
+              <option value="Resume Uploaded/Updated">Resume Uploaded/Updated</option>
+              <option value="JobOrdersInOpenStatus">JobOrdersInOpenStatus</option>
+              <option value="JobOrdersWithOutSubmittals">JobOrdersWithOutSubmittals</option>
+              <option value="JobOrdersWithLessNoOfSubmittals">JobOrdersWithLessNoOfSubmittals</option>
+              </select>
+              </div>
+             
+             <div class="col-md-4">
+             <br>
+            <button type="submit" class="btn blue" style="margin-top: 5px;"><i class="fa fa-search"></i> View </button>
+           
+			<button type="button" class="btn blue" ng-click="configureEmail()" style="margin-top: 5px;"><i class="fa fa-search"></i> Configure Email </button>				
+			</div>
+            </div>
+       </div>
+    </form>
+        <!-- Table --> 
+           <div class="row fade-in-up table-scrollable">
+            
+	            <table id="table" bs-table-control="mailConfig.mailConfigurationTableControl" ng-show="mailConfigurationTable" >
+		        <thead>
+		            <tr>
+		                <th data-field="Report Name"></th>
+		                <th data-field="Email"></th>
+		                <th data-field="Delete" data-formatter="deleteMail" data-events="deleteMailEvent"></th>
+		            </tr>
+		        </thead>
+		        <tbody>
+		           
+		        </tbody>
+	    		</table>  
+            </div>   
+            <!-- End Table -->
+
+</div>

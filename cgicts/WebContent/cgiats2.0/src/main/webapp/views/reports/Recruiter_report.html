@@ -1,0 +1,262 @@
+<div ng-controller="recsreportcontroller" id="recsreportcontrollerId" ng-init="onload()">
+<!-- BEGIN PAGE HEADER--> 
+<div class="sub-page-header">
+  <div class="page-bar">
+    <ul class="page-breadcrumb">
+          	<li><a href="#/dashboard" ng-if="!(rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_Recruiter' || rsLoginUser.userRole === 'ATS_Executive')">Home</a> 
+				<a href="#/india_joborders/my_indiajobOrder" ng-if="(rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_Recruiter')">Home</a>
+				<a href="#/candidates/missingData" ng-if="(rsLoginUser.userRole === 'ATS_Executive')">Home</a>
+				<i class="fa fa-circle"></i>
+				</li>
+      <li>
+        <span>Reports</span> 
+        <i class="fa fa-circle"></i>
+      </li>
+      <li>
+        <span>Recruiter's Performance Report</span> 
+      </li> 
+    </ul> 
+			
+  </div>
+</div>
+<!-- END PAGE HEADER-->
+
+
+
+
+
+
+
+
+
+
+<!-- BEGIN MAIN CONTENT --> 
+ 
+    <form  name="AddCandidateForm" class="tab-form-demo" novalidate=""  ng-submit="joborder()" >
+    
+
+<div class="col-md-4">
+              	<div class="form-group" style="padding-top:1px">
+                <label class="">DM Name</label>
+                <select class="form-control" ng-model="selectedCurrentDM" ng-options="dm.userId as dm.fullName for dm in  dmname" ng-change="onchangeDm(selectedCurrentDM)">
+                </select>
+              </div>
+            </div>
+            
+            
+<uib-tabset active="activeForm">
+
+            
+<uib-tab index="0" heading="Yesterday" active="tabs[0].active" style="margin-top:25px;">
+
+
+
+<div class="row fade-in-up table-scrollable">
+
+						<table bs-table-control="yesterdayReports.reportTableControl"  ng-show="RecruitersReportTable">
+							<thead>
+								<tr>
+									<th title="Name" data-field="Name" data-sortable="true"></th>
+									<th title="Location" data-field="Location" data-sortable="true"></th>
+									<th title="SUBMITTED" data-field="SUBMITTED" data-sortable="true"></th>
+									<th title="DMREJ" data-field="DMREJ" data-sortable="true"></th>
+									<th title="ACCEPTED" data-field="ACCEPTED" data-sortable="true"></th>
+									<th title="INTERVIEWING" data-field="INTERVIEWING" data-sortable="true"></th>
+									<th Title="CONFIRMED" data-field="CONFIRMED" data-sortable="true"></th>
+									<th title="REJECTED" data-field="REJECTED" data-sortable="true"></th>
+									<th title="STARTED" data-field="STARTED" data-sortable="true"></th>
+									<th title="BACKOUT" data-field="BACKOUT" data-sortable="true"></th>
+									<th title="OUROFPROJ" data-field="OUTOFPROJ" data-sortable="true"></th>
+									<th title="NOTUPDATED" data-field="NotUpdated" data-sortable="true"></th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+							<tfoot>
+							<tr class="totlbstable">
+							<td colspan="2">Total</td>
+							<td id="ydsubmi"></td>
+							<td id="yddmrej"></td>
+							<td id="ydaccepcted"></td>
+							<td id="ydinterviewing"></td>
+							<td id="ydconfirmed"></td>
+							<td id="ydrejected"></td>
+							<td id="ydstarted"></td>
+							<td id="ydbackout"></td>
+							<td id="ydoutofproj"></td>
+							<td id="ydnu"></td>
+							</tr>
+							</tfoot>
+						</table>
+</div>
+					
+
+
+</uib-tab>
+    
+    
+    
+    
+    
+<uib-tab index="1" heading="Last Week" active="tabs[1].active" style="margin-top:25px;">
+
+
+<div class="row fade-in-up table-scrollable">
+
+						<table bs-table-control="lastweekReports.reportTableControl"  ng-show="RecruitersReportTable">
+							<thead>
+								<tr>
+									<th title="Name" data-field="Name" data-sortable="true"></th>
+									<th title="Location" data-field="Location" data-sortable="true"></th>
+									<th title="SUBMITTED" data-field="SUBMITTED" data-sortable="true"></th>
+									<th title="DMREJ" data-field="DMREJ" data-sortable="true"></th>
+									<th title="ACCEPTED" data-field="ACCEPTED" data-sortable="true"></th>
+									<th title="INTERVIEWING" data-field="INTERVIEWING" data-sortable="true"></th>
+									<th Title="CONFIRMED" data-field="CONFIRMED" data-sortable="true"></th>
+									<th title="REJECTED" data-field="REJECTED" data-sortable="true"></th>
+									<th title="STARTED" data-field="STARTED" data-sortable="true"></th>
+									<th title="BACKOUT" data-field="BACKOUT" data-sortable="true"></th>
+									<th title="OUROFPROJ" data-field="OUTOFPROJ" data-sortable="true"></th>
+									<th title="NOTUPDATED" data-field="NotUpdated" data-sortable="true"></th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+							<tfoot>
+							<tr class="totlbstable">
+							<td colspan="2">Total</td>
+							<td id="lwsubmi"></td>
+							<td id="lwdmrej"></td>
+							<td id="lwaccepcted"></td>
+							<td id="lwinterviewing"></td>
+							<td id="lwconfirmed"></td>
+							<td id="lwrejected"></td>
+							<td id="lwstarted"></td>
+							<td id="lwbackout"></td>
+							<td id="lwoutofproj"></td>
+							<td id="lwnu"></td>
+							</tr>
+							</tfoot>
+						</table>
+</div>
+
+
+</uib-tab>
+ 
+ 
+ 
+ 
+ 
+
+<uib-tab index="2" heading="This Month" active="tabs[2].active" style="margin-top:25px;">
+
+<button type="submit" class="btn blue pull-left btnsmargn"  ng-click="exportData()">Export <i class="fa fa-upload" aria-hidden="true"></i></button>
+
+<div class="row fade-in-up table-scrollable">
+
+						<table bs-table-control="thisMonthReports.reportTableControl"  ng-show="RecruitersReportTable">
+							<thead>
+								<tr>
+									<th title="Name" data-field="Name" data-sortable="true"></th>
+									<th title="Location" data-field="Location" data-sortable="true"></th>
+									<th title="SUBMITTED" data-field="SUBMITTED" data-sortable="true"></th>
+									<th title="DMREJ" data-field="DMREJ" data-sortable="true"></th>
+									<th title="ACCEPTED" data-field="ACCEPTED" data-sortable="true"></th>
+									<th title="INTERVIEWING" data-field="INTERVIEWING" data-sortable="true"></th>
+									<th Title="CONFIRMED" data-field="CONFIRMED" data-sortable="true"></th>
+									<th title="REJECTED" data-field="REJECTED" data-sortable="true"></th>
+									<th title="STARTED" data-field="STARTED" data-sortable="true"></th>
+									<th title="BACKOUT" data-field="BACKOUT" data-sortable="true"></th>
+									<th title="OUROFPROJ" data-field="OUTOFPROJ" data-sortable="true"></th>
+									<th title="NOTUPDATED" data-field="NotUpdated" data-sortable="true"></th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+							<tfoot>
+							<tr class="totlbstable">
+							<td colspan="2">Total</td>
+							<td id="tmsubmi"></td>
+							<td id="tmdmrej"></td>
+							<td id="tmaccepcted"></td>
+							<td id="tminterviewing"></td>
+							<td id="tmconfirmed"></td>
+							<td id="tmrejected"></td>
+							<td id="tmstarted"></td>
+							<td id="tmbackout"></td>
+							<td id="tmoutofproj"></td>
+							<td id="tmnu"></td>
+							</tr>
+							</tfoot>
+						</table>
+</div>
+
+
+
+
+
+
+
+
+<div class="row fade-in-up table-scrollable"  style="display:none;">
+<div id="exportThisMonth">
+						<table  border="1" class="tblexp]" bs-table-control="export.reportTableControl"  ng-show="RecruitersReportTable">
+							<thead>
+								<tr>
+									<th bgcolor="#FF0000" title="Name" data-field="Name" data-sortable="true"></th>
+									<th title="Location" data-field="Location" data-sortable="true"></th>
+									<th title="SUBMITTED" data-field="SUBMITTED" data-sortable="true"></th>
+									<th title="DMREJ" data-field="DMREJ" data-sortable="true"></th>
+									<th title="ACCEPTED" data-field="ACCEPTED" data-sortable="true"></th>
+									<th title="INTERVIEWING" data-field="INTERVIEWING" data-sortable="true"></th>
+									<th Title="CONFIRMED" data-field="CONFIRMED" data-sortable="true"></th>
+									<th title="REJECTED" data-field="REJECTED" data-sortable="true"></th>
+									<th title="STARTED" data-field="STARTED" data-sortable="true"></th>
+									<th title="BACKOUT" data-field="BACKOUT" data-sortable="true"></th>
+									<th title="OUROFPROJ" data-field="OUTOFPROJ" data-sortable="true"></th>
+									<th title="NOTUPDATED" data-field="NotUpdated" data-sortable="true"></th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+							<tfoot>
+							<tr style="background-color:#3598dc;color:#ffffff;">
+							<td align="center" colspan="2">Total</td>
+							<td align="center" id="expsubmi"></td>
+							<td align="center" id="expdmrej"></td>
+							<td align="center" id="expaccepcted"></td>
+							<td align="center" id="expinterviewing"></td>
+							<td align="center" id="expconfirmed"></td>
+							<td align="center" id="exprejected"></td>
+							<td align="center" id="expstarted"></td>
+							<td align="center" id="expbackout"></td>
+							<td align="center" id="expoutofproj"></td>
+							<td align="center" id="expnu"></td>
+							</tr>
+							</tfoot>
+						</table>
+						</div>
+</div>
+
+</uib-tab>
+    
+ 
+
+</uib-tabset>  
+
+
+
+
+
+
+
+
+
+
+
+<div style="clear:both;''"></div>
+</form>
+
+<!-- END MAIN CONTENT --> 
+
+</div>

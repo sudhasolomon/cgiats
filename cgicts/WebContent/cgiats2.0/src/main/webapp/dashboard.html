@@ -1,0 +1,647 @@
+<html ng-app="dashboardapp" ng-controller="kendashboardcontroller" ng-init="onload()">
+<head>
+	<title>Welcome to CGIATS - Dashboard</title>
+	<script src="assets/global/plugins/angularjs/angular.min.js"></script>
+	<script src="assets/global/plugins/jquery.min.js"></script>
+	<script src="js/modules/extrajs/kendashboard.js"></script>
+	<link href="assets/layouts/layout/css/custom.css" rel="stylesheet" />
+	<link href="assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+	
+	<style type="text/css">
+	body
+	{
+	margin:0;
+	padding:0;}
+	.headsing
+{
+margin:0;
+padding:0;
+	width:100%!important;
+}
+.appname
+{
+margin:0;
+padding:10px;
+background-color:#2b3643;
+color:#b4bcc8;
+}
+.headsing .logo-default
+{
+margin-right:50px;}
+
+	</style>
+	
+	<script type="text/javascript">
+$(document).ready(function(){
+	
+	
+	
+	setTimeout(function(){
+		   window.location.reload(1);
+		}, 1500000);
+	
+	
+	
+	
+	window.setInterval(function(){
+
+        var divelm = $(".dscont");
+        var divpos = divelm.position();
+        var divltpos = divpos.left;
+        if(divltpos < 0)
+        {
+           divelm.animate({left: '0%'});
+        }
+        else
+        {
+           divelm.animate({left: '-100%'});
+        }
+
+     }, 20000);
+	
+	
+	
+
+	
+	
+	$("i[data-tp='btn']").click(function(){
+		
+		var divelm = $(this).parent("h4").siblings(".dscont");
+        var divpos = divelm.position();
+        var divltpos = divpos.left;
+        if(divltpos < 0)
+        {
+           divelm.animate({left: '0%'});
+        }
+        else
+        {
+           divelm.animate({left: '-100%'});
+        }
+		
+	});
+	
+	
+	
+	
+	$(".dscont").mouseover(function(){
+		
+
+		var divelm = $(this).parent("h4").siblings(".dscont");
+        var divpos = divelm.position();
+        var divltpos = divpos.left;
+        if(divltpos < 0)
+        {
+           divelm.animate({left: '-100%'});
+        }
+        else
+        {
+           divelm.animate({left: '0%'});
+        }
+		
+	});
+	
+	
+	
+	
+	
+});
+
+</script>
+
+
+</head>
+<body>
+
+<div class="underlay" >
+<div class="loadcont">
+<img src="assets/layouts/layout/img/newloading.gif" width="100px"><b>Loading....</b>
+</div>
+</div>
+
+
+<div class="header-global-search headsing">
+    <div class="col-md-12 appname ">
+    <img src="assets/layouts/layout/img/logo.png" alt="logo" class="logo-default" /> <span style = "font-size : 24px;color:#b4bcc8">Applicant Tracking System - Dashboard</span>
+    
+    </div></div>
+
+
+<div class="clearboth"></div>
+
+<!-- BEGIN MAIN CONTENT -->
+<div class="kendashboarddiv"> 
+     <br>
+<div class="row">
+<div class="col-md-4 dsmn">
+<div class=" dsbox01 resume">
+<h4>
+Resumes
+<i data-tp="btn" class="fa fa-arrow-circle-right pull-right" aria-hidden="true"></i>
+<i data-tp="btn" class="fa fa-arrow-circle-left pull-right" aria-hidden="true"></i>
+</h4>
+
+<div class="dscont">
+
+<div class="dsslide">
+
+<h5>Yesterday</h5>
+<div class="hrline"></div>
+
+<div class="row dsrow">
+<label class="col-xs-8 dslbl">Dice</label>
+<label class="col-xs-4 bldval">{{getFieldValue(dashboarddata.yesterdayResumeStatsMap.records.Dice)}}</label>
+</div>
+
+<div class="row dsrow">
+<label class="col-xs-8 dslbl">Careerbuilder</label>
+<label class="col-xs-4 bldval">{{getFieldValue(dashboarddata.yesterdayResumeStatsMap.records.Careerbuilder)}}</label>
+</div>
+
+<div class="row dsrow">
+<label class="col-xs-8 dslbl">Monster</label>
+<label class="col-xs-4 bldval">{{getFieldValue(dashboarddata.yesterdayResumeStatsMap.records.Monster)}}</label>
+</div>
+
+
+<div class="row dsrow">
+<label class="col-xs-8 dslbl">Techfetch</label>
+<label class="col-xs-4 bldval">{{getFieldValue(dashboarddata.yesterdayResumeStatsMap.records.Techfetch)}}</label>
+</div>
+
+
+<div class="row dsrow">
+<label class="col-xs-8 dslbl">Others</label>
+<label class="col-xs-4 bldval">{{getFieldValue(dashboarddata.yesterdayResumeStatsMap.records.Others)}}</label>
+</div>
+
+<div class="hrline"></div>
+
+<div class="row dsrow">
+<label class="col-xs-8 dslbl">Total Resumes Yesterday</label>
+<label class="col-xs-4 bldval">{{getFieldValue(dashboarddata.yesterdayResumeStatsMap.totalCount)}}</label>
+</div>
+
+
+
+<div class="row dsrow">
+<label class="col-xs-8 dslbl">Total Resumes {{currentYear}}</label>
+<label class="col-xs-4 bldval">{{getFieldValue(dashboarddata.presentYearResumeStatsMap.totalCount)}}</label>
+</div>
+
+
+
+<div class="row dsrow">
+<label class="col-xs-8 dslbl">Total Resumes {{previousYear}}</label>
+<label class="col-xs-4 bldval">{{getFieldValue(dashboarddata.previousYearResumeStatsMap.totalCount)}}</label>
+</div>
+
+
+<div class="row dsrow">
+<label class="col-xs-8 dslbl">Total Resumes</label>
+<label class="col-xs-4 bldval">{{getFieldValue(dashboarddata.totalResumeCount)}}</label>
+</div>
+
+</div>
+
+
+
+<div class="dsslide">
+<h5>Resumes History</h5>
+<div class="hrline"></div>
+<center class="bldval">Year {{currentYear}}</center>
+<div class="row dsrow">
+<label class="col-xs-8 dslbl">Dice</label>
+<label class="col-xs-4 bldval">{{getFieldValue(dashboarddata.presentYearResumeStatsMap.records.Dice)}}</label>
+</div>
+
+<div class="row dsrow">
+<label class="col-xs-8 dslbl">Careerbuilder</label>
+<label class="col-xs-4 bldval">{{getFieldValue(dashboarddata.presentYearResumeStatsMap.records.Careerbuilder)}}</label>
+</div>
+
+<div class="row dsrow">
+<label class="col-xs-8 dslbl">Monster</label>
+<label class="col-xs-4 bldval">{{getFieldValue(dashboarddata.presentYearResumeStatsMap.records.Monster)}}</label>
+</div>
+
+
+<div class="row dsrow">
+<label class="col-xs-8 dslbl">Techfetch</label>
+<label class="col-xs-4 bldval">{{getFieldValue(dashboarddata.presentYearResumeStatsMap.records.Techfetch)}}</label>
+</div>
+
+
+<div class="row dsrow">
+<label class="col-xs-8 dslbl">Others</label>
+<label class="col-xs-4 bldval">{{getFieldValue(dashboarddata.presentYearResumeStatsMap.records.Others)}}</label>
+</div>
+
+
+
+
+
+
+<div class="hrline"></div>
+<center class="bldval">Year {{previousYear}}</center>
+<div class="row dsrow">
+<label class="col-xs-8 dslbl">Dice</label>
+<label class="col-xs-4 bldval">{{getFieldValue(dashboarddata.previousYearResumeStatsMap.records.Dice)}}</label>
+</div>
+
+<div class="row dsrow">
+<label class="col-xs-8 dslbl">Careerbuilder</label>
+<label class="col-xs-4 bldval">{{getFieldValue(dashboarddata.previousYearResumeStatsMap.records.Careerbuilder)}}</label>
+</div>
+
+<div class="row dsrow">
+<label class="col-xs-8 dslbl">Monster</label>
+<label class="col-xs-4 bldval">{{getFieldValue(dashboarddata.previousYearResumeStatsMap.records.Monster)}}</label>
+</div>
+
+
+<div class="row dsrow">
+<label class="col-xs-8 dslbl">Techfetch</label>
+<label class="col-xs-4 bldval">{{getFieldValue(dashboarddata.previousYearResumeStatsMap.records.Techfetch)}}</label>
+</div>
+
+
+<div class="row dsrow">
+<label class="col-xs-8 dslbl">Others</label>
+<label class="col-xs-4 bldval">{{getFieldValue(dashboarddata.previousYearResumeStatsMap.records.Others)}}</label>
+</div>
+
+
+<div class="hrline"></div>
+
+<div class="row dsrow">
+<label class="col-xs-8 dslbl">Total Resumes {{currentYear}}</label>
+<label class="col-xs-4 bldval">{{getFieldValue(dashboarddata.presentYearResumeStatsMap.totalCount)}}</label>
+</div>
+
+
+
+<div class="row dsrow">
+<label class="col-xs-8 dslbl">Total Resumes {{previousYear}}</label>
+<label class="col-xs-4 bldval">{{getFieldValue(dashboarddata.previousYearResumeStatsMap.totalCount)}}</label>
+</div>
+<div class="row dsrow">
+<label class="col-xs-8 dslbl">Total Resumes</label>
+<label class="col-xs-4 bldval">{{getFieldValue(dashboarddata.totalResumeCount)}}</label>
+</div>
+
+
+</div>
+
+
+
+<div class="clearboth'"></div>
+
+</div>
+
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="col-md-4 dsmn">
+<div class=" dsbox01 submital">
+<h4>
+Submittals
+<i data-tp="btn" class="fa fa-arrow-circle-right pull-right" aria-hidden="true"></i>
+<i data-tp="btn" class="fa fa-arrow-circle-left pull-right" aria-hidden="true"></i>
+</h4>
+
+<div class="dscont">
+
+<div class="dsslide">
+
+<h5 class="col-xs-6">Yesterday</h5>
+<h5 class="col-xs-3 toppd">OnSite</h5>
+<h5 class="col-xs-3 toppd lcname">OffShore</h5>
+<div class="clearboth"></div>
+
+<div class="hrline"></div>
+
+<div class="row dsrow">
+<label class="col-xs-6 dslbl">SUBMITTED</label>
+<label class="col-xs-3 bldval">{{getFieldValue(dashboarddata.yesterdaySubmittalStatsMap.records.SUBMITTED)}}</label>
+<label class="col-xs-3 bldval">{{getFieldValue(indiadashboarddata.yesterdaySubmittalStatsMap.records.SUBMITTED)}}</label>
+</div>
+
+<div class="row dsrow">
+<label class="col-xs-6 dslbl">DMREJ</label>
+<label class="col-xs-3 bldval">{{getFieldValue(dashboarddata.yesterdaySubmittalStatsMap.records.DMREJ)}}</label>
+<label class="col-xs-3 bldval">{{getFieldValue(indiadashboarddata.yesterdaySubmittalStatsMap.records.DMREJ)}}</label>
+</div>
+
+<div class="row dsrow">
+<label class="col-xs-6 dslbl">ACCEPTED</label>
+<label class="col-xs-3 bldval">{{getFieldValue(dashboarddata.yesterdaySubmittalStatsMap.records.ACCEPTED)}}</label>
+<label class="col-xs-3 bldval">{{getFieldValue(indiadashboarddata.yesterdaySubmittalStatsMap.records.ACCEPTED)}}</label>
+</div>
+
+
+<div class="row dsrow">
+<label class="col-xs-6 dslbl text-green bldval">INTERVIEWING</label>
+<label class="col-xs-3 text-green bldval">{{getFieldValue(dashboarddata.yesterdaySubmittalStatsMap.records.INTERVIEWING)}}</label>
+<label class="col-xs-3 text-green bldval">{{getFieldValue(indiadashboarddata.yesterdaySubmittalStatsMap.records.INTERVIEWING)}}</label>
+</div>
+
+
+<div class="row dsrow">
+<label class="col-xs-6 dslbl text-green bldval">CONFIRMED</label>
+<label class="col-xs-3 text-green bldval">{{getFieldValue(dashboarddata.yesterdaySubmittalStatsMap.records.CONFIRMED)}}</label>
+<label class="col-xs-3 text-green bldval">{{getFieldValue(indiadashboarddata.yesterdaySubmittalStatsMap.records.CONFIRMED)}}</label>
+</div>
+
+<div class="row dsrow">
+<label class="col-xs-6 dslbl">REJECTED</label>
+<label class="col-xs-3 bldval">{{getFieldValue(dashboarddata.yesterdaySubmittalStatsMap.records.REJECTED)}}</label>
+<label class="col-xs-3 bldval">{{getFieldValue(indiadashboarddata.yesterdaySubmittalStatsMap.records.REJECTED)}}</label>
+</div>
+
+
+<div class="row dsrow">
+<label class="col-xs-6 dslbl text-green bldval">ACTIVE STARTS</label>
+<label class="col-xs-3 text-green bldval">{{getFieldValue(dashboarddata.yesterdaySubmittalStatsMap.records.STARTED)}}</label>
+<label class="col-xs-3 text-green bldval">{{getFieldValue(indiadashboarddata.yesterdaySubmittalStatsMap.records.STARTED)}}</label>
+</div>
+
+<div class="row dsrow">
+<label class="col-xs-6 dslbl text-green bldval">INACTIVE STARTS</label>
+<label class="col-xs-3 text-green bldval">{{getFieldValue(dashboarddata.yesterdaySubmittalStatsMap.records.INACTIVE_STARTS)}}</label>
+<label class="col-xs-3 text-green bldval">{{getFieldValue(indiadashboarddata.yesterdaySubmittalStatsMap.records.INACTIVE_STARTS)}}</label>
+</div>
+
+
+<div class="row dsrow">
+<label class="col-xs-6 dslbl">BACKOUT</label>
+<label class="col-xs-3 bldval">{{getFieldValue(dashboarddata.yesterdaySubmittalStatsMap.records.BACKOUT)}}</label>
+<label class="col-xs-3 bldval">{{getFieldValue(indiadashboarddata.yesterdaySubmittalStatsMap.records.BACKOUT)}}</label>
+</div>
+
+
+<div class="row dsrow">
+<label class="col-xs-6 dslbl">OUTOFPROJ</label>
+<label class="col-xs-3 bldval">{{getFieldValue(dashboarddata.yesterdaySubmittalStatsMap.records.OUTOFPROJ)}}</label>
+<label class="col-xs-3 bldval">{{getFieldValue(indiadashboarddata.yesterdaySubmittalStatsMap.records.OUTOFPROJ)}}</label>
+</div>
+
+</div>
+
+
+
+<div class="dsslide">
+<h5 class="col-xs-6">Submittals History</h5>
+<h5 class="col-xs-3 toppd">OnSite</h5>
+<h5 class="col-xs-3 toppd lcname">OffShore</h5>
+<div class="clearboth"></div>
+
+<div class="hrline"></div>
+<div class="bldval" style="margin-top:-6px;margin-bottom:10px;">Year {{currentYear}}</div>
+<div class="row dsrow">
+<label class="col-xs-6 dslbl">SUBMITTED</label>
+<label class="col-xs-3 bldval">{{getFieldValue(dashboarddata.presentYearSubmittalStatsMap.records.SUBMITTED)}}</label>
+<label class="col-xs-3 bldval">{{getFieldValue(indiadashboarddata.presentYearSubmittalStatsMap.records.SUBMITTED)}}</label>
+</div>
+
+<div class="row dsrow">
+<label class="col-xs-6 dslbl text-green bldval">ACTIVE STARTS</label>
+<label class="col-xs-3 bldval text-green bldval">{{getFieldValue(dashboarddata.presentYearSubmittalStatsMap.records.STARTED)}}</label>
+<label class="col-xs-3 bldval text-green bldval">{{getFieldValue(indiadashboarddata.presentYearSubmittalStatsMap.records.STARTED)}}</label>
+</div>
+<div class="row dsrow">
+<label class="col-xs-6 dslbl text-green bldval">INACTIVE STARTS</label>
+<label class="col-xs-3 text-green bldval">{{getFieldValue(dashboarddata.presentYearSubmittalStatsMap.records.INACTIVE_STARTS)}}</label>
+<label class="col-xs-3 text-green bldval">{{getFieldValue(indiadashboarddata.presentYearSubmittalStatsMap.records.INACTIVE_STARTS)}}</label>
+</div>
+<div class="row dsrow">
+<label class="col-xs-6 dslbl">BACKOUT</label>
+<label class="col-xs-3 bldval">{{getFieldValue(dashboarddata.presentYearSubmittalStatsMap.records.BACKOUT)}}</label>
+<label class="col-xs-3 bldval">{{getFieldValue(indiadashboarddata.presentYearSubmittalStatsMap.records.BACKOUT)}}</label>
+</div>
+
+
+<div class="row dsrow">
+<label class="col-xs-6 dslbl">OUTOFPROJ</label>
+<label class="col-xs-3 bldval">{{getFieldValue(dashboarddata.presentYearSubmittalStatsMap.records.OUTOFPROJ)}}</label>
+<label class="col-xs-3 bldval">{{getFieldValue(indiadashboarddata.presentYearSubmittalStatsMap.records.OUTOFPROJ)}}</label>
+</div>
+
+
+
+
+
+
+
+
+<div class="hrline"></div>
+<div class="bldval" style="margin-top:-6px;margin-bottom:10px;">Year {{previousYear}}</div>
+<div class="row dsrow">
+<label class="col-xs-6 dslbl">SUBMITTED</label>
+<label class="col-xs-3 bldval">{{getFieldValue(dashboarddata.previousYearSubmittalStatsMap.records.SUBMITTED)}}</label>
+<label class="col-xs-3 bldval">{{getFieldValue(indiadashboarddata.previousYearSubmittalStatsMap.records.SUBMITTED)}}</label>
+</div>
+
+<div class="row dsrow">
+<label class="col-xs-6 dslbl text-green bldval">ACTIVE STARTS</label>
+<label class="col-xs-3 bldval text-green bldval">{{getFieldValue(dashboarddata.previousYearSubmittalStatsMap.records.STARTED)}}</label>
+<label class="col-xs-3 bldval text-green bldval">{{getFieldValue(indiadashboarddata.previousYearSubmittalStatsMap.records.STARTED)}}</label>
+</div>
+<div class="row dsrow">
+<label class="col-xs-6 dslbl text-green bldval">INACTIVE STARTS</label>
+<label class="col-xs-3 text-green bldval">{{getFieldValue(dashboarddata.previousYearSubmittalStatsMap.records.INACTIVE_STARTS)}}</label>
+<label class="col-xs-3 text-green bldval">{{getFieldValue(indiadashboarddata.previousYearSubmittalStatsMap.records.INACTIVE_STARTS)}}</label>
+</div>
+<div class="row dsrow">
+<label class="col-xs-6 dslbl">BACKOUT</label>
+<label class="col-xs-3 bldval">{{getFieldValue(dashboarddata.previousYearSubmittalStatsMap.records.BACKOUT)}}</label>
+<label class="col-xs-3 bldval">{{getFieldValue(indiadashboarddata.previousYearSubmittalStatsMap.records.BACKOUT)}}</label>
+</div>
+
+
+<div class="row dsrow">
+<label class="col-xs-6 dslbl">OUTOFPROJ</label>
+<label class="col-xs-3 bldval">{{getFieldValue(dashboarddata.previousYearSubmittalStatsMap.records.OUTOFPROJ)}}</label>
+<label class="col-xs-3 bldval">{{getFieldValue(indiadashboarddata.previousYearSubmittalStatsMap.records.OUTOFPROJ)}}</label>
+</div>
+
+
+
+
+
+</div>
+
+
+
+
+
+</div>
+
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="col-md-4 dsmn">
+<div class="dsbox01 joborder">
+<h4>Job Orders</h4>
+<div class="stil">
+
+
+<div class="dsslide01">
+
+<h5 class="col-xs-6">Yesterday</h5>
+<h5 class="col-xs-3 toppd">OnSite</h5>
+<h5 class="col-xs-3 toppd lcname">OffShore</h5>
+<div class="clearboth"></div>
+
+<div class="hrline"></div>
+<div class="row dsrow">
+<label class="col-xs-6 dslbl">Open</label>
+<label class="col-xs-3 bldval">{{getFieldValue(dashboarddata.yesterdayJobStatsMap.records.OPEN)}}</label>
+<label class="col-xs-3 bldval">{{getFieldValue(indiadashboarddata.yesterdayJobStatsMap.records.OPEN)}}</label>
+</div>
+
+<div class="row dsrow">
+<label class="col-xs-6 dslbl">Closed</label>
+<label class="col-xs-3 bldval">{{getFieldValue(dashboarddata.yesterdayJobStatsMap.records.CLOSED)}}</label>
+<label class="col-xs-3 bldval">{{getFieldValue(indiadashboarddata.yesterdayJobStatsMap.records.CLOSED)}}</label>
+</div>
+
+
+<br>
+
+
+<div class="hrline"></div>
+<div class="bldval" style="margin-top:-6px;margin-bottom:10px;">Year {{currentYear}}</div>
+<div class="row dsrow">
+<label class="col-xs-6 dslbl">Open</label>
+<label class="col-xs-3 bldval">{{getFieldValue(dashboarddata.presentYearJobStatsMap.records.OPEN)}}</label>
+<label class="col-xs-3 bldval">{{getFieldValue(indiadashboarddata.presentYearJobStatsMap.records.OPEN)}}</label>
+</div>
+
+<div class="row dsrow">
+<label class="col-xs-6 dslbl">Closed</label>
+<label class="col-xs-3 bldval">{{getFieldValue(dashboarddata.presentYearJobStatsMap.records.CLOSED)}}</label>
+<label class="col-xs-3 bldval">{{getFieldValue(indiadashboarddata.presentYearJobStatsMap.records.CLOSED)}}</label>
+</div>
+
+
+<br>
+
+
+<div class="hrline"></div>
+<div class="bldval" style="margin-top:-6px;margin-bottom:10px;">Year {{previousYear}}</div>
+<div class="row dsrow">
+<label class="col-xs-6 dslbl">Open</label>
+<label class="col-xs-3 bldval">{{getFieldValue(dashboarddata.previousYearJobStatsMap.records.OPEN)}}</label>
+<label class="col-xs-3 bldval">{{getFieldValue(indiadashboarddata.previousYearJobStatsMap.records.OPEN)}}</label>
+</div>
+
+<div class="row dsrow">
+<label class="col-xs-6 dslbl">Closed</label>
+<label class="col-xs-3 bldval">{{getFieldValue(dashboarddata.previousYearJobStatsMap.records.CLOSED)}}</label>
+<label class="col-xs-3 bldval">{{getFieldValue(indiadashboarddata.previousYearJobStatsMap.records.CLOSED)}}</label>
+</div>
+
+
+
+</div>
+
+
+</div>
+</div>
+</div>
+
+<div class="clearboth"></div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+<!-- END MAIN CONTENT -->
+
+
+<div class="header-global-search headsing navbar-fixed-bottom">
+    <div class="col-md-12 appname ">
+    {{currentYear}} © Charter Global Inc.
+        </div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

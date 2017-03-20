@@ -1,0 +1,66 @@
+<div ng-controller="submittal_listcontroller" ng-init="onload()" id="submittal_listcontrollerId">
+
+<script src="assets/global/scripts/alljquery.js"></script>
+<!-- BEGIN PAGE HEADER--> 
+<div class="sub-page-header">
+  <div class="page-bar">
+    <ul class="page-breadcrumb">
+      <li>
+        <a href="#/dashboard">Home</a>
+        <i class="fa fa-circle"></i>
+      </li>
+      <li>
+        <span>Dashboard</span> 
+        <i class="fa fa-circle"></i>
+      </li>
+      <li>
+        <span>Recruiter's Summary Report</span> 
+      </li> 
+    </ul> 
+  </div>
+</div>
+<!-- END PAGE HEADER-->
+
+
+
+
+<!-- BEGIN MAIN CONTENT -->
+
+
+
+<div>
+					<!-- Table -->
+					<div class="row fade-in-up table-scrollable">
+
+						<table id="table" data-filter-control="true"
+							ng-repeat="candidate in candidates"
+							bs-table-control="candidate.submittalListBsTableControl"
+							ng-show="submittalTable">
+							<thead>
+								<tr>
+									<!--  <th data-field="state" data-checkbox="true"></th> -->
+									<th data-field="createdOn" data-sortable="true"
+										></th>
+									<th data-field="updatedOn" data-sortable="true"></th>
+									<th data-field="createdBy" data-sortable="true"></th>
+									<th data-field="status" data-sortable="true" data-filter-control="input"></th>
+									<th data-field="candidateName" data-sortable="true"
+										data-filter-control="input"></th>
+									<th data-field="actions" data-formatter="submittalEventActionFormatter"
+										data-events="submittalEvent"></th>
+								</tr>
+							</thead>
+							<tbody>
+
+							</tbody>
+						</table>
+					</div>
+					<!--  End Table  -->
+            <div class="undermask" id="submitalstatus"><div class="popupcont"><div class="popuphead">Submital Details <span class="pull-right" id="closebtn"><img width="16" height="16" src="assets/global/img/portlet-remove-icon-white.png" class="ng-scope"></span></div><div id="viewsubmittalid"></div></div></div>
+            <div class="undermask" id="submitaldelete"><div class="popupcont"><div class="popuphead">Delete Submital <span class="pull-right" id="closebtndelete"><img width="16" height="16" src="assets/global/img/portlet-remove-icon-white.png" class="ng-scope"></span></div><div id="deletesubmittal"></div></div></div>
+    <!-- END MAIN CONTENT -->
+
+				</div>
+<!-- END MAIN CONTENT -->
+
+</div>

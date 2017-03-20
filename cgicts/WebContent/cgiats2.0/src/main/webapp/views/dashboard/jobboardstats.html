@@ -1,0 +1,274 @@
+<div ng-controller="jobboardstatscontroller" ng-init="onload()">
+
+<!-- BEGIN PAGE HEADER--> 
+<div class="sub-page-header">
+  <div class="page-bar">
+    <ul class="page-breadcrumb">
+      <li><a href="#/dashboard" ng-if="!(rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_Recruiter' || rsLoginUser.userRole === 'ATS_Executive')">Home</a> 
+				<a href="#/india_joborders/my_indiajobOrder" ng-if="(rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_Recruiter')">Home</a>
+				<a href="#/candidates/missingData" ng-if="(rsLoginUser.userRole === 'ATS_Executive')">Home</a>
+				<i class="fa fa-circle"></i>
+				</li>
+      <li>
+        <span>Dashboard</span>
+        <i class="fa fa-circle"></i>
+      </li>
+      <li>
+        <span>Resume Stats</span>
+        <i class="fa fa-circle"></i>
+      </li>
+    </ul> 
+  </div>
+</div>
+<!-- END PAGE HEADER--> 
+
+<div class="underlay" >
+<div class="loadcont">
+<img src="assets/layouts/layout/img/newloading.gif" width="100px"><b>Loading....</b>
+</div>
+</div>
+<form class="tab-form-demo">
+<!-- <div ng-show="isErrorMsg">
+			<div style="color: red; text-align: right;">
+				<b>{{errMsg}}</b>
+			</div>
+		</div> -->
+ <uib-tabset active="activeForm">
+  <uib-tab index="0" heading="Job Board Stats" active="tabs[0].active">
+  <!-- <h3>Job Board Stats</h3> -->
+<!-- Job Board Stats -->
+
+    <!-- BEGIN Search Forms -->
+    <br>
+       <div class="row">
+       <div class="form-group">
+              
+              <div class="col-md-2">
+              <label></label>
+              <select style="margin-top: 5px;" class="dropDown" ng-model="jobBoard.jobBoardStatsMonthandYear">
+              <option value="">Select</option>
+              <option ng-repeat="date in dates" value="{{date.month}}">{{date.month}}</option>
+              </select>
+              </div>
+             
+              <div class="col-md-2">
+              <br>
+              <button type="button" ng-click="viewByMonth(jobBoard)" class="btn blue" style="margin-top: 5px;"><i class="fa fa-search"></i> View By Month </button>
+             </div>
+            
+              <div class="col-md-2">
+                <label class="">Start Date:</label>
+                <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Start Date" uib-datepicker-popup="{{DateFormat}}" is-open="JobBoardStartDatePopup.opened" datepicker-options="JobBoardStartDateOptions" close-text="Close" alt-input-formats="altInputFormats" ng-model="jobBoard.JobBoardStartDate" readonly="true"/>
+                  <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="JobBoardStartDateopen()"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+                </div>
+              </div>
+              
+              
+              <div class="col-md-2">
+                <label class="">End Date:</label>
+                <div class="input-group">
+                  <input type="text" class="form-control" placeholder="End Date" uib-datepicker-popup="{{DateFormat}}" is-open="JobBoardEndDatePopup.opened" datepicker-options="JobBoardEndDateOptions" close-text="Close" alt-input-formats="altInputFormats" ng-model="jobBoard.JobBoardEndDate" readonly="true"/>
+                  <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="JobBoardEndDateopen()"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+                </div>
+              </div>
+              
+             <div class="col-md-2">
+             <br>
+            <button type="button" ng-click="viewByDates(jobBoard)" class="btn blue" style="margin-top: 5px;"><i class="fa fa-search"></i> View By Dates</button>
+			</div>
+            </div>
+       </div>
+   
+        <!-- Table --> 
+           <div class="row fade-in-up table-scrollable">
+            
+	            <table id="table" bs-table-control="jobBoardStats.jobBoardStasTableControl" ng-show="jobBoardStatsTable" >
+		        <thead>
+		            <tr>
+		                <th data-field="Users" data-sortable="true"></th>
+		                <th data-field="Resumes Downloaded" data-sortable="true"></th>
+		            </tr>
+		        </thead>
+		        <tfoot class="totl">
+		        <tr>
+		        <td>Total</td>
+		        <td id="jobTotal"></td>
+		        </tr>
+		        </tfoot>
+		        <tbody>
+		           
+		        </tbody>
+	    		</table>  
+            </div>   
+            <!-- End Table -->
+            
+            </uib-tab>
+            
+             <uib-tab index="0" heading="Dice Job Board Stats" active="tabs[1].active">
+           <!--  <h3>Dice Job Board Stats</h3> -->
+            <!-- Dice Job Board Stats -->
+
+    <!-- BEGIN Search Forms -->
+    <br>
+       <div class="row">
+       <div class="form-group">
+              
+              <div class="col-md-2">
+              <label></label>
+              <select style="margin-top: 5px;" class="dropDown" ng-model="jobBoard.dicemonthandyear">
+              <option value="">Select</option>
+              <option ng-repeat="date in dates" value="{{date.month}}">{{date.month}}</option>
+              </select>
+              </div>
+             
+              <div class="col-md-2">
+              <br>
+              <button type="button" ng-click="diceViewByMonth(jobBoard)" class="btn blue" style="margin-top: 5px;"><i class="fa fa-search"></i> View By Month </button>
+             </div>
+            
+              <div class="col-md-2">
+                <label class="">Start Date:</label>
+                <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Start Date" uib-datepicker-popup="{{DateFormat}}" is-open="DiceStartDatePopup.opened" datepicker-options="DiceStartDateOptions" close-text="Close" alt-input-formats="altInputFormats" ng-model="jobBoard.diceStartDate" readonly="true"/>
+                  <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="DiceStartDateopen()"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+                </div>
+              </div>
+              
+              
+              <div class="col-md-2">
+                <label class="">End Date:</label>
+                <div class="input-group">
+                  <input type="text" class="form-control" placeholder="End Date" uib-datepicker-popup="{{DateFormat}}" is-open="DiceEndDatePopup.opened" datepicker-options="DiceEndDateOptions" close-text="Close" alt-input-formats="altInputFormats" ng-model="jobBoard.diceEndDate" readonly="true"/>
+                  <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="DiceEndDateopen()"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+                </div>
+              </div>
+              
+             <div class="col-md-2">
+             <br>
+            <button type="button" ng-click="diceViewByDates(jobBoard)" class="btn blue" style="margin-top: 5px;"><i class="fa fa-search"></i> View By Dates</button>
+			</div>
+            </div>
+       </div>
+   
+        <!-- Table --> 
+           <div class="row fade-in-up table-scrollable">
+            
+	            <table id="table" bs-table-control="diceJobBoardStats.diceJobBoardStatsTableControl" ng-show="diceJobBoardStatsTable" >
+		        <thead>
+		            <tr>
+		                <th data-field="Dice Email ID" data-sortable="true"></th>
+		               <!--  <th data-field="Monthly Views" data-sortable="true"></th> -->
+		                <th data-field="Resumes Downloaded" data-sortable="true"></th>
+		            </tr>
+		        </thead>
+		        <tfoot>
+		        <tr class="totl">
+		        <td>Total</td>
+		        <!-- <td></td> -->
+		        <td id="diceTotal"></td>
+		        </tr>
+		        </tfoot>
+		        <tbody>
+		           
+		        </tbody>
+	    		</table>  
+            </div>   
+            <!-- End Table -->
+            
+            </uib-tab>
+            
+            
+        <uib-tab index="0" heading="Resume Stats" active="tabs[2].active">     
+       <!--  <h3>Resume Stats</h3> -->
+            
+  <!-- Resume Stats -->
+    <br>
+       <div class="row">
+       <div class="form-group">
+       
+       <div class="col-md-4">
+            <label>Created Between :</label>
+             <input type="daterange" id="resumeStatsRange" ng-model="Created" class="dropDown" ranges="ranges" placeholder="Custom Dates" required></div>
+              
+       <!--        <div class="col-md-2">
+              <label></label>
+              <select style="margin-top: 5px;" class="dropDown" ng-model="resumestatsmonthandyear">
+              <option value="">Select</option>
+              <option value="HYD">HYD</option>
+              <option value="NOIDA">NOIDA</option>
+              <option value="PUNE">PUNE</option>
+              </select>
+              </div>
+             
+              <div class="col-md-2">
+              <br>
+              <button type="button" ng-click="resumeStatsViewByMonth()" class="btn blue" style="margin-top: 5px;"><i class="fa fa-search"></i> View By Month </button>
+             </div>
+            
+              <div class="col-md-2">
+                <label class="">Start Date:</label>
+                <div class="input-group">
+                  <input type="text" class="form-control" uib-datepicker-popup="{{DateFormat}}" is-open="ResumeStatsStartDatePopup.opened" datepicker-options="ResumeStatsStartDateOptions" close-text="Close" alt-input-formats="altInputFormats" ng-model="resumeStatsStartDate" readonly="true"/>
+                  <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="ResumeStatsStartDateopen()"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+                </div>
+              </div>
+              
+              
+              <div class="col-md-2">
+                <label class="">End Date:</label>
+                <div class="input-group">
+                  <input type="text" class="form-control" uib-datepicker-popup="{{DateFormat}}" is-open="ResumeStatsEndDatePopup.opened" datepicker-options="ResumeStatsEndDateOptions" close-text="Close" alt-input-formats="altInputFormats" ng-model="resumeStatsEndDate" readonly="true"/>
+                  <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="ResumeStatsEndDateopen()"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+                </div>
+              </div> -->
+              
+             <div class="col-md-4">
+             <br>
+            <button type="button" ng-click="resumeStats(jobBoard)" class="btn blue" style="margin-top: 5px;"><i class="fa fa-search"></i> View </button>
+             
+           <!--  <button type="button" ng-click="refresh()" class="btn blue" style="margin-top: 5px;"><i class="fa fa-search"></i> Refresh </button> -->
+			</div>
+			
+            </div>
+       </div>
+ 
+        <!-- Table --> 
+           <div class="row fade-in-up table-scrollable">
+            
+	            <table id="table" bs-table-control="resumeStats.resumeStatsTableControl" ng-show="resumeStatsTable" >
+		        <thead>
+		            <tr>
+		                <th data-field="Users" data-sortable="true"></th>
+		                <th data-field="Resumes" data-sortable="true"></th>
+		            </tr>
+		        </thead>
+		        <tfoot>
+		         <tr class="totl">
+		         <td>Total</td>
+		         <td id="resumeTotal"></td>
+		         </tr>
+		        </tfoot>
+		        <tbody>
+		           
+		        </tbody>
+	    		</table>  
+            </div>   
+            <!-- End Table -->
+            </uib-tab>
+            </uib-tabset>
+            </form>
+
+</div>

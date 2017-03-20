@@ -1,0 +1,130 @@
+<div ng-controller="dmwisereportcontroller" ng-init="onload()">
+<script src="assets/global/scripts/alljquery02.js"></script>
+<style>
+.pagination-detail
+{
+display:none;
+}
+</style>
+    
+<!-- BEGIN PAGE HEADER--> 
+<div class="sub-page-header">
+  <div class="page-bar">
+    <ul class="page-breadcrumb">
+        	<li><a href="#/dashboard" ng-if="!(rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_Recruiter' || rsLoginUser.userRole === 'ATS_Executive')">Home</a> 
+				<a href="#/india_joborders/my_indiajobOrder" ng-if="(rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_Recruiter')">Home</a>
+				<a href="#/candidates/missingData" ng-if="(rsLoginUser.userRole === 'ATS_Executive')">Home</a>
+				<i class="fa fa-circle"></i>
+				</li>
+      <li>
+        <span>Reports</span> 
+        <i class="fa fa-circle"></i>
+      </li>
+      <li>
+        <a href="#/reports/JobOrderMetric">Job Order Metric</a> 
+        <i class="fa fa-circle"></i>
+      </li>
+      <li>
+        <span>DM Wise Serviced Report</span> 
+      </li> 
+    </ul> 
+  </div>
+</div>
+<!-- END PAGE HEADER-->
+
+
+
+
+<!-- BEGIN MAIN CONTENT -->
+
+
+<form name="searchsubmitaldm" class="tab-form-demo" ng-submit="getrecdata()" >
+
+<div class="fade-in-up" id="res">Please Fill the mandatory fields</div>
+
+<div class="row">
+
+<div class="col-md-4" style="display:none;">
+<div class="col-md-12 reportfield">
+<label>Year</label>
+<div class="multiselect" events="yearevent" ng-dropdown-multiselect="" options="yeardata" selected-model="year" extra-settings="manysettings"></div>
+</div>
+
+
+<div class="col-md-12 reportfield">
+<label>Recruiter</label>
+<div class="multiselect" events="monthevent" ng-dropdown-multiselect="" options="monthdata" selected-model="month" extra-settings="manysettings"></div>
+</div>
+
+
+<div class="col-md-12 reportfield">
+<label>Week</label>
+<div class="multiselect" events="weekevent" ng-dropdown-multiselect="" options="weekdata" selected-model="week" extra-settings="manysettings"></div>
+</div>
+
+
+<div class="col-md-12 reportfield">
+<label>Job Order</label>
+<div class="multiselect" events="joborderevent" ng-dropdown-multiselect="" options="joborderdata" selected-model="joborder" extra-settings="onesettings"></div>
+</div>
+
+
+<div class="col-md-12">
+<button type="button" ng-click="getdataforreport()" class="btn blue pull-right reportbutton">Update</button>
+</div>
+</div>
+
+
+<div class="col-md-6 animated bounceInDown">
+				<div id="container" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto;"></div>
+				<b class="pietotalcount">Total no of {{statustoshow}} job Orders: {{totalCountfrompg}}</b>
+				
+		</div>
+		
+	<div class="col-md-6 animated slideInRight" ng-show = "dmClick">
+	<div id="containerClientPie" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto;"></div>
+	</div>		
+		<div class="col-md-6" >
+		
+		<div class="row" >
+		<div id="containerside" style="height:200px;" ng-show = "dataChart"></div>
+		<div  ng-show = "emptyChart">
+		  No data
+		
+		</div>
+		</div>
+		
+		<div id="dmtable" class="row table-scrollable animated slideInRight" style="display:none;">
+            <b class="reporttablehead">{{selectedDmName}} Job Orders Details</b>
+	            <table id="table" bs-table-control="dmwisejoborder.dmwisejoborderTableControl" ng-show="dmjoborderTable" >
+		        <thead>
+		            <tr>
+		            	<th data-field="jobOrderId" data-formatter="jobOrderIdFormatter" data-events="jobOrderIdEvents" data-sortable="true"></th>
+		                <th data-field="title" data-sortable="true"></th>
+		                <th data-field="client" data-sortable="true"></th>
+		                <th data-field="noOfSub" data-sortable="true"></th>
+		                 <th data-field="noOfPositions" data-sortable="true"></th>
+		                  <th data-field="openJobOrders" data-sortable="true"></th>
+		                <th data-field="activeDays" data-sortable="true"></th>
+		                
+		            </tr>
+		        </thead>
+		        <tbody>
+		           
+		        </tbody>
+	    		</table>  
+            </div>  
+            
+            
+		</div>
+
+</div>
+
+</form>
+<!-- END MAIN CONTENT -->
+
+
+<br>
+	
+
+</div>

@@ -1,0 +1,99 @@
+<div ng-controller="resumeauditreportcontroller" ng-init="onload()">
+<div class="sub-page-header">
+  <div class="page-bar">
+    <ul class="page-breadcrumb">
+          	<li><a href="#/dashboard" ng-if="!(rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_Recruiter' || rsLoginUser.userRole === 'ATS_Executive')">Home</a> 
+				<a href="#/india_joborders/my_indiajobOrder" ng-if="(rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_Recruiter')">Home</a>
+				<a href="#/candidates/missingData" ng-if="(rsLoginUser.userRole === 'ATS_Executive')">Home</a>
+				<i class="fa fa-circle"></i>
+				</li>
+      <li>
+        <span>Reports</span>
+        <i class="fa fa-circle"></i>
+      </li>
+      <li>
+        <span>Candidates</span>
+        <i class="fa fa-circle"></i>
+      </li>
+      <li>
+        <span>Resume Audit Logs Report</span>
+      </li>
+    </ul> 
+  </div>
+</div>
+
+
+<form role="form" novalidate="" ng-submit="getResumeAuditLogs()" >
+<div ng-show="errMsg" style="text-align: right; color: red;"><b>Please select valid dates</b></div>
+<div class="row">
+ <div class="col-md-2">
+              	<div class="form-group">
+                <label class="">Candidate Id</label>
+                <input type="text" class="form-control" ng-model="candidateId">
+				</div>
+</div>
+
+ <div class="col-md-2">
+              	<div class="form-group">
+                <label class="">Viewed By</label>
+                <input type="text" class="form-control" ng-model="viewedBy">
+				</div>
+</div>
+
+ <div class="col-md-2">
+              	<div class="form-group">
+                <label class="">Start Date</label>
+  				<div class="input-group datepick">
+                  <input type="text" class="form-control whitereadonly" uib-datepicker-popup="{{DateFormat}}" is-open="startDatePopup.opened" datepicker-options="startDateOptions" close-text="Close" alt-input-formats="altInputFormats" ng-model="startDate" ng-keyup="" readonly="true" />
+                  <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="startDateopen()"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+                </div>
+				</div>
+
+
+</div>
+
+   <div class="col-md-2">
+              	<div class="form-group">
+                <label class="">End Date</label>
+  					<div class="input-group">
+                  <input type="text"  class="form-control whitereadonly" uib-datepicker-popup="{{DateFormat}}" is-open="endDatePopup.opened" datepicker-options="endDateOptions" close-text="Close" alt-input-formats="altInputFormats" ng-model="endDate" ng-keyup="" readonly="true" />
+                  <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="endDateopen()"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+                </div>
+				</div>
+              </div>
+              
+   <div class="col-md-1" style="margin-top: 25px;">
+	<button type="submit" class="btn blue"><i class="fa fa-search"></i> View </button>
+   </div>
+</div>
+</form>
+		<div class="row fade-in-up table-scrollable">
+            
+	            <table id="resumeAuditLogTable"  bs-table-control="resumeAuditLogInfo.resumeAuditLogTableControl" ng-show="resumeAuditLogTable"  >
+		        <thead>
+		            <tr>
+		         		<th data-field="Candidate Id" data-sortable="true" ></th>
+		         		<th data-field="Viewed/Downloaded By" data-sortable="true" ></th>
+		         		<th data-field="Viewed/Downloaded Date" data-sortable="true" ></th>
+		         		<th data-field="Document Status" data-sortable="true" ></th>
+		                <th data-field="Status" data-sortable="true"></th>
+		            </tr>
+		        </thead>
+		        <tbody>
+		           
+		        </tbody>
+	    		</table> 
+	    		</div>
+<div>
+<span style="color: red;">* original: </span> <span> Original Resume </span>
+<span style="color: red;">&nbsp;&nbsp;* CGI: </span> <span> CGI Resume </span>
+<span style="color: red;">&nbsp;&nbsp;* RTR: </span>  <span> RTR Document </span>
+<span style="color: red;">&nbsp;&nbsp;* others: </span> <span> Resume Downloaded from Resumes Page </span>
+</div>
+
+
+</div>

@@ -1,0 +1,44 @@
+<md-dialog ng-cloak>
+<form novalidate="">
+<div>
+    <md-toolbar style="background-color:#00CED1">
+      <div class="md-toolbar-tools">
+        <h2><b>Are you sure want to activate user {{row.userId}}?</b></h2>
+         <span flex></span> 
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <img width="16" height="16" src="assets/global/img/portlet-remove-icon-white.png" />
+        </md-button>
+      </div>
+    </md-toolbar></div>
+    
+     <md-dialog-content>
+      <div class="md-dialog-content" style="height: 380px;">
+      <div style="color: red;" align="right">{{joiningDateErrMsg}}</div>
+      <!-- Are you sure want to activate user {{row.userId}}? -->
+              <div class="col-md-8">
+                 <div class="form-group">
+                <label class="control-label">Date Of Joining</label>
+                <div class="input-group">
+                  <input type="text" class="form-control" uib-datepicker-popup="{{joiningDateFormat}}" is-open="joiningDatePopup.opened" datepicker-options="dateOfJoining" close-text="Close" alt-input-formats="altInputFormats" ng-model="userDetails.joiningDate" readonly="true" required="required" />
+                  <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="joiningDateopen()"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+                </div>
+				</div>
+              </div> 
+      </div>
+     
+    </md-dialog-content>
+    
+      <md-dialog-actions layout="row">
+      <span flex></span>
+        <md-button style="background-color:#3399FF; color:white" ng-click="answer(userDetails)" style="margin-right:20px;" md-autofocus>
+        Yes
+      </md-button>
+      <md-button style="background-color:#3399FF; color:white" ng-click="cancel()" md-autofocus>
+       Cancel
+      </md-button>
+    </md-dialog-actions>
+ 
+</form>
+</md-dialog>

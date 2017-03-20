@@ -1,0 +1,236 @@
+<div ng-controller="newrecruitersreportcontroller" ng-init="onload()">
+<script src="assets/global/scripts/alljquery02.js"></script>
+
+<!-- BEGIN PAGE HEADER--> 
+<div class="sub-page-header">
+  <div class="page-bar">
+    <ul class="page-breadcrumb">
+      <li>
+        <a href="#/dashboard">Home</a>
+        <i class="fa fa-circle"></i>
+      </li>
+      <li>
+        <span>Dashboard</span> 
+        <i class="fa fa-circle"></i>
+      </li>
+      <li>
+        <span>Recruiter's Rank Report</span> 
+      </li> 
+    </ul> 
+  </div>
+</div>
+<!-- END PAGE HEADER-->
+
+
+
+
+<!-- BEGIN MAIN CONTENT -->
+
+
+<form name="searchsubmitaldm" class="tab-form-demo" ng-submit="getrecdata()" >
+
+<div class="fade-in-up" id="res">Please Fill the mandatory fields</div>
+
+<div class="row">
+
+
+<div class="col-md-2">
+							<div class="form-group">
+								<label class="control-label">Year</label>
+								<div class="multi">
+									<span class="blankmsg">Select</span> <input type="text"
+										class="ddbox form-control" readonly="readonly" id="recselectedyear"><i
+										class="fa fa-caret-down" aria-hidden="true"></i> <span
+										class="errormsg">This field is required</span>
+									<ul class="ddlist" id="yeardd">
+									<input class="selectall" type="checkbox" value="selectall" >Select All
+										<li ng-repeat="values in yearList" ><input type="checkbox"  value="{{values}}" >{{values}}</li>
+									</ul>
+								</div>
+
+							</div>
+						</div>
+						
+						
+						
+						
+						
+						
+						
+						<div class="col-md-2">
+							<div class="form-group">
+								<label class="control-label">Month</label>
+								<div class="multi">
+									<span class="blankmsg">Select</span> <input type="text"
+										class="ddbox form-control" readonly="readonly" id="recselectedmonth"><i
+										class="fa fa-caret-down" aria-hidden="true"></i> <span
+										class="errormsg">This field is required</span>
+									<ul class="ddlist" id="monthdd">
+										<input class="selectall" type="checkbox" value="selectall">Select All
+										<li><input data-month="1"   type="checkbox" value="Jan" >JAN</li>
+										<li><input data-month="2" type="checkbox" value="Feb" >FEB</li>
+										<li><input data-month="3" type="checkbox" value="Mar" >MAR</li>
+										<li><input data-month="4" type="checkbox" value="Apr" >APR</li>
+										<li><input data-month="5" type="checkbox" value="May" >MAY</li>
+										<li><input data-month="6" type="checkbox" value="Jun" >JUN</li>
+										<li><input data-month="7" type="checkbox" value="Jul" >JUL</li>
+										<li><input data-month="8" type="checkbox" value="Aug" >AUG</li>
+										<li><input data-month="9" type="checkbox" value="Sep" >SEP</li>
+										<li><input data-month="10" type="checkbox" value="Oct" >OCT</li>
+										<li><input data-month="11" type="checkbox" value="Nov" >NOV</li>
+										<li><input data-month="12" type="checkbox" value="Dec" >DEC</li>
+									</ul>
+								</div>
+
+							</div>
+						</div>
+						
+						
+						
+						
+						
+						
+						<div class="col-md-3">
+							<div class="form-group">
+								<label class="control-label">Weeks</label>
+								<div class="multi">
+									<span class="blankmsg">Select</span> <input type="text"
+										class="ddbox form-control" readonly="readonly" id="recselectedweek"><i
+										class="fa fa-caret-down" aria-hidden="true"></i> <span
+										class="errormsg">This field is required</span>
+									<ul class="ddlist" id="weekdd">
+									<input id="weeksel" class="selectall" type="checkbox" value="selectall"  checked="true">Select All
+									<li ng-repeat="values in weeksList" ><input type="checkbox"  value="{{values.value}}" checked="true" >{{values.label}}</li>
+									</ul>
+								</div>
+
+							</div>
+						</div>
+						
+						
+						
+						
+						
+						
+						<div class="col-md-3">
+							<div class="form-group">
+								<label class="control-label">DM Name</label>
+								<div class="multi">
+									<span class="blankmsg">Select</span> <input type="text"
+										class="ddbox form-control" readonly="readonly" id="recselecteddmname"><i
+										class="fa fa-caret-down" aria-hidden="true"></i> <span
+										class="errormsg">This field is required</span>
+									<ul class="ddlist" id="dmnamedd">
+									<input class="selectall" type="checkbox" value="selectall" checked="true" >Select All
+										<li ng-repeat="values in userRecords" ><input type="checkbox" value="{{values.userId}}"  checked="true">{{values.fullName}}</li>
+									</ul>
+								</div>
+
+							</div>
+						</div>
+						
+
+
+<div class="col-md-2">
+							<div class="form-group">
+								<label class="control-label">Status</label>
+								<div class="multi">
+									<span class="blankmsg">Select</span> <input type="text"
+										class="ddbox form-control" readonly="readonly" id="recselectedstatus"><i
+										class="fa fa-caret-down" aria-hidden="true"></i> <span
+										class="errormsg">This field is required</span>
+									<ul class="ddlist" id="status">
+									<input class="selectall" type="checkbox" value="selectall" checked="true" >Select All
+										<li><input data-month="ACTIVE" type="checkbox" value="Active"  checked="true">Active</li>
+										<li><input data-month="INACTIVE" type="checkbox" value="Inactive" checked="true" >Inactive</li>
+									</ul>
+								</div>
+
+							</div>
+						</div>
+
+
+
+</div>
+
+
+<div class="row">
+
+<div class="col-md-2 pull-right"  style="margin-top:15px;margin-bottom:0px;padding-left:0px;padding-right:0px;" >
+            <button type="button" ng-click="checkandgetdata()" style="margin-left:20px;padding-bottom:3px;"  class="btn blue"><i class="fa fa-search"></i> View</button>
+            <button type="button" style="padding-bottom:3px;" class="btn blue pull-right"  ng-click="exportData()">Export <i class="fa fa-upload" aria-hidden="true"></i></button>
+            </div>				
+</div>         
+
+
+<!--******************************************* TABLE STARTS HERE **************************************************** -->
+<div class="row fade-in-up table-scrollable">
+	<table bs-table-control="recruitersReport.tableControl"  ng-show="RecruitersReportTable">
+	<thead>
+		<tr>
+		<th title="RECRUITER Name" data-field="Name" data-sortable="true"></th>
+		<th title="RANK" data-field="rank" data-sortable="true"></th>
+		<th title="SUBMITTED" data-field="SUBMITTED" data-sortable="true"></th>
+		<th title="DMREJ" data-field="DMREJ" data-sortable="true"></th>
+		<th title="ACCEPTED" data-field="ACCEPTED" data-sortable="true"></th>
+		<th title="INTERVIEWING" data-field="INTERVIEWING" data-sortable="true"></th>
+		<th Title="CONFIRMED" data-field="CONFIRMED" data-sortable="true"></th>
+		<th title="REJECTED" data-field="REJECTED" data-sortable="true"></th>
+		<th title="STARTED" data-field="STARTED" data-sortable="true"></th>
+		<th title="BACKOUT" data-field="BACKOUT" data-sortable="true"></th>
+		<th title="OUROFPROJ" data-field="OUTOFPROJ" data-sortable="true"></th>
+		<th title="NOTUPDATED" data-field="NotUpdated" data-sortable="true"></th>
+	</tr>
+	</thead>
+	<tbody></tbody>
+	<tfoot>
+	<tr class="totlbstable">
+							<td colspan="2">Total</td>
+							<td id="subm"></td>
+							<td id="dmrej"></td>
+							<td id="accept"></td>
+							<td id="intview"></td>
+							<td id="conf"></td>
+							<td id="rej"></td>
+							<td id="start" style="background-color:#ffff00;color:#000000;font-weight:bold;"></td>
+							<td id="backout"></td>
+							<td id="oop"></td>
+							<td id="nu"></td>
+							</tr>
+	</tfoot>
+	</table>
+</div>
+<!--******************************************* TABLE ENDS HERE ****************************************************-->
+
+
+
+<!--******************************************* EXPORT TABLE STARTS HERE **************************************************** -->
+<div class="row fade-in-up table-scrollable" id="exporttable" style="display:none;">
+	<table border="1" bs-table-control="exportrecruitersReport.tableControl"  ng-show="exportRecruitersReportTable">
+	<thead></thead>
+	<tbody></tbody>
+	<tfoot>
+	<tr style="background-color:#3598dc;color:#ffffff;">
+							<td align="center" colspan="2">Total</td>
+							<td align="center" id="expsubm"></td>
+							<td align="center" id="expdmrej"></td>
+							<td align="center" id="expaccept"></td>
+							<td align="center" id="expintview"></td>
+							<td align="center" id="expconf"></td>
+							<td align="center" id="exprej"></td>
+							<td align="center" id="expstart"></td>
+							<td align="center" id="expbackout"></td>
+							<td align="center" id="expoop"></td>
+							<td align="center" id="expnu"></td>
+							</tr>
+	</tfoot>
+	</table>
+</div>
+<!--******************************************* EXPORT TABLE ENDS HERE ****************************************************-->
+
+
+
+</form>
+<!-- END MAIN CONTENT -->
+
+</div>

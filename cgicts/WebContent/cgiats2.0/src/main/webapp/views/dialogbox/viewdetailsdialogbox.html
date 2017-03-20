@@ -1,0 +1,28 @@
+<md-dialog style="width:30%">
+<md-toolbar style="background-color:#00CED1">
+<div class="md-toolbar-tools">
+<h2>Candidate Details</h2>
+ <span flex></span>
+ <md-button class="md-icon-button" ng-click="cancel()">
+ <img width="16" height="16" src="assets/global/img/portlet-remove-icon-white.png" />
+ </md-button>
+ </div>
+ </md-toolbar>
+ <md-dialog-content>
+ <div class="md-dialog-content">
+ <table>
+ <tr><td>Candidate ID : </td><td><span style="font-weight:bold">{{row.id}}</span></td></tr>
+ <tr><td>Name : </td><td><span style="font-weight:bold">{{row.firstName!=null ?row.firstName :"NA"}}</span></td></tr>
+ <tr><td>Address : </td><td><span style="font-weight:bold">{{row.location}}</span></td></tr>
+ <tr><td>Phone Number : </td><td><span style="font-weight:bold">{{row.phoneNumber!=null ? row.phoneNumber : "NA"}}</span></td></tr>
+ <tr><td>Email : </td><td><span style="font-weight:bold">{{row.email!= null ? row.email : "NA"}}</span></td></tr>
+ <tr><td>Visa Type : </td><td><span style="font-weight:bold">{{row.visaType!=null ? row.visaType : "NA"}}</span></td></tr>
+ <tr><td>Visa Expiry Date : </td><td><span style="font-weight:bold">{{row.visaExpiryDate!=null ? row.visaExpiryDate : "NA"}}</span></td></tr>
+ <tr><td>Resume : </td><td><span style="font-weight:bold">{{row.documentType!=null ? row.documentType : "NA"}}</span></td>
+ </tr>
+ </table>
+ 
+ </div>
+ </md-dialog-content>
+ 
+ </md-dialog>

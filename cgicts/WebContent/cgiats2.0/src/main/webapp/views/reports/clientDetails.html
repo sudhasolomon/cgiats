@@ -1,0 +1,108 @@
+<div ng-controller="clientDetailsreportcontroller" ng-init="onload()">
+<div class="sub-page-header">
+  <div class="page-bar">
+    <ul class="page-breadcrumb">
+          	<li><a href="#/dashboard" ng-if="!(rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_Recruiter' || rsLoginUser.userRole === 'ATS_Executive')">Home</a> 
+				<a href="#/india_joborders/my_indiajobOrder" ng-if="(rsLoginUser.userRole === 'IN_DM' || rsLoginUser.userRole === 'IN_Recruiter')">Home</a>
+				<a href="#/candidates/missingData" ng-if="(rsLoginUser.userRole === 'ATS_Executive')">Home</a>
+				<i class="fa fa-circle"></i>
+				</li>
+      <li>
+        <span>Reports</span>
+        <i class="fa fa-circle"></i>
+      </li>
+      <li>
+        <span>Client Report ({{siteName}})</span>
+        <i class="fa fa-circle"></i>
+      </li>
+      <li>
+        <span> {{clientname}} Report</span>
+      </li>
+    </ul> 
+  </div>
+</div>
+
+
+<form role="form" novalidate="" ng-submit="getJobOrders()" >
+<button type="button" ng-click="backToClients()" class="btn btn-default pull-right" ><i class="fa fa-arrow-left" aria-hidden="true"></i> Back To Clients Report ({{siteName}})</button>
+<div ng-show="errMsg" style="text-align: right; color: red;"><b>Please select valid dates</b></div>
+<div class="row">
+ <div class="col-md-2">
+              	<div class="form-group">
+                <label class="">Start Date</label>
+  				<div class="input-group datepick">
+                  <input type="text" class="form-control whitereadonly" uib-datepicker-popup="{{DateFormat}}" is-open="startDatePopup.opened" datepicker-options="startDateOptions" close-text="Close" alt-input-formats="altInputFormats" ng-model="startDate" ng-keyup="" readonly="true" />
+                  <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="startDateopen()"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+                </div>
+				</div>
+
+
+</div>
+
+   <div class="col-md-2">
+              	<div class="form-group">
+                <label class="">End Date</label>
+  					<div class="input-group">
+                  <input type="text"  class="form-control whitereadonly" uib-datepicker-popup="{{DateFormat}}" is-open="endDatePopup.opened" datepicker-options="endDateOptions" close-text="Close" alt-input-formats="altInputFormats" ng-model="endDate" ng-keyup="" readonly="true" />
+                  <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="endDateopen()"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+                </div>
+				</div>
+              </div>
+              
+   <div class="col-md-1" style="margin-top: 25px;">
+	<button type="submit" class="btn blue"><i class="fa fa-search"></i> View </button>
+   </div>
+<!-- 	<div class="col-md-1" style="margin-top: 25px;">
+	<button type="button" ng-disabled="(clientWiseSbmList && clientWiseSbmList.length == 0)" class="btn blue" ng-csv="exportClientWiseSbmList" ng-if="!(rsLoginUser.userRole === 'Recruiter')"
+									filename="clientWiseSubmittals_{{currentDateWithTime | date:'MM-dd-yyyy hh:mm:ss a'}}.csv" ng-click="getTimeFnc();"
+									csv-header="['JobOrder Id','Created Date','Client Name','Title','DM Name','Assigned To','Positions','Sbm','Confirmed','Started','Net Positions']"
+									charset="utf-8">
+									Export <i class="fa fa-upload" aria-hidden="true"></i>
+								</button>
+</div> -->
+</div>
+</form>
+<!-- <center>
+<div><b>Job Order Details of  {{clientname}}  </b></div>
+</center> -->
+<div class="col-md-12 bigdata">
+<div class="col-md-2 animated bounceIn"><div class="rounddiv">Job Orders<span class="totalcountbig">{{noOfJobOrders}}</span></div></div>
+<div class="col-md-2 animated bounceIn"><div class="rounddiv">Positions<span class="totalcountbig">{{noOfPos}}</span></div></div>
+<div class="col-md-2 animated bounceIn"><div class="rounddiv">Submittals<span class="totalcountbig">{{noOfSub}}</span></div></div>
+<div class="col-md-2 animated bounceIn delay-one"><div class="rounddiv">Confirmed<span class="totalcountbig">{{noOfConfirmed}}</span></div></div>
+<div class="col-md-2 animated bounceIn delay-two"><div class="rounddiv startedcolor">Started<span class="totalcountbig">{{noOfStarts}}</span></div></div>
+<div class="col-md-2 animated bounceIn delay-three"><div class="rounddiv" style="padding-top:35px;">Remaining Positions<span class="totalcountbig">{{netPositions}}</span></div></div>
+<div class="clearboth"></div>
+</div>
+
+		<div class="row fade-in-up table-scrollable">
+            
+	            <table class="customtable" id="customJobOrderTable"  bs-table-control="jobOrderInfo.jobOrderTableControl" ng-show="customJobOrderTable"  >
+		        <thead>
+		            <tr>
+		         		<th data-field="Job Order" data-sortable="true" ></th>
+		         		<th data-field="DM" data-sortable="true" ></th>
+		         		<th data-field="Recruiter" data-sortable="true" ></th>
+		         		<th data-field="Title" data-sortable="true" ></th>
+		         		 <th data-field="Status" data-sortable="true"></th>
+		         		  <th data-field="Active Days" data-sortable="true"></th>
+		                <th data-field="# Positions" data-sortable="true"></th>
+		                <th data-field="SBM" data-sortable="true"></th>
+		                <th data-field="Confirmed" data-sortable="true"></th>
+		                <th data-field="Started" data-sortable="true"></th>
+		                <th data-field="Remaining Positions" data-sortable="true"></th>
+		                <!-- <th data-field="Started Date" data-sortable="true"></th> -->
+		            </tr>
+		        </thead>
+		        <tbody>
+		           
+		        </tbody>
+	    		</table> 
+	    		</div>
+
+
+</div>
